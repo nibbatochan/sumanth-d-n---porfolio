@@ -19,16 +19,16 @@ export const WorkGrid = ({ onSelectProject, soundEnabled }) => {
   }, [activeCategory]);
 
   return (
-    <section id="work" className="py-16 px-4 sm:px-8 max-w-6xl mx-auto">
+    <section id="work" className="py-20 sm:py-24 px-4 sm:px-8 max-w-6xl mx-auto space-y-10">
       
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-zinc-200 dark:border-zinc-800 gap-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between pb-6 border-b border-zinc-200 dark:border-zinc-800 gap-4">
         <div>
           <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-widest text-orange-600 dark:text-orange-400 font-bold mb-2">
             <Sparkle size={15} weight="fill" />
             <span>Selected Projects</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold font-sans text-zinc-900 dark:text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight">
             Crafted with warmth, structure & care.
           </h2>
         </div>
@@ -59,8 +59,8 @@ export const WorkGrid = ({ onSelectProject, soundEnabled }) => {
         </div>
       </div>
 
-      {/* Grid of Projects */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+      {/* Spacious Grid of Scaled Projects */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
         {filteredProjects.map((project) => (
           <ProjectCard
             key={project.id}
