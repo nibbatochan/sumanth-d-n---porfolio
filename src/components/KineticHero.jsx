@@ -109,17 +109,17 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   };
 
   return (
-    <section ref={heroRef} id="home" className="pt-28 sm:pt-36 pb-12 px-4 sm:px-8 max-w-6xl mx-auto space-y-8 relative z-10">
+    <section ref={heroRef} id="home" className="pt-24 sm:pt-32 pb-10 sm:pb-12 px-4 sm:px-8 max-w-6xl mx-auto space-y-8 relative z-10">
       
       {/* Main Grid: Left Column Headline + Right Column 3D ASCII Dove */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
         
         {/* Left 7 Columns: Availability Badge, Headline, Bio & Action Buttons */}
-        <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
+        <div className="lg:col-span-7 flex flex-col justify-between space-y-5 sm:space-y-6">
           
           {/* Availability Status Badge */}
           <div ref={badgeRef}>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm text-xs text-zinc-700 dark:text-zinc-200">
+            <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm text-xs text-zinc-700 dark:text-zinc-200">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               <span className="font-semibold text-zinc-900 dark:text-white flex items-center gap-1.5 text-xs">
                 <CheckCircle size={14} weight="fill" className="text-emerald-500" />
@@ -131,7 +131,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
           {/* GSAP Soft Deblur Responsive Headline */}
           <h1
             ref={titleContainerRef}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-[1.08] max-w-xl"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-[1.10] max-w-lg lg:max-w-xl"
           >
             {headlineWords.map((word, idx) => (
               <span
@@ -152,7 +152,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
           </h1>
 
           {/* Intro Bio */}
-          <p ref={bioRef} className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-xl">
+          <p ref={bioRef} className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-lg">
             Hey, I’m <strong className="text-zinc-900 dark:text-white font-bold">{designerProfile.name}</strong> — a Graphic & UI/UX Designer based in Bengaluru. Crafting tactile, human-scale digital interfaces and brand identities.
           </p>
 
@@ -161,7 +161,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
             <a
               href="#work"
               onClick={() => playSound('whoosh', soundEnabled)}
-              className="bg-zinc-900 dark:bg-white hover:bg-black dark:hover:bg-zinc-100 text-white dark:text-zinc-900 px-6 py-3.5 rounded-full text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2 tactile-btn transition-all group"
+              className="bg-zinc-900 dark:bg-white hover:bg-black dark:hover:bg-zinc-100 text-white dark:text-zinc-900 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2 tactile-btn transition-all group"
             >
               <span>Explore Selected Work</span>
               <ArrowDown size={15} weight="bold" className="text-amber-400 dark:text-orange-500 group-hover:translate-y-0.5 transition-transform" />
@@ -169,7 +169,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
 
             <button
               onClick={handleCopyEmail}
-              className="bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 px-5 py-3.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm flex items-center gap-2 tactile-btn transition-all"
+              className="bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 px-4 sm:px-5 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm flex items-center gap-2 tactile-btn transition-all"
             >
               {copied ? <Check size={15} weight="bold" className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={15} weight="bold" className="text-zinc-500 dark:text-zinc-400" />}
               <span>{copied ? 'Copied to Clipboard!' : 'Copy Email'}</span>

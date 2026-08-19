@@ -5,6 +5,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-size: 85%; /* Elegant 85% scaling so 100% browser zoom looks perfectly spacious like 80% zoom */
+  }
+
+  @media (min-width: 1536px) {
+    html {
+      font-size: 90%;
+    }
   }
 
   body {
