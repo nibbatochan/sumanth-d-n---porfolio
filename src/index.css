@@ -10,8 +10,8 @@
   body {
     background-color: #FFFFFF;
     color: #18181B;
-    background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
+    /* clean modern background */
+    
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
@@ -19,7 +19,7 @@
   .dark body {
     background-color: #09090B;
     color: #FFFFFF;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    /* clean modern dark background */
   }
 }
 
