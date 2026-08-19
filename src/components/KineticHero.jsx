@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { designerProfile } from '../data/portfolioData';
 import { playSound } from '../utils/sound';
 import { AsciiCanvas } from './AsciiCanvas';
-import { InlineAsciiGlobe, InlineAsciiMorph } from './InlineAsciiBadge';
+import { PixelFlower } from './PixelFlower';
 
 export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   const [copied, setCopied] = useState(false);
@@ -75,10 +75,10 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   return (
     <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-140px)] flex flex-col justify-center pt-14 sm:pt-16 pb-2 sm:pb-3 px-4 sm:px-8 max-w-6xl mx-auto relative z-10">
       
-      {/* Main Grid: Left Column Headline & Bio + Right Column 3D ASCII Canvas */}
+      {/* Main Grid: Left Column Headline & Bio + Right Column 3D ASCII Canvas (Untouched) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center my-auto">
         
-        {/* Left 7 Columns: Status Badge, Headline with Inline Badges, Bio & Action Buttons */}
+        {/* Left 7 Columns: Status Badge, Scaled Headline with Flower & Portrait Capsule, Bio & Lowered CTAs */}
         <div className="lg:col-span-7 flex flex-col justify-center space-y-4">
           
           {/* Availability Status Badge with Pulse Indicator */}
@@ -95,21 +95,66 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
             </div>
           </div>
 
-          {/* Master Headline (Option 2) with Bespoke Inline Animated ASCII Badges */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[54px] xl:text-[60px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-[1.12] max-w-xl">
-            Crafting <InlineAsciiGlobe soundEnabled={soundEnabled} /> <span className="font-serif italic font-normal text-orange-600 dark:text-orange-400">thoughtful,</span>
-            <br />human-centered <InlineAsciiMorph soundEnabled={soundEnabled} />
-            <br />products & brand
-            <br />experiences.
-          </h1>
+          {/* Master Headline - Scaled-Up Flower & Scaled-Up Action Portrait Capsule */}
+          <div className="space-y-1 text-zinc-900 dark:text-white select-none max-w-xl">
+            
+            {/* Line 1: 'Crafting thoughtful,' */}
+            <div>
+              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-[56px] font-sans font-bold tracking-tight">
+                Crafting{' '}
+              </span>
+              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-[56px] font-serif italic font-normal text-orange-600 dark:text-orange-400">
+                thoughtful,
+              </span>
+            </div>
 
-          {/* Option 2 Bio Copy */}
-          <p className="text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-lg">
+            {/* Line 2: 'human-centered' + Scaled-Up Pixel Flower */}
+            <div className="flex items-center flex-wrap gap-1 sm:gap-2">
+              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-[56px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none">
+                human-centered
+              </span>
+              <PixelFlower 
+                isDarkMode={isDarkMode}
+                soundEnabled={soundEnabled} 
+                className="w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 ml-2 sm:ml-3 -translate-y-0.5 sm:-translate-y-1 drop-shadow-xs" 
+              />
+            </div>
+
+            {/* Line 3: Scaled-Up Action Portrait Capsule + 'products &' */}
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap pt-1 sm:pt-1.5">
+              <span 
+                onMouseEnter={() => playSound('pop', soundEnabled)}
+                title="Sumanth D N — Hover to reveal"
+                className="inline-flex items-center justify-center rounded-full overflow-hidden border border-zinc-300 dark:border-zinc-700 shadow-md backdrop-blur-xs hover:border-orange-500 hover:shadow-orange-500/20 transition-all duration-300 select-none cursor-pointer h-10 sm:h-12 md:h-14 lg:h-15 w-26 sm:w-34 md:w-40 lg:w-44 shrink-0 group self-center bg-black"
+              >
+                {/* Smooth pan from Face on right to Hand on left */}
+                <img 
+                  src="/sumanth-pixel-action.png" 
+                  alt="Sumanth D N Pixel Portrait" 
+                  className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] object-[84%_center] group-hover:object-[8%_center] group-hover:scale-105"
+                />
+              </span>
+              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-[56px] font-sans font-bold tracking-tight leading-none self-center">
+                products &
+              </span>
+            </div>
+
+            {/* Line 4: 'brand experiences.' */}
+            <div className="pt-0.5 sm:pt-1">
+              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-[58px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
+                brand experiences.
+              </span>
+            </div>
+
+          </div>
+
+          {/* Bio Copy */}
+          <p className="text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-lg pt-1">
             I’m <strong className="text-zinc-900 dark:text-white font-bold">{designerProfile.name}</strong> — a Bengaluru-based Graphic & UI/UX Designer. Specializing in scalable design systems, tactile web interactions, and distinctive brand identities.
           </p>
 
           {/* GSAP Magnetic Action CTAs */}
-          <div className="pt-1 flex flex-wrap items-center gap-3">
+          <div className="pt-10 sm:pt-12 md:pt-[50px] flex flex-wrap items-center gap-3">
             <a
               ref={workBtnRef}
               href="#work"
@@ -142,7 +187,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
 
         </div>
 
-        {/* Right 5 Columns: Grand-Scale 3D ASCII Dove with Laser Tracers & Palette Shuffle */}
+        {/* Right 5 Columns: 3D ASCII Flying Dove Canvas (100% Untouched) */}
         <div className="lg:col-span-5 flex items-center justify-center relative select-none w-full">
           <AsciiCanvas soundEnabled={soundEnabled} isDarkMode={isDarkMode} />
         </div>
