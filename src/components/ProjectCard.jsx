@@ -10,18 +10,8 @@ export const ProjectCard = ({ project, onSelect, soundEnabled }) => {
         playSound('pop', soundEnabled);
         onSelect(project);
       }}
-      className="group relative bg-white dark:bg-gradient-to-t dark:from-[#191310] dark:via-[#131317] dark:to-[#0f0e13] rounded-3xl sm:rounded-4xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-400 hover:-translate-y-2 hover:border-orange-500/40 flex flex-col cursor-pointer"
+      className="group relative bg-white dark:bg-[#121215] rounded-3xl sm:rounded-4xl border border-zinc-200 dark:border-zinc-800/90 shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-400 hover:-translate-y-2 hover:border-orange-500/40 flex flex-col cursor-pointer"
     >
-      {/* Decorative Subtle ASCII Matrix Texture (Very soft, non-crowding ambient aesthetic) */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.04] dark:opacity-[0.07] group-hover:opacity-[0.14] transition-opacity duration-500 overflow-hidden font-mono text-[9px] leading-[13px] text-orange-400 select-none p-4 break-all">
-        {'+  ~  ·  *  %  @  8  S  0  #  X  +  ~  ·  *  %  @  8  S  0  #  X  ' +
-         '+  ~  ·  *  %  @  8  S  0  #  X  +  ~  ·  *  %  @  8  S  0  #  X  ' +
-         '+  ~  ·  *  %  @  8  S  0  #  X  +  ~  ·  *  %  @  8  S  0  #  X  ' +
-         '+  ~  ·  *  %  @  8  S  0  #  X  +  ~  ·  *  %  @  8  S  0  #  X  ' +
-         '+  ~  ·  *  %  @  8  S  0  #  X  +  ~  ·  *  %  @  8  S  0  #  X  ' +
-         '+  ~  ·  *  %  @  8  S  0  #  X  +  ~  ·  *  %  @  8  S  0  #  X  '}
-      </div>
-
       {/* Top Visual Mockup Container */}
       <div className={`h-64 sm:h-80 p-4 bg-gradient-to-br ${project.heroColor} relative overflow-hidden flex items-center justify-center rounded-t-3xl sm:rounded-t-4xl`}>
         <ProjectMockup project={project} interactive={false} />
@@ -32,8 +22,19 @@ export const ProjectCard = ({ project, onSelect, soundEnabled }) => {
         </div>
       </div>
 
-      {/* Card Info Content */}
+      {/* Card Info Content - Clean Solid Base */}
       <div className="p-6 sm:p-8 flex flex-col justify-between flex-1 space-y-5 relative z-10">
+        
+        {/* Subtle Ambient Bottom Gradient (Second Half Only - fades smoothly to transparent) */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-orange-500/[0.07] via-orange-500/[0.02] to-transparent pointer-events-none rounded-b-3xl sm:rounded-b-4xl -z-10" />
+
+        {/* Soft ASCII Texture (Second Half Only with Top Mask Fade) */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden pointer-events-none select-none font-mono text-[9px] leading-[13px] text-orange-400 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.10] transition-opacity duration-300 -z-10 [mask-image:linear-gradient(to_top,black_30%,transparent_100%)] p-4 break-all">
+          {'+ ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X ' +
+           '+ ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X ' +
+           '+ ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X '}
+        </div>
+
         <div>
           <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400 mb-2.5">
             <span className="font-mono uppercase tracking-wider text-[11px] text-orange-600 dark:text-orange-400 font-bold">
