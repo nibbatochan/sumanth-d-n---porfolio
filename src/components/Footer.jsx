@@ -202,7 +202,7 @@ export const Footer = ({ soundEnabled }) => {
   };
 
   return (
-    <footer className="relative -mt-36 sm:-mt-52 text-white overflow-hidden select-none min-h-[500px] sm:min-h-[600px] flex flex-col justify-end z-10">
+    <footer className="relative mt-12 sm:-mt-24 md:-mt-36 text-white overflow-hidden select-none min-h-[440px] sm:min-h-[540px] flex flex-col justify-end z-10 w-full">
       
       {/* Full-Size Upward Pulsating Orange Canvas Background */}
       <div className="absolute inset-0 z-0">
@@ -210,25 +210,25 @@ export const Footer = ({ soundEnabled }) => {
       </div>
 
       {/* Top Gradient Fade to guarantee seamless transition from #09090B */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#09090B] to-transparent z-5 pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-32 sm:h-40 bg-gradient-to-b from-[#09090B] to-transparent z-5 pointer-events-none" />
 
-      {/* Bottom Footer Bar */}
-      <div className="relative z-20 max-w-6xl mx-auto w-full py-12 px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-zinc-300">
+      {/* Bottom Footer Bar - Fully Responsive Clean Stacking on Mobile */}
+      <div className="relative z-20 max-w-6xl mx-auto w-full py-8 sm:py-12 px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 text-xs text-zinc-300">
         
-        {/* Left: Brand + Time */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
-          <span className="font-bold text-white font-sans text-sm">© {new Date().getFullYear()} {designerProfile.name}</span>
+        {/* Brand & Bangalore Time Indicator */}
+        <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 text-center sm:text-left">
+          <span className="font-bold text-white font-sans text-sm tracking-tight">© {new Date().getFullYear()} {designerProfile.name}</span>
           <span className="hidden sm:inline text-zinc-600">•</span>
-          <span className="font-mono bg-zinc-950/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-zinc-800 text-zinc-200 font-medium flex items-center gap-1.5 shadow-sm">
-            <GlobeHemisphereWest size={14} weight="duotone" className="text-orange-400" />
+          <span className="font-mono bg-zinc-950/85 backdrop-blur-md px-3 py-1.5 rounded-full border border-zinc-800 text-zinc-200 font-medium flex items-center gap-1.5 shadow-sm text-[11px] sm:text-xs">
+            <GlobeHemisphereWest size={13} weight="duotone" className="text-orange-400 shrink-0" />
             <span>Bangalore, IN</span>
-            <Clock size={13} weight="bold" className="text-zinc-400 ml-1" />
+            <Clock size={12} weight="bold" className="text-zinc-400 ml-1 shrink-0" />
             <span>{bengaluruTime || '1:30 PM (IST)'}</span>
           </span>
         </div>
 
-        {/* Center: Social Links */}
-        <div className="flex items-center gap-5 font-semibold">
+        {/* Social Links - Clean wrap without clipping */}
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5 font-semibold text-xs sm:text-sm">
           <a 
             href={designerProfile.socials.behance} 
             target="_blank" 
@@ -248,19 +248,21 @@ export const Footer = ({ soundEnabled }) => {
           </a>
           <a 
             href={`mailto:${designerProfile.email}`}
-            className="hover:text-orange-400 transition-colors flex items-center gap-1 text-zinc-200"
+            className="hover:text-orange-400 transition-colors flex items-center gap-1 text-zinc-200 max-w-[200px] sm:max-w-none truncate"
+            title={designerProfile.email}
           >
-            <EnvelopeSimple size={15} weight="bold" />
-            <span>{designerProfile.email}</span>
+            <EnvelopeSimple size={15} weight="bold" className="shrink-0" />
+            <span className="truncate">{designerProfile.email}</span>
           </a>
         </div>
 
-        {/* Right: Scroll to top */}
+        {/* Scroll to Top */}
         <button
           onClick={scrollToTop}
-          className="p-2.5 rounded-full bg-zinc-950/85 hover:bg-zinc-800 border border-zinc-800 shadow-sm text-zinc-200 hover:text-white hover:scale-105 transition-all tactile-btn flex items-center gap-1.5 backdrop-blur-md"
+          aria-label="Scroll back to top"
+          className="p-2.5 px-3.5 rounded-full bg-zinc-950/85 hover:bg-zinc-800 border border-zinc-800 shadow-sm text-zinc-200 hover:text-white hover:scale-105 transition-all tactile-btn flex items-center gap-1.5 backdrop-blur-md"
         >
-          <ArrowUp size={15} weight="bold" />
+          <ArrowUp size={14} weight="bold" />
           <span className="text-[11px] font-bold">Top</span>
         </button>
 
