@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   SpeakerHigh, 
   SpeakerSlash, 
@@ -13,12 +13,19 @@ import {
   List,
   X
 } from '@phosphor-icons/react';
+import gsap from 'gsap';
 import { SumanthLogo } from './SumanthLogo';
 import { playSound } from '../utils/sound';
 
 export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMode, setIsDarkMode }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const logoRef = useRef(null);
+  const themeBtnRef = useRef(null);
+  const resumeBtnRef = useRef(null);
+  const soundBtnRef = useRef(null);
+  const connectBtnRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +43,48 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // GSAP Magnetic Physics on Header Controls
+  useEffect(() => {
+    const attachMagnetic = (el) => {
+      if (!el) return;
+      const onMove = (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - (rect.left + rect.width / 2);
+        const y = e.clientY - (rect.top + rect.height / 2);
+        gsap.to(el, {
+          x: x * 0.3,
+          y: y * 0.3,
+          duration: 0.25,
+          ease: 'power2.out'
+        });
+      };
+      const onLeave = () => {
+        gsap.to(el, {
+          x: 0,
+          y: 0,
+          duration: 0.6,
+          ease: 'elastic.out(1.1, 0.4)'
+        });
+      };
+      el.addEventListener('mousemove', onMove);
+      el.addEventListener('mouseleave', onLeave);
+      return () => {
+        el.removeEventListener('mousemove', onMove);
+        el.removeEventListener('mouseleave', onLeave);
+      };
+    };
+
+    const cleanups = [
+      attachMagnetic(logoRef.current),
+      attachMagnetic(themeBtnRef.current),
+      attachMagnetic(resumeBtnRef.current),
+      attachMagnetic(soundBtnRef.current),
+      attachMagnetic(connectBtnRef.current)
+    ];
+
+    return () => cleanups.forEach((c) => c && c());
   }, []);
 
   const toggleTheme = () => {
@@ -59,6 +108,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
         
         {/* Authentic Signature Logo + Sumanth Reddy Name */}
         <a 
+          ref={logoRef}
           href="#home"
           onClick={() => playSound('click', soundEnabled)}
           aria-label="Sumanth Reddy Portfolio Home"
@@ -72,12 +122,12 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
           </p>
         </a>
 
-        {/* Desktop Center Pill Navigation */}
-        <nav aria-label="Main navigation" className="hidden md:flex bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-800 px-5 py-2 rounded-full shadow-sm backdrop-blur-md items-center gap-3 text-xs font-bold text-zinc-800 dark:text-zinc-200">
+        {/* Desktop Center Pill Navigation with Smooth Hover Highlights */}
+        <nav aria-label="Main navigation" className="hidden md:flex bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-800 px-5 py-2 rounded-full shadow-sm backdrop-blur-md items-center gap-2 text-xs font-bold text-zinc-800 dark:text-zinc-200">
           <a 
             href="#work" 
             onClick={() => playSound('pop', soundEnabled)}
-            className="px-3 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-all duration-200 flex items-center gap-1.5 hover:scale-105"
           >
             <FolderSimple size={14} weight="bold" />
             <span>Work</span>
@@ -85,7 +135,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
           <a 
             href="#about" 
             onClick={() => playSound('pop', soundEnabled)}
-            className="px-3 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-all duration-200 flex items-center gap-1.5 hover:scale-105"
           >
             <User size={14} weight="bold" />
             <span>About</span>
@@ -93,42 +143,45 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
           <a 
             href="#tools" 
             onClick={() => playSound('pop', soundEnabled)}
-            className="px-3 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-all duration-200 flex items-center gap-1.5 hover:scale-105"
           >
             <Wrench size={14} weight="bold" />
             <span>Tools</span>
           </a>
         </nav>
 
-        {/* Desktop Right Controls */}
+        {/* Desktop Right Controls with GSAP Magnetic Spring */}
         <div className="hidden md:flex items-center gap-2.5 shrink-0">
           
           {/* Dark / Light Theme Toggle */}
           <button 
+            ref={themeBtnRef}
             onClick={toggleTheme}
             aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
             title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            className="w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all tactile-btn"
+            className="w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
-            {isDarkMode ? <Sun size={16} weight="bold" className="text-amber-400" /> : <Moon size={16} weight="bold" className="text-zinc-800" />}
+            {isDarkMode ? <Sun size={16} weight="bold" className="text-amber-400 hover:rotate-45 transition-transform duration-300" /> : <Moon size={16} weight="bold" className="text-zinc-800 hover:-rotate-12 transition-transform duration-300" />}
           </button>
 
           {/* Download Resume Button */}
           <a
+            ref={resumeBtnRef}
             href="/Sumanth_DN_Resume.pdf"
             download="Sumanth_DN_Resume.pdf"
             aria-label="Download Sumanth D N Resume PDF"
             onClick={() => playSound('success', soundEnabled)}
-            className="px-4 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white text-xs font-bold shadow-sm flex items-center gap-1.5 transition-all tactile-btn"
+            className="px-4 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white text-xs font-bold shadow-xs flex items-center gap-1.5 transition-colors group"
             title="Download Resume PDF"
           >
-            <FileText size={15} weight="bold" className="text-orange-600 dark:text-orange-400" />
+            <FileText size={15} weight="bold" className="text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform" />
             <span>Resume</span>
-            <DownloadSimple size={13} weight="bold" className="text-zinc-500 dark:text-zinc-400" />
+            <DownloadSimple size={13} weight="bold" className="text-zinc-500 dark:text-zinc-400 group-hover:translate-y-0.5 transition-transform" />
           </a>
 
           {/* Sound Toggle */}
           <button 
+            ref={soundBtnRef}
             onClick={() => {
               const next = !soundEnabled;
               setSoundEnabled(next);
@@ -136,22 +189,23 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
             }}
             aria-label={soundEnabled ? "Mute interface audio effects" : "Enable interface audio effects"}
             title={soundEnabled ? "Mute audio" : "Enable audio"}
-            className="w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all tactile-btn"
+            className="w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
             {soundEnabled ? <SpeakerHigh size={17} weight="bold" className="text-orange-500" /> : <SpeakerSlash size={17} weight="bold" className="text-zinc-400" />}
           </button>
 
           {/* Contact CTA */}
           <button
+            ref={connectBtnRef}
             onClick={() => {
               playSound('success', soundEnabled);
               onOpenContact();
             }}
             aria-label="Open contact and project collaboration modal"
-            className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-black dark:hover:bg-zinc-100 px-5 py-2.5 rounded-full text-xs font-bold shadow-sm flex items-center gap-1.5 transition-all tactile-btn"
+            className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-black dark:hover:bg-zinc-100 px-5 py-2.5 rounded-full text-xs font-bold shadow-md flex items-center gap-1.5 transition-colors group"
           >
             <span>Let's Connect</span>
-            <ArrowUpRight size={13} weight="bold" className="text-orange-400 dark:text-orange-600" />
+            <ArrowUpRight size={13} weight="bold" className="text-orange-400 dark:text-orange-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
         </div>
 
@@ -160,7 +214,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
           <button 
             onClick={toggleTheme}
             aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            className="w-9 h-9 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center text-zinc-800 dark:text-zinc-200 tactile-btn"
+            className="w-9 h-9 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center text-zinc-800 dark:text-zinc-200"
           >
             {isDarkMode ? <Sun size={15} weight="bold" className="text-amber-400" /> : <Moon size={15} weight="bold" className="text-zinc-800" />}
           </button>
@@ -172,7 +226,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
               playSound('pop', soundEnabled);
             }}
             aria-label="Toggle navigation menu"
-            className="w-9 h-9 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 flex items-center justify-center shadow-sm tactile-btn"
+            className="w-9 h-9 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 flex items-center justify-center shadow-sm"
           >
             {mobileMenuOpen ? <X size={18} weight="bold" /> : <List size={18} weight="bold" />}
           </button>
