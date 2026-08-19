@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { animate } from 'animejs';
+import gsap from 'gsap';
 import { playSound } from '../utils/sound';
 
 export const Preloader = ({ onComplete, soundEnabled }) => {
   const [percent, setPercent] = useState(0);
   const [statusLog, setStatusLog] = useState('INITIALIZING PORTFOLIO...');
   const containerRef = useRef(null);
+  const isDoneRef = useRef(false);
 
   const logs = [
     'LOADING DESIGN SYSTEMS & TOKENS...',
@@ -14,12 +15,35 @@ export const Preloader = ({ onComplete, soundEnabled }) => {
     'READY.'
   ];
 
+  const completeAndDismiss = () => {
+    if (isDoneRef.current) return;
+    isDoneRef.current = true;
+
+    if (containerRef.current) {
+      gsap.to(containerRef.current, {
+        yPercent: -100,
+        duration: 0.55,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          onComplete();
+        }
+      });
+    } else {
+      onComplete();
+    }
+  };
+
   useEffect(() => {
     let currentPercent = 0;
     let logIndex = 0;
 
+    // Safety fallback: maximum 1.2 seconds
+    const fallback = setTimeout(() => {
+      completeAndDismiss();
+    }, 1200);
+
     const interval = setInterval(() => {
-      currentPercent += Math.floor(Math.random() * 8) + 5;
+      currentPercent += 12;
       if (currentPercent > 100) currentPercent = 100;
       setPercent(currentPercent);
 
@@ -32,25 +56,17 @@ export const Preloader = ({ onComplete, soundEnabled }) => {
 
       if (currentPercent >= 100) {
         clearInterval(interval);
+        clearTimeout(fallback);
         playSound('success', soundEnabled);
-
-        if (containerRef.current) {
-          animate(containerRef.current, {
-            translateY: ['0%', '-100%'],
-            duration: 750,
-            ease: 'inOutExpo',
-            onComplete: () => {
-              onComplete();
-            }
-          });
-        } else {
-          onComplete();
-        }
+        completeAndDismiss();
       }
-    }, 32);
+    }, 25);
 
-    return () => clearInterval(interval);
-  }, [onComplete, soundEnabled]);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(fallback);
+    };
+  }, [soundEnabled]);
 
   return (
     <div
@@ -62,7 +78,7 @@ export const Preloader = ({ onComplete, soundEnabled }) => {
           <span className="w-2 h-2 rounded-full bg-orange-500 animate-ping" />
           <span>SUMANTH REDDY — PORTFOLIO</span>
         </div>
-        <span className="text-zinc-500">UI/UX & GRAPHIC DESIGNER</span>
+        <span className="text-zinc-500 hidden sm:inline">UI/UX & GRAPHIC DESIGNER</span>
       </div>
 
       <div className="my-auto space-y-4">

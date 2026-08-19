@@ -14,7 +14,7 @@ import {
 import { SumanthLogo } from './SumanthLogo';
 import { playSound } from '../utils/sound';
 
-export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMode, setIsDarkMode, isLoaded = false }) => {
+export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMode, setIsDarkMode }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-700 px-3 sm:px-8 py-3 sm:py-4 ${scrolled ? 'pt-2.5 sm:pt-3' : 'pt-3 sm:pt-5'} ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6 pointer-events-none'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 px-3 sm:px-8 py-3 sm:py-4 ${scrolled ? 'pt-2.5 sm:pt-3' : 'pt-3 sm:pt-5'} opacity-100 translate-y-0`}>
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-2">
         
         {/* Authentic Signature Logo + Sumanth Reddy Name */}
@@ -102,7 +102,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
             <DownloadSimple size={12} weight="bold" className="text-zinc-500 dark:text-zinc-400" />
           </a>
 
-          {/* Sound Toggle (hidden on very small screens to preserve space) */}
+          {/* Sound Toggle */}
           <button 
             onClick={() => {
               const next = !soundEnabled;
