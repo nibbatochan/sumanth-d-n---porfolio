@@ -35,8 +35,8 @@ export const AsciiCanvas = ({ soundEnabled, isDarkMode }) => {
     doveRef.current = dove;
 
     const ctx = canvas.getContext('2d');
-    let width = (canvas.width = canvas.offsetWidth);
-    let height = (canvas.height = canvas.offsetHeight);
+    let width = (canvas.width = canvas.offsetWidth || 400);
+    let height = (canvas.height = canvas.offsetHeight || 400);
 
     const handleResize = () => {
       if (!canvas) return;
@@ -47,43 +47,50 @@ export const AsciiCanvas = ({ soundEnabled, isDarkMode }) => {
     window.addEventListener('resize', handleResize);
 
     const render = () => {
-      ctx.clearRect(0, 0, width, height);
+      try {
+        ctx.clearRect(0, 0, width, height);
 
-      const frameData = dove.renderFrame();
-      const rows = frameData.length;
-      const cols = frameData[0].length;
+        const frameText = dove.nextFrame();
+        const lines = frameText.split('\n');
+        const rows = lines.length;
+        const cols = lines[0] ? lines[0].length : 118;
 
-      const charW = width / cols;
-      const charH = height / rows;
+        const charW = width / cols;
+        const charH = height / rows;
 
-      ctx.font = `${Math.max(7, Math.floor(charH * 0.95))}px 'JetBrains Mono', monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+        ctx.font = `${Math.max(7, Math.floor(charH * 0.95))}px 'JetBrains Mono', monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
 
-      for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < cols; x++) {
-          const char = frameData[y][x];
-          if (char && char !== ' ') {
-            const px = x * charW + charW / 2;
-            const py = y * charH + charH / 2;
+        for (let y = 0; y < rows; y++) {
+          const line = lines[y];
+          if (!line) continue;
+          for (let x = 0; x < cols; x++) {
+            const char = line[x];
+            if (char && char !== ' ') {
+              const px = x * charW + charW / 2;
+              const py = y * charH + charH / 2;
 
-            if (char === '@' || char === '%' || char === '#') {
-              ctx.fillStyle = currentPalette.highlight;
-              ctx.shadowColor = currentPalette.glow;
-              ctx.shadowBlur = 6;
-            } else if (char === '*' || char === '+' || char === '=') {
-              ctx.fillStyle = currentPalette.text;
-              ctx.shadowBlur = 0;
-            } else {
-              ctx.fillStyle = isDarkMode ? 'rgba(212, 212, 216, 0.45)' : 'rgba(82, 82, 91, 0.45)';
-              ctx.shadowBlur = 0;
+              if (char === '@' || char === '%' || char === '#') {
+                ctx.fillStyle = currentPalette.highlight;
+                ctx.shadowColor = currentPalette.glow;
+                ctx.shadowBlur = 6;
+              } else if (char === '*' || char === '+' || char === '=' || char === '>') {
+                ctx.fillStyle = currentPalette.text;
+                ctx.shadowBlur = 0;
+              } else {
+                ctx.fillStyle = isDarkMode ? 'rgba(212, 212, 216, 0.45)' : 'rgba(82, 82, 91, 0.45)';
+                ctx.shadowBlur = 0;
+              }
+
+              ctx.fillText(char, px, py);
             }
-
-            ctx.fillText(char, px, py);
           }
         }
+        ctx.shadowBlur = 0;
+      } catch (err) {
+        console.error("Canvas render error:", err);
       }
-      ctx.shadowBlur = 0;
 
       animFrameRef.current = requestAnimationFrame(render);
     };
