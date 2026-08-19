@@ -152,9 +152,9 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
       }}
       title="Aim with crosshair gun • Click to shoot colored laser projectile (dove dodges!)"
       style={{ cursor: 'crosshair' }}
-      className="w-full h-full min-h-[380px] sm:min-h-[460px] lg:min-h-[520px] relative select-none flex flex-col items-center justify-center group overflow-visible"
+      className="w-full h-full min-h-[440px] sm:min-h-[500px] lg:min-h-[540px] relative select-none flex flex-col items-center justify-center group overflow-visible"
     >
-      {/* 1. Distinct Vivid Colored Projectile Tracers (Neon Orange / Golden Laser Streaks) */}
+      {/* 1. Distinct Vivid Colored Projectile Tracers */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-30 overflow-visible">
         {activeProjectiles.map((p) => {
           const currentX = p.startX + (p.targetEndX - p.startX) * p.progress;
@@ -237,7 +237,7 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
       {/* 4. Ultra-Large High-Definition 3D Flying Dove Canvas */}
       <div className="w-full h-full flex items-center justify-center overflow-visible relative z-10 my-auto">
         <pre 
-          className={`font-mono text-[7px] xs:text-[8px] sm:text-[9.5px] md:text-[10.5px] lg:text-[12px] xl:text-[13px] leading-[0.98] tracking-tighter whitespace-pre text-center select-none transition-colors duration-300 ${currentTheme.textClass} drop-shadow-sm`}
+          className={`font-mono text-[7.5px] sm:text-[9px] md:text-[10px] lg:text-[11.5px] xl:text-[13px] leading-[0.98] tracking-tighter whitespace-pre text-center select-none transition-colors duration-300 ${currentTheme.textClass} drop-shadow-sm`}
           style={{ margin: 0 }}
         >
           {asciiOutput}
