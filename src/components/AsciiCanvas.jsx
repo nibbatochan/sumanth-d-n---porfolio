@@ -39,13 +39,17 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
     const engine = new RealisticAsciiDove(118, 42);
     engineRef.current = engine;
 
+    // Check motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const intervalMs = prefersReducedMotion ? 400 : 35;
+
     const updateFrame = () => {
       try {
         setAsciiOutput(engine.nextFrame());
       } catch (e) {
         console.error("Frame error:", e);
       }
-      animRef.current = setTimeout(updateFrame, 35);
+      animRef.current = setTimeout(updateFrame, intervalMs);
     };
 
     updateFrame();
@@ -150,12 +154,13 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
         setIsAiming(false);
         if (engineRef.current) engineRef.current.setMouse(0.5, 0.5);
       }}
+      aria-label="Interactive 3D Flying Dove Canvas"
       title="Aim with crosshair gun • Click to shoot colored laser projectile (dove dodges!)"
       style={{ cursor: 'crosshair' }}
       className="w-full h-full min-h-[380px] sm:min-h-[440px] lg:min-h-[460px] relative select-none flex flex-col items-center justify-center group overflow-visible"
     >
       {/* 1. Distinct Vivid Colored Projectile Tracers */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-30 overflow-visible">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-30 overflow-visible" aria-hidden="true">
         {activeProjectiles.map((p) => {
           const currentX = p.startX + (p.targetEndX - p.startX) * p.progress;
           const currentY = p.startY + (p.targetEndY - p.startY) * p.progress;
@@ -211,6 +216,7 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
             transform: 'translate(-50%, -50%)' 
           }}
           className="absolute pointer-events-none z-40 flex items-center justify-center transition-opacity duration-150 hidden sm:flex"
+          aria-hidden="true"
         >
           <div className="relative flex items-center justify-center">
             <Crosshair size={32} weight="bold" className="text-orange-500 drop-shadow-md opacity-90 animate-pulse" />
@@ -223,7 +229,8 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
       <div className="absolute top-0 right-0 z-20 flex items-center gap-2">
         <button
           onClick={handleShuffleColor}
-          className="px-3 py-1.5 rounded-full bg-white/95 dark:bg-zinc-900/95 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 shadow-sm text-xs font-mono font-medium flex items-center gap-2 tactile-btn backdrop-blur-md transition-all hover:border-zinc-300 dark:hover:border-zinc-700"
+          aria-label={`Shuffle dove color palette. Current: ${currentTheme.name}`}
+          className="px-3.5 py-1.5 rounded-full bg-white/95 dark:bg-zinc-900/95 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 shadow-sm text-xs font-mono font-medium flex items-center gap-2 tactile-btn backdrop-blur-md transition-all hover:border-zinc-300 dark:hover:border-zinc-700"
           title="Shuffle ink color"
         >
           <span className={`w-2.5 h-2.5 rounded-full ${currentTheme.dotClass} shadow-xs`} />
