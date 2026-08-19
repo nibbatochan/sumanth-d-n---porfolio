@@ -1,96 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { ArrowDown, Copy, Check, CheckCircle } from '@phosphor-icons/react';
 import confetti from 'canvas-confetti';
-import gsap from 'gsap';
 import { designerProfile } from '../data/portfolioData';
 import { playSound } from '../utils/sound';
 import { AsciiCanvas } from './AsciiCanvas';
 
 export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   const [copied, setCopied] = useState(false);
-  
-  const heroRef = useRef(null);
-  const badgeRef = useRef(null);
-  const titleContainerRef = useRef(null);
-  const bioRef = useRef(null);
-  const ctaRef = useRef(null);
-  const timelineRef = useRef(null);
-
-  const headlineWords = [
-    { text: 'Designing', isItalic: false, isAccent: false },
-    { text: 'warm,', isItalic: true, isAccent: true },
-    { text: 'minimal', isItalic: false, isAccent: false },
-    { text: 'digital', isItalic: false, isAccent: false },
-    { text: 'products', isItalic: false, isAccent: false },
-    { text: '&', isItalic: false, isAccent: false },
-    { text: 'visual', isItalic: false, isAccent: false },
-    { text: 'identities.', isItalic: false, isAccent: false },
-  ];
-
-  useEffect(() => {
-    if (!heroRef.current) return;
-
-    const words = titleContainerRef.current?.querySelectorAll('.gsap-word-inner');
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    timelineRef.current = tl;
-
-    if (badgeRef.current) {
-      tl.from(badgeRef.current, {
-        opacity: 0,
-        y: 15,
-        scale: 0.92,
-        duration: 0.6,
-        ease: 'back.out(1.5)',
-      });
-    }
-
-    if (words && words.length > 0) {
-      tl.from(
-        words,
-        {
-          opacity: 0,
-          y: 25,
-          filter: 'blur(10px)',
-          scale: 0.96,
-          duration: 0.85,
-          stagger: 0.045,
-          ease: 'power3.out',
-        },
-        '-=0.25'
-      );
-    }
-
-    if (bioRef.current) {
-      tl.from(
-        bioRef.current,
-        {
-          opacity: 0,
-          y: 20,
-          duration: 0.7,
-          ease: 'power2.out',
-        },
-        '-=0.35'
-      );
-    }
-
-    if (ctaRef.current?.children) {
-      tl.from(
-        ctaRef.current.children,
-        {
-          opacity: 0,
-          y: 15,
-          duration: 0.55,
-          stagger: 0.08,
-          ease: 'power2.out',
-        },
-        '-=0.35'
-      );
-    }
-
-    return () => {
-      if (timelineRef.current) timelineRef.current.kill();
-    };
-  }, []);
 
   const handleCopyEmail = (e) => {
     e.stopPropagation();
@@ -109,16 +25,16 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   };
 
   return (
-    <section ref={heroRef} id="home" className="pt-24 sm:pt-32 pb-10 sm:pb-12 px-4 sm:px-8 max-w-6xl mx-auto space-y-8 relative z-10">
+    <section id="home" className="min-h-[calc(100vh-64px)] flex flex-col justify-center pt-20 sm:pt-24 pb-6 px-4 sm:px-8 max-w-7xl mx-auto relative z-10">
       
       {/* Main Grid: Left Column Headline + Right Column 3D ASCII Dove */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center my-auto">
         
         {/* Left 7 Columns: Availability Badge, Headline, Bio & Action Buttons */}
-        <div className="lg:col-span-7 flex flex-col justify-between space-y-5 sm:space-y-6">
+        <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-5">
           
           {/* Availability Status Badge */}
-          <div ref={badgeRef}>
+          <div>
             <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm text-xs text-zinc-700 dark:text-zinc-200">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               <span className="font-semibold text-zinc-900 dark:text-white flex items-center gap-1.5 text-xs">
@@ -128,40 +44,25 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
             </div>
           </div>
 
-          {/* GSAP Soft Deblur Responsive Headline */}
-          <h1
-            ref={titleContainerRef}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-[1.10] max-w-lg lg:max-w-xl"
-          >
-            {headlineWords.map((word, idx) => (
-              <span
-                key={idx}
-                className="inline-block mr-[0.24em] align-top"
-              >
-                <span
-                  className={`gsap-word-inner inline-block ${
-                    word.isAccent
-                      ? 'font-serif italic font-normal text-orange-600 dark:text-orange-400'
-                      : ''
-                  }`}
-                >
-                  {word.text}
-                </span>
-              </span>
-            ))}
+          {/* Bold Editorial Headline - Permanent 100% visibility matching reference image */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[62px] xl:text-[66px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-[1.06] max-w-xl">
+            Designing <span className="font-serif italic font-normal text-orange-600 dark:text-orange-400">warm,</span>
+            <br />minimal digital
+            <br />products & visual
+            <br />identities.
           </h1>
 
           {/* Intro Bio */}
-          <p ref={bioRef} className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-lg">
+          <p className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-lg">
             Hey, I’m <strong className="text-zinc-900 dark:text-white font-bold">{designerProfile.name}</strong> — a Graphic & UI/UX Designer based in Bengaluru. Crafting tactile, human-scale digital interfaces and brand identities.
           </p>
 
           {/* Action CTAs */}
-          <div ref={ctaRef} className="pt-2 flex flex-wrap items-center gap-3">
+          <div className="pt-2 flex flex-wrap items-center gap-3">
             <a
               href="#work"
               onClick={() => playSound('whoosh', soundEnabled)}
-              className="bg-zinc-900 dark:bg-white hover:bg-black dark:hover:bg-zinc-100 text-white dark:text-zinc-900 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2 tactile-btn transition-all group"
+              className="bg-zinc-900 dark:bg-white hover:bg-black dark:hover:bg-zinc-100 text-white dark:text-zinc-900 px-6 py-3.5 rounded-full text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2 tactile-btn transition-all group"
             >
               <span>Explore Selected Work</span>
               <ArrowDown size={15} weight="bold" className="text-amber-400 dark:text-orange-500 group-hover:translate-y-0.5 transition-transform" />
@@ -169,7 +70,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
 
             <button
               onClick={handleCopyEmail}
-              className="bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 px-4 sm:px-5 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm flex items-center gap-2 tactile-btn transition-all"
+              className="bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 px-5 py-3.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm flex items-center gap-2 tactile-btn transition-all"
             >
               {copied ? <Check size={15} weight="bold" className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={15} weight="bold" className="text-zinc-500 dark:text-zinc-400" />}
               <span>{copied ? 'Copied to Clipboard!' : 'Copy Email'}</span>
