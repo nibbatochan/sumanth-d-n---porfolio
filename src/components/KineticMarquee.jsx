@@ -33,7 +33,7 @@ export const KineticMarquee = () => {
   ];
 
   return (
-    <div className="w-full bg-zinc-950 text-white border-y border-zinc-800 py-4 my-12 overflow-hidden select-none">
+    <div className="w-full bg-zinc-950 text-white border-y border-zinc-800 py-4 mt-6 mb-12 overflow-hidden select-none">
       <div className="animate-marquee-left flex items-center gap-8 whitespace-nowrap">
         {[...marqueeItems, ...marqueeItems].map((item, idx) => {
           const Icon = item.icon;
