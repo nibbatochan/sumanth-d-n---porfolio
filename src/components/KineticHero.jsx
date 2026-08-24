@@ -73,13 +73,13 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   };
 
   return (
-    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-140px)] flex flex-col justify-center pt-24 sm:pt-28 lg:pt-16 pb-8 sm:pb-12 px-4 sm:px-8 max-w-6xl mx-auto relative z-10">
+    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-80px)] flex flex-col justify-center pt-28 sm:pt-32 lg:pt-28 pb-8 sm:pb-12 px-4 sm:px-8 max-w-6xl mx-auto relative z-10">
       
       {/* Main Grid: Left Column Headline & Bio + Right Column 3D ASCII Canvas (Untouched) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center my-auto">
         
-        {/* Left 7 Columns: Status Badge, Scaled Headline with Flower & Portrait Capsule, Bio & Lowered CTAs */}
-        <div className="lg:col-span-7 flex flex-col justify-center space-y-5 sm:space-y-4">
+        {/* Left 7 Columns: Status Badge, Headline with Flower & Portrait Capsule, Bio & Lowered CTAs */}
+        <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-3.5">
           
           {/* Availability Status Badge with Pulse Indicator */}
           <div className="flex items-center gap-2">
@@ -95,37 +95,37 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
             </div>
           </div>
 
-          {/* Master Headline - Larger on Mobile with Strong Visual Impact */}
-          <div className="space-y-1 sm:space-y-1 text-zinc-900 dark:text-white select-none max-w-xl">
+          {/* Master Headline - Refined & Perfectly Scaled for Desktop & Mobile */}
+          <div className="space-y-0.5 sm:space-y-1 text-zinc-900 dark:text-white select-none max-w-xl">
             
             {/* Line 1: 'Crafting thoughtful,' */}
-            <div className="leading-[1.1] sm:leading-tight">
-              <span className="text-[42px] sm:text-5xl md:text-6xl lg:text-[56px] font-sans font-bold tracking-tight">
+            <div className="leading-[1.12] sm:leading-tight">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight">
                 Crafting{' '}
               </span>
-              <span className="text-[42px] sm:text-5xl md:text-6xl lg:text-[56px] font-serif italic font-normal text-orange-600 dark:text-orange-400">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400">
                 thoughtful,
               </span>
             </div>
 
-            {/* Line 2: 'human-centered' + Scaled-Up Pixel Flower */}
-            <div className="flex items-center flex-wrap gap-1.5 sm:gap-2 leading-[1.1] sm:leading-tight">
-              <span className="text-[42px] sm:text-5xl md:text-6xl lg:text-[56px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none">
+            {/* Line 2: 'human-centered' + Scaled Pixel Flower */}
+            <div className="flex items-center flex-wrap gap-1.5 sm:gap-2 leading-[1.12] sm:leading-tight">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none">
                 human-centered
               </span>
               <PixelFlower 
                 isDarkMode={isDarkMode}
                 soundEnabled={soundEnabled} 
-                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 ml-2 sm:ml-3 -translate-y-0.5 sm:-translate-y-1 drop-shadow-xs" 
+                className="w-7 h-7 sm:w-9 sm:h-9 md:w-11 md:h-11 lg:w-12 lg:h-12 ml-2 sm:ml-2.5 -translate-y-0.5 sm:-translate-y-1 drop-shadow-xs" 
               />
             </div>
 
-            {/* Line 3: Scaled-Up Action Portrait Capsule + 'products &' */}
-            <div className="flex items-center gap-3 sm:gap-4 flex-wrap pt-1 sm:pt-1.5 leading-[1.1] sm:leading-tight">
+            {/* Line 3: Scaled Action Portrait Capsule + 'products &' */}
+            <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap pt-1 sm:pt-1.5 leading-[1.12] sm:leading-tight">
               <span 
                 onMouseEnter={() => playSound('pop', soundEnabled)}
                 title="Sumanth D N — Hover to reveal"
-                className="inline-flex items-center justify-center rounded-full overflow-hidden border border-zinc-300 dark:border-zinc-700 shadow-md backdrop-blur-xs hover:border-orange-500 hover:shadow-orange-500/20 transition-all duration-300 select-none cursor-pointer h-11 sm:h-12 md:h-14 lg:h-15 w-30 sm:w-34 md:w-40 lg:w-44 shrink-0 group self-center bg-black"
+                className="inline-flex items-center justify-center rounded-full overflow-hidden border border-zinc-300 dark:border-zinc-700 shadow-md backdrop-blur-xs hover:border-orange-500 hover:shadow-orange-500/20 transition-all duration-300 select-none cursor-pointer h-8 sm:h-10 md:h-11 lg:h-12 w-22 sm:w-28 md:w-34 lg:w-38 shrink-0 group self-center bg-black"
               >
                 {/* Smooth pan from Face on right to Hand on left */}
                 <img 
@@ -134,14 +134,14 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
                   className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] object-[84%_center] group-hover:object-[8%_center] group-hover:scale-105"
                 />
               </span>
-              <span className="text-[42px] sm:text-5xl md:text-6xl lg:text-[56px] font-sans font-bold tracking-tight leading-none self-center">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight leading-none self-center">
                 products &
               </span>
             </div>
 
             {/* Line 4: 'brand experiences.' */}
-            <div className="pt-0.5 sm:pt-1 leading-[1.1] sm:leading-tight">
-              <span className="text-[42px] sm:text-5xl md:text-6xl lg:text-[58px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
+            <div className="pt-0.5 sm:pt-1 leading-[1.12] sm:leading-tight">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
                 brand experiences.
               </span>
             </div>
@@ -149,17 +149,17 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
           </div>
 
           {/* Bio Copy */}
-          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-lg pt-1">
+          <p className="text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-lg pt-1">
             I’m <strong className="text-zinc-900 dark:text-white font-bold">{designerProfile.name}</strong> — a Bengaluru-based Graphic & UI/UX Designer. Specializing in scalable design systems, tactile web interactions, and distinctive brand identities.
           </p>
 
           {/* GSAP Magnetic Action CTAs */}
-          <div className="pt-8 sm:pt-12 md:pt-[50px] flex flex-wrap items-center gap-3">
+          <div className="pt-6 sm:pt-8 md:pt-10 flex flex-wrap items-center gap-3">
             <a
               ref={workBtnRef}
               href="#work"
               onClick={() => playSound('whoosh', soundEnabled)}
-              className="bg-zinc-900 dark:bg-white hover:bg-black dark:hover:bg-zinc-100 text-white dark:text-zinc-900 px-5 sm:px-6 py-3.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold shadow-md flex items-center gap-2 transition-colors duration-200 group cursor-pointer"
+              className="bg-zinc-900 dark:bg-white hover:bg-black dark:hover:bg-zinc-100 text-white dark:text-zinc-900 px-5 sm:px-6 py-3 rounded-full text-xs sm:text-sm font-bold shadow-md flex items-center gap-2 transition-colors duration-200 group cursor-pointer"
             >
               <span>Explore Selected Work</span>
               <ArrowDown size={15} weight="bold" className="text-amber-400 dark:text-orange-500 group-hover:translate-y-1 transition-transform duration-200" />
@@ -169,7 +169,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
               ref={copyBtnRef}
               onClick={handleCopyEmail}
               aria-label="Copy Sumanth Reddy email to clipboard"
-              className="bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 px-4 sm:px-5 py-3.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold shadow-xs flex items-center gap-2 transition-colors duration-200 cursor-pointer"
+              className="bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 px-4 sm:px-5 py-3 rounded-full text-xs sm:text-sm font-semibold shadow-xs flex items-center gap-2 transition-colors duration-200 cursor-pointer"
             >
               {copied ? (
                 <>
