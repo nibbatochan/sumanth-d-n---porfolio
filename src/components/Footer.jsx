@@ -9,7 +9,7 @@ import {
 import { designerProfile } from '../data/portfolioData';
 import { playSound } from '../utils/sound';
 
-export const Footer = ({ soundEnabled }) => {
+export const Footer = ({ soundEnabled, onOpenContact, className = "" }) => {
   const [bengaluruTime, setBengaluruTime] = useState('');
   const canvasRef = useRef(null);
   const animFrameRef = useRef(null);
@@ -199,10 +199,14 @@ export const Footer = ({ soundEnabled }) => {
   const scrollToTop = () => {
     playSound('pop', soundEnabled);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    const parentContainer = canvasRef.current?.closest('.overflow-y-auto');
+    if (parentContainer) {
+      parentContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
-    <footer className="relative mt-12 sm:-mt-24 md:-mt-36 text-white overflow-hidden select-none min-h-[440px] sm:min-h-[540px] flex flex-col justify-end z-10 w-full">
+    <footer className={`relative text-white overflow-hidden select-none min-h-[440px] sm:min-h-[540px] flex flex-col justify-end z-10 w-full ${className || 'mt-12 sm:-mt-24 md:-mt-36'}`}>
       
       {/* Full-Size Upward Pulsating Orange Canvas Background */}
       <div className="absolute inset-0 z-0">

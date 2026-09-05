@@ -1,7 +1,49 @@
 import React from 'react';
-import { GameController, Buildings, Coffee, Sparkle } from '@phosphor-icons/react';
+import { GameController, Buildings, Coffee, Sparkle, Compass, MapPin } from '@phosphor-icons/react';
 
 export const ProjectMockup = ({ project, interactive = true }) => {
+  if (project.id === 'nobroker-commute') {
+    return (
+      <div className="w-full h-full bg-[#081717] text-white p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden select-none border border-emerald-500/20 shadow-inner">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-[#009999]/25 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="flex items-center justify-between text-xs text-white/60 border-b border-white/10 pb-3">
+          <div className="flex items-center gap-1.5 font-mono">
+            <span className="w-2 h-2 rounded-full bg-[#009999] animate-pulse" />
+            <span className="text-[#009999] font-bold">NOBROKER SPATIAL ENGINE</span>
+          </div>
+          <span className="font-mono text-[10px] bg-[#009999]/20 text-[#5ce1e1] px-2.5 py-0.5 rounded-full border border-[#009999]/40 font-bold">
+            PS2 SPINE · HI-FI LAB
+          </span>
+        </div>
+
+        <div className="my-3 p-4 rounded-2xl bg-gradient-to-br from-[#004D4D] to-[#002B2B] border border-[#009999]/30 text-white shadow-xl">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-[11px] font-mono text-[#5ce1e1]">In-App Commute & Routing</p>
+              <p className="text-xl font-bold font-sans tracking-tight mt-0.5">Search by Commute</p>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-[#009999]/30 border border-[#009999]/50 flex items-center justify-center">
+              <Compass size={20} weight="duotone" className="text-[#5ce1e1]" />
+            </div>
+          </div>
+          <div className="mt-3 flex justify-between items-center text-[10px] font-mono text-white/80">
+            <span className="bg-black/30 px-2 py-0.5 rounded-md">POINT A ➔ 1–5 KM RADIUS</span>
+            <span className="text-emerald-400 font-bold">GLIMPSE V6 READY</span>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/10 text-xs">
+          <div className="flex items-center gap-2">
+            <MapPin size={14} weight="fill" className="text-[#009999]" />
+            <span className="text-white/90 font-medium">Multi-Amenity & Transit Tabs</span>
+          </div>
+          <span className="font-mono text-[11px] text-[#5ce1e1]">Bengaluru Focus</span>
+        </div>
+      </div>
+    );
+  }
+
   if (project.id === 'image-of-a-child') {
     return (
       <div className="w-full h-full bg-[#181614] text-white p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden select-none border border-white/10 shadow-inner">

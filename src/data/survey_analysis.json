@@ -1,0 +1,209 @@
+{
+  "total_responses": 52,
+  "active_searchers": 37,
+  "non_searchers": 15,
+  "cities": {
+    "Bengaluru": 26,
+    "Delhi / NCR": 4,
+    "Chennai": 1,
+    "Bengaluru, Other city": 2,
+    "Bengaluru, Mumbai": 1,
+    "Hyderabad": 1,
+    "Mumbai": 1,
+    "Other city": 1
+  },
+  "when": {
+    "Within the last 3 months": 13,
+    "3–12 months ago": 8,
+    "More than a year ago": 13,
+    "I'm searching right now": 3
+  },
+  "budget": {
+    "₹10,000 – ₹15,000": 11,
+    "Under ₹10,000": 14,
+    "Above ₹30,000": 2,
+    "₹20,000 – ₹30,000": 3,
+    "₹15,000 – ₹20,000": 7
+  },
+  "alone_or_help": {
+    "Completely alone in a new city": 7,
+    "Alone but I know this city": 14,
+    "Had family or friends helping locally": 10,
+    "Used a broker / agent": 6
+  },
+  "apps_used": {
+    "NoBroker, Housing.com, 99acres, Facebook Groups / WhatsApp, Offline broker / agent": 1,
+    "NoBroker, Other": 1,
+    "NoBroker, MagicBricks, 99acres": 2,
+    "NoBroker, Housing.com, MagicBricks, Nestaway, Facebook Groups / WhatsApp": 1,
+    "NoBroker, Housing.com, MagicBricks, Facebook Groups / WhatsApp, Offline broker / agent": 1,
+    "Other": 4,
+    "NoBroker, Offline broker / agent": 3,
+    "NoBroker": 7,
+    "NoBroker, 99acres": 1,
+    "Housing.com, MagicBricks, 99acres, Facebook Groups / WhatsApp, Offline broker / agent": 1,
+    "NoBroker, 99acres, Nestaway": 1,
+    "NoBroker, Housing.com, MagicBricks, 99acres": 4,
+    "NoBroker, Facebook Groups / WhatsApp, Other": 1,
+    "Housing.com": 1,
+    "NoBroker, Housing.com, Offline broker / agent": 1,
+    "NoBroker, Housing.com, MagicBricks, 99acres, Nestaway, Facebook Groups / WhatsApp, Offline broker / agent": 1,
+    "NoBroker, Housing.com, MagicBricks, 99acres, Nestaway, Offline broker / agent, Other": 1,
+    "NoBroker, MagicBricks, Offline broker / agent, Other": 1,
+    "NoBroker, Housing.com, 99acres": 1,
+    "NoBroker, 99acres, Offline broker / agent": 1,
+    "NoBroker, MagicBricks, Other": 1,
+    "Housing.com, 99acres": 1
+  },
+  "listings_opened_before_contact": {
+    "6–15 listings": 9,
+    "1–5 listings": 19,
+    "16–30 listings": 5,
+    "More than 30 listings": 2,
+    "I never ended up contacting anyone": 2
+  },
+  "wish_app_told": {
+    "Commute time to my office, Hidden costs (maintenance, deposits, etc.)": 2,
+    "Quality / condition of amenities (not just a list), Hidden costs (maintenance, deposits, etc.), The information was mostly sufficient": 1,
+    "Whether the owner is responsive / trustworthy, Hidden costs (maintenance, deposits, etc.), Whether the listing was still actually available": 1,
+    "Commute time to my office, Quality / condition of amenities (not just a list), Whether the owner is responsive / trustworthy, Hidden costs (maintenance, deposits, etc.)": 2,
+    "Quality / condition of amenities (not just a list), What the neighbourhood is actually like, Whether the owner is responsive / trustworthy, Hidden costs (maintenance, deposits, etc.), Whether the listing was still actually available": 2,
+    "Quality / condition of amenities (not just a list), What the neighbourhood is actually like, The information was mostly sufficient": 1,
+    "Quality / condition of amenities (not just a list), Whether the owner is responsive / trustworthy": 1,
+    "Commute time to my office": 2,
+    "Commute time to my office, Whether the owner is responsive / trustworthy": 1,
+    "Commute time to my office, Quality / condition of amenities (not just a list)": 2,
+    "Hidden costs (maintenance, deposits, etc.), Whether the listing was still actually available": 3,
+    "What the neighbourhood is actually like, Whether the listing was still actually available": 1,
+    "Hidden costs (maintenance, deposits, etc.), The information was mostly sufficient": 1,
+    "Quality / condition of amenities (not just a list), Whether the listing was still actually available": 1,
+    "Commute time to my office, Quality / condition of amenities (not just a list), What the neighbourhood is actually like, Whether the owner is responsive / trustworthy, Hidden costs (maintenance, deposits, etc.), Whether the listing was still actually available": 1,
+    "The information was mostly sufficient": 1,
+    "Commute time to my office, Quality / condition of amenities (not just a list), What the neighbourhood is actually like, Hidden costs (maintenance, deposits, etc.)": 1,
+    "Whether the listing was still actually available": 1,
+    "Commute time to my office, Quality / condition of amenities (not just a list), What the neighbourhood is actually like, Whether the owner is responsive / trustworthy, Hidden costs (maintenance, deposits, etc.)": 2,
+    "Commute time to my office, Whether the listing was still actually available": 1,
+    "Commute time to my office, Quality / condition of amenities (not just a list), Hidden costs (maintenance, deposits, etc.), Whether the listing was still actually available": 2,
+    "Quality / condition of amenities (not just a list), What the neighbourhood is actually like": 1,
+    "Quality / condition of amenities (not just a list), What the neighbourhood is actually like, Whether the owner is responsive / trustworthy, Hidden costs (maintenance, deposits, etc.), Whether the listing was still actually available, The information was mostly sufficient": 1,
+    "Whether the owner is responsive / trustworthy, Hidden costs (maintenance, deposits, etc.)": 1,
+    "Quality / condition of amenities (not just a list), What the neighbourhood is actually like, Whether the owner is responsive / trustworthy": 1,
+    "Commute time to my office, Whether the owner is responsive / trustworthy, Hidden costs (maintenance, deposits, etc.)": 1,
+    "Commute time to my office, Quality / condition of amenities (not just a list), What the neighbourhood is actually like": 2
+  },
+  "switch_to_maps": {
+    "Yes, I did this constantly": 24,
+    "No — I trusted the commute info in the app": 2,
+    "No — the app didn't show commute info so I just guessed": 3,
+    "Yes, for some listings": 7,
+    "No — commute wasn't a priority for me": 1
+  },
+  "after_maps": {
+    "I went back to the listing and made a decision": 10,
+    "I went back but kept browsing other listings": 15,
+    "Not applicable — I didn't switch to Maps": 6,
+    "I lost track and didn't go back to that listing": 3,
+    "I ended up closing the app entirely": 3
+  },
+  "contacted_already_taken": {
+    "Yes — this happened more than once": 21,
+    "No — listings were mostly available when I checked": 3,
+    "Yes — it happened once": 7,
+    "I never got to the point of contacting anyone": 6
+  },
+  "how_quickly_contacted": {
+    "Within minutes": 6,
+    "Within a few hours": 13,
+    "Next day or later": 8,
+    "Same day but later": 6,
+    "I waited for more options first": 4
+  },
+  "property_alerts_used": {
+    "Yes — and they were helpful": 9,
+    "Yes — but by the time I saw the alert, listings were often gone": 8,
+    "No — I just refreshed manually": 8,
+    "Yes — but I turned them off, too many irrelevant ones": 8,
+    "No — I didn't know this feature existed": 4
+  },
+  "availability_in_budget": {
+    "Very few options that actually matched my needs": 16,
+    "Some good options, but they went fast": 12,
+    "Plenty of good options — finding was not the problem": 7,
+    "Almost nothing within my budget in decent condition": 2
+  },
+  "how_long_search_took": {
+    "2–4 weeks": 15,
+    "1–2 weeks": 6,
+    "1–2 months": 4,
+    "Under a week": 6,
+    "Still searching": 4,
+    "More than 2 months": 2
+  },
+  "overall_experience": {
+    "Exhausting — too many options, hard to decide": 8,
+    "Fine overall, but some frustrating moments": 8,
+    "Anxious the whole time — scared of making the wrong choice": 6,
+    "Straightforward — I found something quickly and didn't stress": 4,
+    "Helpless — felt like nothing good was available for my budget": 11
+  },
+  "stress_level": {
+    "7.0": 12,
+    "6.0": 5,
+    "8.0": 5,
+    "4.0": 3,
+    "10.0": 4,
+    "3.0": 1,
+    "5.0": 3,
+    "2.0": 2,
+    "9.0": 2
+  },
+  "close_app_mid_search": {
+    "Yes, regularly": 20,
+    "Yes, at least once": 13,
+    "No — I always finished what I was looking at": 4
+  },
+  "one_thing_make_faster": [
+    "As I was searching for flats near my college, the reliability was the most important, along with that safety was quite important for me. ",
+    "Responses from owners",
+    "Better location management",
+    "The app should be updated when the property is sold or rented. ",
+    "Internet ",
+    "Filters are the key!! But in most of the apps if we add filter, few relevant properties will be shown but most of the time filters will not work properly.",
+    "unfiltered neighbour testimonials",
+    "Better communication of contacting owners ",
+    "Select good rentals",
+    "Would have been nicer if the process is smoother ",
+    "Place",
+    "If apps would assign a AI agent to select and finalise the property ",
+    "Exact location of the listing with latest pictures ",
+    "More pictures of rooms",
+    "The rent and deposit mentioned clearly. Property images and the option to filter out based on location and budget",
+    "Na",
+    "Not having to get in touch with middle man ",
+    "Paid extra for broker to get better house and as per my requirment ",
+    "App that helps users find rental homes near their office, showing rent, distance, amenities, and direct landlord contact details. It should also display all available nearby rentals on a map and allow users to compare costs and commute times easily.",
+    "One of my friend suggested one apartment ",
+    "Not having to visit multiple properties would've been great. Something like a video call option for a property tour would help me filter out properties and reduce the number of visits",
+    "Not sure. One thing that comes to my mind is genuine showcase of properties rather than brocker contacting you all the time and showing better properties than the the one listed"
+  ],
+  "open_feedback": [
+    "Mostly it always is stressful for me, because choosing a wrong house can mean daily issues and struggles. One decision can literally ruin your next 6 months, along with that the deposit amount remains too much, and getting that returned is almost impossible or very difficult. In the end. Also, trying to find a flat as a single individual anyway feels difficult, along with it how we contact with house-ownners is also very important. Some as very rude, sometimes they don't respond. Sometimes things seem unsafe/fishy. (All this experience has been from my college days as a single female individual)",
+    "Fake information.  When we visit the property for viewing its not as described in the ad",
+    "None",
+    "Nothing much ",
+    "Most of the apps are paid apps \nSo most of the free users feel they will not get better property in there apps so the trust will be very low and these apps will be used only 30% to select the property and to know the price trends \nI individually prefer to-let boards for searching a house",
+    "It was easier to trust brokers over apps. ",
+    "No",
+    "Apps will save time",
+    "Exhausting and it should be more smoother and not  exhausting way",
+    "Nothing",
+    "Many house listing are incomplete and has incorrect information. Sometimes agents from apps give incorrect information even when the house is currently not vacant or already found tenet and force us to take additional subscriptions to get contact information of owner. Most of the times taking subscriptions were waste of money and seeking help of local agents helped",
+    "Lack of negotiations for rent",
+    "When images are not available and we visit the place it was in horrible condition.",
+    "Na",
+    "NA",
+    "We don't get what kind of house we are getting into, it can be the place where someone committed suicide or a place without vastu or annoying neighbours etc",
+    "Nothing ",
+    "Even with so many property hunt apps and specially NoBroker, owners still opted to hire a broker/agent and the agents had better options in my budget "
+  ]
+}

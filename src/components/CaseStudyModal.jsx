@@ -82,34 +82,34 @@ export const CaseStudyModal = ({ project, onClose, soundEnabled }) => {
             <div className="p-5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 space-y-2">
               <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 dark:text-zinc-500 font-bold">The Challenge</span>
               <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                {project.details.challenge}
+                {project.details?.challenge || project.challenge}
               </p>
             </div>
 
             <div className="p-5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 space-y-2">
               <span className="text-[10px] font-mono uppercase tracking-widest text-orange-600 dark:text-orange-400 font-bold">The Solution</span>
               <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                {project.details.solution}
+                {project.details?.solution || project.solution}
               </p>
             </div>
 
             <div className="p-5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 space-y-2">
               <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-600 dark:text-emerald-400 font-bold">Verified Impact</span>
               <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-semibold">
-                {project.details.impact}
+                {project.details?.impact || project.summary}
               </p>
             </div>
 
           </div>
 
           {/* Design System Palette Swatches */}
-          {project.details.palette && project.details.palette.length > 0 && (
+          {((project.details?.palette && project.details.palette.length > 0) || (project.designTokens?.colors && project.designTokens.colors.length > 0)) && (
             <div className="space-y-3 pt-2">
               <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold">
                 Design System Palette
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {project.details.palette.map((color, idx) => (
+                {(project.details?.palette || project.designTokens?.colors || []).map((color, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleCopyColor(color.hex)}
@@ -139,10 +139,10 @@ export const CaseStudyModal = ({ project, onClose, soundEnabled }) => {
           {/* Key Design Takeaways */}
           <div className="space-y-3">
             <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold">
-              Execution Methodology
+              Execution Methodology & Deliverables
             </h4>
             <ul className="space-y-2">
-              {project.details.takeaways.map((item, idx) => (
+              {(project.details?.takeaways || project.screens?.map(s => `${s.title}: ${s.description}`) || []).map((item, idx) => (
                 <li key={idx} className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 flex items-start gap-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-2 shrink-0" />
                   <span>{item}</span>

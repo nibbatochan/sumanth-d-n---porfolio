@@ -10,12 +10,30 @@ import { CaseStudyModal } from './components/CaseStudyModal';
 import { AboutSection } from './components/AboutSection';
 import { ContactModal } from './components/ContactModal';
 import { Footer } from './components/Footer';
+import { NoBrokerCasePage } from './components/NoBrokerCasePage';
+import { projects } from './data/portfolioData';
 
 export function App() {
   const [loading, setLoading] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [activeDedicatedCase, setActiveDedicatedCase] = useState(null);
   const [isContactOpen, setIsContactOpen] = useState(false);
+
+  // Synchronize hash routing for deep linking into case pages
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#/project/nobroker') {
+        const nobrokerProj = projects.find(p => p.id === 'nobroker-commute');
+        if (nobrokerProj) setActiveDedicatedCase(nobrokerProj);
+      } else {
+        setActiveDedicatedCase(null);
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
 
   // Default to Dark Mode with localStorage persistence
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -79,7 +97,14 @@ export function App() {
         {/* Clean Work Grid */}
         <WorkGrid
           soundEnabled={soundEnabled}
-          onSelectProject={(proj) => setSelectedProject(proj)}
+          onSelectProject={(proj) => {
+            if (proj.id === 'nobroker-commute' || proj.hasDedicatedPage) {
+              setActiveDedicatedCase(proj);
+              window.history.pushState(null, '', '#/project/nobroker');
+            } else {
+              setSelectedProject(proj);
+            }
+          }}
         />
 
         {/* Work History & Clean Software Arsenal (Floats securely above footer) */}
@@ -93,7 +118,23 @@ export function App() {
         onOpenContact={() => setIsContactOpen(true)}
       />
 
-      {/* 7. Case Study Modal */}
+      {/* 7. Dedicated Full Case Study Page View */}
+      {activeDedicatedCase && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-white dark:bg-[#0C0C0E] animate-fade-in">
+          <NoBrokerCasePage
+            soundEnabled={soundEnabled}
+            isDarkMode={isDarkMode}
+            setIsDarkMode={setIsDarkMode}
+            onOpenContact={() => setIsContactOpen(true)}
+            onBack={() => {
+              setActiveDedicatedCase(null);
+              window.history.pushState(null, '', window.location.pathname);
+            }}
+          />
+        </div>
+      )}
+
+      {/* 8. Standard Case Study Modal */}
       {selectedProject && (
         <CaseStudyModal
           project={selectedProject}
@@ -102,7 +143,7 @@ export function App() {
         />
       )}
 
-      {/* 8. Contact Modal */}
+      {/* 9. Contact Modal */}
       <ContactModal
         isOpen={isContactOpen}
         soundEnabled={soundEnabled}

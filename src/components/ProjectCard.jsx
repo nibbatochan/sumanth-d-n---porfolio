@@ -13,10 +13,18 @@ export const ProjectCard = ({ project, onSelect, soundEnabled }) => {
       className="group relative bg-white dark:bg-[#121215] rounded-3xl sm:rounded-4xl border border-zinc-200 dark:border-zinc-800/90 shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-400 hover:-translate-y-2 hover:border-orange-500/40 flex flex-col cursor-pointer"
     >
       {/* Top Visual Mockup Container */}
-      <div className={`h-64 sm:h-80 p-4 bg-gradient-to-br ${project.heroColor} relative overflow-hidden flex items-center justify-center rounded-t-3xl sm:rounded-t-4xl`}>
-        <ProjectMockup project={project} interactive={false} />
+      <div className={`h-64 sm:h-80 ${project.thumbnailImage ? 'p-0' : 'p-4'} bg-gradient-to-br ${project.heroColor} relative overflow-hidden flex items-center justify-center rounded-t-3xl sm:rounded-t-4xl`}>
+        {project.thumbnailImage ? (
+          <img 
+            src={project.thumbnailImage} 
+            alt={project.title}
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+          />
+        ) : (
+          <ProjectMockup project={project} interactive={false} />
+        )}
 
-        <div className="absolute top-4 right-4 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-zinc-900 dark:text-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-1.5 border border-zinc-200 dark:border-zinc-800">
+        <div className="absolute top-4 right-4 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-zinc-900 dark:text-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-1.5 border border-zinc-200 dark:border-zinc-800 z-10">
           <span>View Case Study</span>
           <ArrowUpRight size={14} weight="bold" className="text-orange-500" />
         </div>

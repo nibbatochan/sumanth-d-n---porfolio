@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export const GlobalAsciiBackground = ({ isDarkMode = true }) => {
+export const GlobalAsciiBackground = ({ isDarkMode = true, fullPage = false }) => {
   const canvasRef = useRef(null);
   const animFrameRef = useRef(null);
 
@@ -44,10 +44,10 @@ export const GlobalAsciiBackground = ({ isDarkMode = true }) => {
       ctx.clearRect(0, 0, width, height);
 
       const heroEl = document.getElementById('home');
-      const heroBottom = heroEl ? heroEl.getBoundingClientRect().bottom : -1000;
+      const heroBottom = (fullPage || !heroEl) ? -5000 : heroEl.getBoundingClientRect().bottom;
 
-      // Only render if mouse is present and below the hero section
-      if (mouseX > -500 && mouseY > heroBottom - 40) {
+      // Only render if mouse is present and below the hero section (or fullPage)
+      if (mouseX > -500 && (fullPage || mouseY > heroBottom - 40)) {
         const cellSize = 38;
         const cols = Math.floor(width / cellSize);
         const rows = Math.floor(height / cellSize);
@@ -59,7 +59,7 @@ export const GlobalAsciiBackground = ({ isDarkMode = true }) => {
         for (let y = 0; y <= rows; y++) {
           const py = y * cellSize + cellSize / 2;
 
-          if (py < heroBottom) continue;
+          if (!fullPage && py < heroBottom) continue;
 
           for (let x = 0; x <= cols; x++) {
             const px = x * cellSize + cellSize / 2;
@@ -98,7 +98,7 @@ export const GlobalAsciiBackground = ({ isDarkMode = true }) => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [isDarkMode]);
+  }, [isDarkMode, fullPage]);
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none">

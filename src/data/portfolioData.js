@@ -39,6 +39,67 @@ export const projectCategories = [
 
 export const projects = [
   {
+    id: 'nobroker-commute',
+    title: 'NoBroker — Ending the Search Flow Break',
+    company: 'NoBroker (Product Design Case Study)',
+    category: 'ui-ux',
+    categoryLabel: 'UI/UX · Product Design',
+    year: '2026',
+    featured: true,
+    hasDedicatedPage: true,
+    thumbnailImage: '/illustrations/nobroker-case-thumbnail.jpg',
+    summary: 'A comprehensive product redesign tackling rental search abandonment in Bangalore. Transformed 7 behavioral patterns into an in-app spatial commute engine, verified reality photos, and calm alerts.',
+    tags: ['UI/UX Design', 'Product Design', 'UX Research', 'In-App Commute', 'Spatial UI', 'Hi-Fi Lab'],
+    heroColor: 'from-[#1A0B05] to-[#0D0502]',
+    accentColor: '#EA580C',
+    coverImage: 'nobroker',
+    challenge: 'When renters leave NoBroker for Google Maps to check travel time and neighbourhood reality, the search flow breaks—Maps is context-heavy and returning to continue the session is difficult.',
+    solution: 'Engineered an in-app spatial commute engine (Search by commute + 1–5km radius + direct route to Point A + multi-amenity tabs) and a structured listing Glimpse sheet, backed by an interactive Next.js test lab.',
+    details: {
+      challenge: 'Renters leave NoBroker for Google Maps to check commute and neighborhood reality. Maps is context-heavy; returning to continue in NoBroker is difficult, causing severe drop-off.',
+      solution: 'Created an in-app commute system (Search by commute + Point A routing + amenity tabs + listing Glimpse sheet) without forcing users outside the platform.',
+      impact: 'Eliminates mid-search context switching to Maps and provides instant transit clarity across 5 solved friction points.',
+      palette: [
+        { name: 'NoBroker Teal', hex: '#009999' },
+        { name: 'Conversion Red', hex: '#E11D2E' },
+        { name: 'Dark Surface', hex: '#1A1A1A' },
+        { name: 'Canvas Base', hex: '#F0F0F0' }
+      ],
+      takeaways: [
+        'Flow break vs. pause: leaving for heavy external apps ends search sessions prematurely.',
+        'Shape A dedicated spatial screens beat cramped bottom sheets for route + multi-amenity browsing.',
+        'Feature addition non-negotiable: inherited NoBroker dual accents (Teal for search, Red for contact) without forcing an ungrounded rebrand.'
+      ]
+    },
+    designTokens: {
+      fonts: ['Inter (UI & Body)', 'Source Sans Pro (NoBroker Native)'],
+      colors: [
+        { name: 'NoBroker Teal', hex: '#009999' },
+        { name: 'Action Red', hex: '#E11D2E' },
+        { name: 'Ink Charcoal', hex: '#1A1A1A' },
+        { name: 'Light Surface', hex: '#F0F0F0' }
+      ],
+      density: 'Dense Functional Search & Map Viewport'
+    },
+    screens: [
+      {
+        title: 'Search by Commute Shell',
+        type: 'Native Search Tab',
+        description: 'Set "Your place" (workplace, parents\' house, landmark) with flexible 1–5 km radius.'
+      },
+      {
+        title: 'Spatial Commute & Amenity Map',
+        type: 'Interactive Map Engine',
+        description: 'Point A pin, live travel paths to selected houses, and amenity breakdown (Metro, Groceries, Gyms).'
+      },
+      {
+        title: 'The Glimpse Sheet V6',
+        type: 'Neighborhood Reality',
+        description: 'Contextual listing sheet covering transit, 5-min walkability, quick commerce delivery, and resident reality.'
+      }
+    ]
+  },
+  {
     id: 'image-of-a-child',
     title: 'Image Of A Child — LMS & Early Childhood Gaming Platform',
     company: 'Image Of A Child Pvt Ltd. (Amphiventures)',
