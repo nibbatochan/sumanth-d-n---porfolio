@@ -22,10 +22,12 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
   const [labHost, setLabHost] = useState('http://localhost:3000');
 
   useEffect(() => {
-    // Auto-detect whether Next.js annotation lab is active on port 3000 or 3001
-    fetch('http://localhost:3000/high-fid-annotation-lab', { method: 'HEAD', mode: 'no-cors' })
-      .then(() => setLabHost('http://localhost:3000'))
-      .catch(() => setLabHost('http://localhost:3001'));
+    // Only check local dev server ports when running on localhost
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+      fetch('http://localhost:3000/high-fid-annotation-lab', { method: 'HEAD', mode: 'no-cors' })
+        .then(() => setLabHost('http://localhost:3000'))
+        .catch(() => setLabHost('http://localhost:3001'));
+    }
   }, []);
 
   const [activeProject, setActiveProject] = useState('ps2');
@@ -270,8 +272,8 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
         className="-mt-[270px] sm:-mt-[370px] md:-mt-[430px]" 
       />
 
-      {/* Visual Feedback & AI Review directly active via Agentation */}
-      <Agentation />
+      {/* Visual Feedback & AI Review directly active via Agentation during local development only */}
+      {import.meta.env.DEV && <Agentation />}
     </div>
   );
 };
