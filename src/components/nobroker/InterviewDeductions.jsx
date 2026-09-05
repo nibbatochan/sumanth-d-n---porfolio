@@ -257,12 +257,12 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
         <div data-reveal className="space-y-6">
           
           {/* North Star Hero Banner with Image on the Right */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-white to-zinc-50/50 dark:from-[#121215] dark:to-[#0C0C0E] border border-zinc-200 dark:border-zinc-800/90 shadow-sm relative overflow-hidden">
+          <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-0 rounded-3xl bg-gradient-to-b from-white to-zinc-50/50 dark:from-[#121215] dark:to-[#0C0C0E] border border-zinc-200 dark:border-zinc-800/90 shadow-sm relative overflow-hidden">
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-orange-500/[0.04] via-transparent to-transparent pointer-events-none -z-0" />
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start relative z-10">
               {/* Left Content */}
-              <div className="md:col-span-7 space-y-3">
+              <div className="md:col-span-7 space-y-3 pt-6 sm:pt-8">
                 <span className="text-xs font-mono uppercase tracking-widest text-orange-600 dark:text-orange-400 font-bold bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20 inline-block">
                   Primary Rental North Star Metric
                 </span>
@@ -274,9 +274,9 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
                 </p>
               </div>
 
-              {/* Right Image - Borderless and clean */}
-              <div className="md:col-span-5 flex items-center justify-center">
-                <div className="w-full max-w-[340px] flex items-center justify-center">
+              {/* Right Image - Borderless, clean, flushed to top */}
+              <div className="md:col-span-5 flex items-start justify-center pt-0">
+                <div className="w-full max-w-[340px] flex items-start justify-center">
                   <img 
                     src="/illustrations/north_star_metric 1.png" 
                     alt="NoBroker Primary North Star Metric Diagram" 

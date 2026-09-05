@@ -245,7 +245,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       number: 'PS4',
       title: 'Calm Signal-Only Alerts',
       subtitle: 'Ending alert fatigue with high-precision commute matching',
-      labRoute: '/ps3',
+      labRoute: '/ps4',
       labActionLabel: 'Launch Calm Signal Prototype',
       illustration: '/illustrations/ps4-alerts.png',
       
@@ -525,9 +525,9 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           </h3>
         </div>
 
-        {/* Sticky Progressive Disclosure Stepper + PS Selector in the Right */}
+        {/* Sticky Progressive Disclosure Stepper */}
         <div className="sticky top-[56px] sm:top-[57px] z-30 bg-white/95 dark:bg-[#121215]/95 backdrop-blur-md py-2.5 sm:py-3 border-b border-zinc-200/80 dark:border-zinc-800/80 -mx-6 sm:-mx-10 px-6 sm:px-10 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar transition-all">
-          {/* Left: 6 Subdivision Steps */}
+          {/* 6 Subdivision Steps */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {stepsList.map((step) => {
               const isActive = activeStep === step.id;
@@ -549,33 +549,6 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
               );
             })}
           </div>
-
-          {/* Right: Persistent Problem State Switcher while scrolling */}
-          <div className="flex items-center gap-1 p-1 bg-zinc-100/90 dark:bg-zinc-900/90 rounded-full border border-zinc-200/80 dark:border-zinc-800 shrink-0">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 px-2 hidden md:inline">
-              PS:
-            </span>
-            {Object.values(projectsData).map((proj) => {
-              const isSelected = activeProject === proj.id;
-              return (
-                <button
-                  key={proj.id}
-                  onClick={() => handleProjectSwitch(proj.id)}
-                  className={`px-2.5 sm:px-3 py-1 rounded-full text-xs font-bold transition-all tactile-btn flex items-center gap-1.5 ${
-                    isSelected
-                      ? 'bg-orange-500 text-white shadow-xs'
-                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                  }`}
-                  title={`${proj.number} · ${proj.title}`}
-                >
-                  <span className="font-mono text-[10px]">{proj.number}</span>
-                  <span className="hidden sm:inline text-[11px] whitespace-nowrap">
-                    {proj.number === 'PS2' ? 'Commute' : proj.number === 'PS1' ? 'Reality' : 'Alerts'}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
         </div>
 
         {/* ========================================================================= */}
@@ -590,7 +563,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           <div 
             id="proj-step-1" 
             data-step-id="1" 
-            className="progressive-step space-y-8 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10"
+            className="progressive-step space-y-8 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10 scroll-mt-32 sm:scroll-mt-36"
           >
             {/* Top Row: Context Narrative on Left, Free-Floating Illustration on Right */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -648,7 +621,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           <div 
             id="proj-step-2" 
             data-step-id="2" 
-            className="progressive-step space-y-6 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10"
+            className="progressive-step space-y-6 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10 scroll-mt-32 sm:scroll-mt-36"
           >
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
@@ -679,7 +652,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           <div 
             id="proj-step-3" 
             data-step-id="3" 
-            className="progressive-step space-y-6 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10"
+            className="progressive-step space-y-6 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10 scroll-mt-32 sm:scroll-mt-36"
           >
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
@@ -737,7 +710,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           <div 
             id="proj-step-4" 
             data-step-id="4" 
-            className="progressive-step space-y-6 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10"
+            className="progressive-step space-y-6 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10 scroll-mt-32 sm:scroll-mt-36"
           >
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
@@ -803,7 +776,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           <div 
             id="proj-step-5" 
             data-step-id="5" 
-            className="progressive-step space-y-6 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10"
+            className="progressive-step space-y-6 pt-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-10 scroll-mt-32 sm:scroll-mt-36"
           >
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
@@ -856,7 +829,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           <div 
             id="proj-step-6" 
             data-step-id="6" 
-            className="progressive-step pt-4 space-y-6"
+            className="progressive-step pt-4 space-y-6 scroll-mt-32 sm:scroll-mt-36"
           >
             <div className="flex items-center justify-between mb-4">
               <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
