@@ -103,10 +103,16 @@ export const ReflectionsAndGaps = ({ labHost, soundEnabled }) => {
 
         <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
           <a
-            href={labHost}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => soundEnabled && playSound('pop')}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (soundEnabled) playSound('pop');
+              const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+              const targetUrl = isMobile 
+                ? `${labHost}/ps1/prototype`
+                : labHost;
+              window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            }}
             className="px-6 py-3 rounded-full bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 transition-all hover:scale-105 active:scale-95 tactile-btn"
           >
             <span>Open All 3 Lab Prototypes</span>

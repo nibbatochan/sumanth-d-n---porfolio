@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 export const splitWords = (text, wordClass = 'header-title-word') => {
   return text.split(' ').map((word, i) => (
     <React.Fragment key={i}>
-      <span className="inline-block overflow-hidden py-0.5 align-top">
+      <span className="inline-block overflow-hidden pt-0.5 pb-2 -mb-2 align-top">
         <span className={`${wordClass} inline-block transform-gpu will-change-transform`}>
           {word}
         </span>

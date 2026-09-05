@@ -55,7 +55,7 @@ export function App() {
   }, [isDarkMode]);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans text-black dark:text-white bg-white dark:bg-[#09090B] antialiased selection:bg-orange-500 selection:text-white relative transition-colors duration-300">
+    <div className="min-h-screen flex flex-col font-sans text-black dark:text-white bg-white dark:bg-[#09090B] antialiased selection:bg-orange-500 selection:text-white relative transition-colors duration-300 overflow-x-hidden">
       
       {/* 1. Kinetic Preloader (Full-Screen z-[9999]) */}
       {loading && (

@@ -158,10 +158,16 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
             </button>
 
             <a
-              href={`${labHost}/high-fid-annotation-lab`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => playSound('pop', soundEnabled)}
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                playSound('pop', soundEnabled);
+                const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+                const targetUrl = isMobile 
+                  ? `${labHost}/ps1/prototype`
+                  : `${labHost}/high-fid-annotation-lab`;
+                window.open(targetUrl, '_blank', 'noopener,noreferrer');
+              }}
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs transition-all shadow-sm hover:scale-105 active:scale-95 tactile-btn"
             >
               <span>Open Hi-Fi Lab</span>

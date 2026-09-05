@@ -46,11 +46,11 @@ export const CaseHeader = ({ onJumpToSection }) => {
         </div>
 
         {/* Word Load Animation on H1: First Line White, Second Line Orange */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold font-sans tracking-tight leading-[1.15]">
-          <span className="block text-zinc-900 dark:text-white mb-1">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold font-sans tracking-tight leading-[1.25]">
+          <span className="block text-zinc-900 dark:text-white mb-1 pb-0.5">
             {splitWords(line1Text, "header-title-word text-zinc-900 dark:text-white")}
           </span>
-          <span className="block text-orange-600 dark:text-orange-500">
+          <span className="block text-orange-600 dark:text-orange-500 pb-1">
             {splitWords(line2Text, "header-title-word text-orange-600 dark:text-orange-500")}
           </span>
         </h1>

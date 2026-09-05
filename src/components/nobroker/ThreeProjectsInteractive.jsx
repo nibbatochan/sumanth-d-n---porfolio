@@ -245,7 +245,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       number: 'PS4',
       title: 'Calm Signal-Only Alerts',
       subtitle: 'Ending alert fatigue with high-precision commute matching',
-      labRoute: '/ps34',
+      labRoute: '/ps3',
       labActionLabel: 'Launch Calm Signal Prototype',
       illustration: '/illustrations/ps4-alerts.png',
       
@@ -856,7 +856,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           <div 
             id="proj-step-6" 
             data-step-id="6" 
-            className="progressive-step pt-4"
+            className="progressive-step pt-4 space-y-6"
           >
             <div className="flex items-center justify-between mb-4">
               <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
@@ -876,15 +876,56 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
               </div>
 
               <a
-                href={`${labHost}${currentP.labRoute}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => soundEnabled && playSound('pop')}
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (soundEnabled) playSound('pop');
+                  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+                  const targetUrl = isMobile 
+                    ? `${labHost}${currentP.labRoute}/prototype`
+                    : `${labHost}${currentP.labRoute}`;
+                  window.open(targetUrl, '_blank', 'noopener,noreferrer');
+                }}
                 className="px-6 py-3 rounded-full bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-orange-600/20 transition-all hover:scale-105 active:scale-95 tactile-btn shrink-0"
               >
                 <span>{currentP.labActionLabel}</span>
                 <ArrowSquareOut size={16} weight="bold" />
               </a>
+            </div>
+
+            {/* Move to Next PS / Section Navigation Button */}
+            <div className="pt-2 flex items-center justify-end">
+              {activeProject === 'ps2' && (
+                <button
+                  onClick={() => handleProjectSwitch('ps1')}
+                  className="px-5 py-2.5 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs flex items-center gap-2 shadow-sm hover:scale-105 active:scale-95 tactile-btn transition-all"
+                >
+                  <span>Move to Next PS · PS1 (Reality Verification)</span>
+                  <ArrowRight size={14} weight="bold" className="text-orange-500" />
+                </button>
+              )}
+              {activeProject === 'ps1' && (
+                <button
+                  onClick={() => handleProjectSwitch('ps34')}
+                  className="px-5 py-2.5 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs flex items-center gap-2 shadow-sm hover:scale-105 active:scale-95 tactile-btn transition-all"
+                >
+                  <span>Move to Next PS · PS4 (Calm Signals)</span>
+                  <ArrowRight size={14} weight="bold" className="text-orange-500" />
+                </button>
+              )}
+              {activeProject === 'ps34' && (
+                <button
+                  onClick={() => {
+                    playSound('pop', soundEnabled);
+                    const gapsEl = document.getElementById('gaps-section');
+                    if (gapsEl) gapsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
+                  className="px-5 py-2.5 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs flex items-center gap-2 shadow-sm hover:scale-105 active:scale-95 tactile-btn transition-all"
+                >
+                  <span>Move to Next Section · Reflections & Gaps</span>
+                  <ArrowRight size={14} weight="bold" className="text-orange-500" />
+                </button>
+              )}
             </div>
           </div>
 
