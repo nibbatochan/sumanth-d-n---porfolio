@@ -19,14 +19,15 @@ import { Footer } from './Footer';
 import { initScrollReveals } from '../utils/motion';
 
 export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMode, setIsDarkMode }) => {
-  const [labHost, setLabHost] = useState('http://localhost:3000');
+  // Use deployed Vercel lab by default, allowing seamless prototype interaction in production
+  const [labHost, setLabHost] = useState('https://app-seven-indol-73.vercel.app');
 
   useEffect(() => {
-    // Only check local dev server ports when running on localhost
+    // When running locally on localhost, check if local Next.js lab is active
     if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-      fetch('http://localhost:3000/high-fid-annotation-lab', { method: 'HEAD', mode: 'no-cors' })
+      fetch('http://localhost:3000/ps1', { method: 'HEAD', mode: 'no-cors' })
         .then(() => setLabHost('http://localhost:3000'))
-        .catch(() => setLabHost('http://localhost:3001'));
+        .catch(() => setLabHost('https://app-seven-indol-73.vercel.app'));
     }
   }, []);
 
