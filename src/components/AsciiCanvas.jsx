@@ -244,7 +244,7 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
       {/* 4. Ultra-Large High-Definition 3D Flying Dove Canvas */}
       <div className="w-full h-full flex items-center justify-center overflow-visible relative z-10 my-auto">
         <pre 
-          className={`font-mono text-[7px] xs:text-[7.8px] sm:text-[9px] md:text-[10px] lg:text-[11px] xl:text-[12.5px] 2xl:text-[13.5px] leading-[0.97] tracking-tighter whitespace-pre text-center select-none transition-colors duration-300 ${currentTheme.textClass} drop-shadow-sm overflow-visible`}
+          className={`font-mono text-[6.8px] xs:text-[7.5px] sm:text-[8.5px] md:text-[9.5px] lg:text-[10px] xl:text-[10.8px] 2xl:text-[11.6px] leading-[0.97] tracking-tighter whitespace-pre text-center select-none transition-colors duration-300 ${currentTheme.textClass} drop-shadow-sm overflow-visible`}
           style={{ margin: 0 }}
         >
           {asciiOutput}

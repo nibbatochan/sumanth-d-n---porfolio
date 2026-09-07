@@ -188,7 +188,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
 
         {/* Right 5 Columns: 3D ASCII Flying Dove Canvas (100% Untouched) */}
         <div className="lg:col-span-5 flex items-center justify-center relative select-none w-full overflow-visible mt-6 lg:mt-0 z-0">
-            <div className="w-full lg:w-[130%] xl:w-[140%] lg:-ml-[25%] xl:-ml-[30%] flex items-center justify-center overflow-visible pointer-events-auto">
+            <div className="w-full lg:w-[118%] xl:w-[122%] lg:-ml-[16%] xl:-ml-[20%] flex items-center justify-center overflow-visible pointer-events-auto">
           <AsciiCanvas soundEnabled={soundEnabled} isDarkMode={isDarkMode} />
             </div>
         </div>
