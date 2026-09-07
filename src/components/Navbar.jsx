@@ -104,7 +104,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-8 py-3 sm:py-4 ${scrolled ? 'pt-2.5 sm:pt-3' : 'pt-3 sm:pt-4'}`}>
-      <div className="max-w-5xl mx-auto flex items-center justify-between gap-3">
+      <div className="max-w-[920px] mx-auto flex items-center justify-between gap-3">
         
         {/* Authentic Signature Logo + Sumanth Reddy Name */}
         <a 
