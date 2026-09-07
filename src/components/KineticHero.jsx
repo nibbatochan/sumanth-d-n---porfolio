@@ -73,7 +73,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   };
 
   return (
-    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-110px)] flex flex-col justify-center pt-28 sm:pt-32 lg:pt-28 pb-4 sm:pb-6 px-4 sm:px-8 max-w-6xl mx-auto relative z-10">
+    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-110px)] flex flex-col justify-center pt-28 sm:pt-32 lg:pt-28 pb-4 sm:pb-6 px-4 sm:px-8 max-w-6xl mx-auto relative z-10 my-12">
       
       {/* Main Grid: Left Column Headline & Bio + Right Column 3D ASCII Canvas (Untouched) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center my-auto">
