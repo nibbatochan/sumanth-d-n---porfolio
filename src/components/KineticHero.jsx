@@ -124,7 +124,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
               <span 
                 onMouseEnter={() => playSound('pop', soundEnabled)}
                 title="Sumanth D N — Hover to reveal"
-                className="inline-flex items-center justify-center rounded-full overflow-hidden border border-zinc-300 dark:border-zinc-700 shadow-md backdrop-blur-xs hover:border-orange-500 hover:shadow-orange-500/20 transition-all duration-300 select-none cursor-pointer h-8 sm:h-10 md:h-11 lg:h-12 w-22 sm:w-28 md:w-34 lg:w-38 shrink-0 group self-center bg-black"
+                className="inline-flex items-center justify-center rounded-full overflow-hidden border border-zinc-300 dark:border-zinc-700 shadow-md backdrop-blur-xs hover:border-orange-500 hover:shadow-orange-500/20 transition-all duration-300 select-none cursor-pointer h-8 sm:h-10 md:h-11 lg:h-12 w-[88px] sm:w-28 md:w-[136px] lg:w-[152px] shrink-0 group self-center bg-black"
               >
                 {/* Smooth pan from Face on right to Hand on left */}
                 <img 
