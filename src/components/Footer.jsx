@@ -206,7 +206,7 @@ export const Footer = ({ soundEnabled, onOpenContact, className = "" }) => {
   };
 
   return (
-    <footer className={`relative text-white overflow-hidden select-none min-h-[440px] sm:min-h-[540px] flex flex-col justify-end z-10 w-full ${className || 'mt-12 sm:-mt-24 md:-mt-36'}`}>
+    <footer className={`relative text-white overflow-hidden select-none min-h-[440px] sm:min-h-[540px] flex flex-col justify-end z-10 w-full ${className || '-mt-6 sm:-mt-[168px] md:-mt-[216px]'}`}>
       
       {/* Full-Size Upward Pulsating Orange Canvas Background */}
       <div className="absolute inset-0 z-0">

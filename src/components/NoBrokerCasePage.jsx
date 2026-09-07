@@ -79,29 +79,56 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
     return () => scrollContainer.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Robust smooth scroll helper that works across modal overflow containers and window
+  const smoothScrollTo = (targetEl, offset = 70) => {
+    if (!targetEl) return;
+    const scrollContainer = targetEl.closest('.overflow-y-auto');
+    if (scrollContainer) {
+      const containerTop = scrollContainer.getBoundingClientRect().top;
+      const targetTop = targetEl.getBoundingClientRect().top;
+      const targetScroll = scrollContainer.scrollTop + (targetTop - containerTop) - offset;
+      scrollContainer.scrollTo({
+        top: Math.max(0, targetScroll),
+        behavior: 'smooth'
+      });
+    } else {
+      const pageOffset = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const targetTop = targetEl.getBoundingClientRect().top;
+      window.scrollTo({
+        top: Math.max(0, pageOffset + targetTop - offset),
+        behavior: 'smooth'
+      });
+    }
+  };
+
   const scrollToSection = (id) => {
     playSound('pop', soundEnabled);
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      smoothScrollTo(el, 70);
     }
   };
 
   const handleSelectSolvedPillar = (pillarId) => {
     setActiveProject(pillarId);
-    scrollToSection('projects-section');
+    setTimeout(() => {
+      const projContainer = document.getElementById('projects-section');
+      if (projContainer) {
+        smoothScrollTo(projContainer, 70);
+      }
+    }, 40);
   };
 
   return (
     <div 
       ref={containerRef}
-      className="min-h-screen bg-white dark:bg-[#09090B] text-zinc-900 dark:text-zinc-100 selection:bg-orange-500 selection:text-white antialiased relative font-sans transition-colors duration-300"
+      className="min-h-screen bg-[#F5F5F7] dark:bg-[#09090B] text-zinc-900 dark:text-zinc-100 selection:bg-orange-500 selection:text-white antialiased relative font-sans transition-colors duration-300"
     >
       {/* Global Ambient '+' Grid Hover Spotlight across the entire case study page */}
       <GlobalAsciiBackground isDarkMode={isDarkMode} fullPage={true} />
 
       {/* Floating Top Bar (Sticky Navigation & Back Button) */}
-      <nav className="sticky top-0 z-50 bg-white/80 dark:bg-[#09090B]/80 backdrop-blur-xl border-b border-zinc-200 dark:border-zinc-800 px-4 sm:px-6 xl:px-0 py-3.5 transition-all">
+      <nav className="sticky top-0 z-50 bg-[#F5F5F7]/85 dark:bg-[#09090B]/80 backdrop-blur-xl border-b border-zinc-200/90 dark:border-zinc-800 px-4 sm:px-6 xl:px-0 py-3.5 transition-all">
         <div className="max-w-[1240px] w-full mx-auto flex items-center justify-between gap-4">
           
           {/* Left Action: Back to Portfolio */}

@@ -8,9 +8,9 @@
   }
 
   body {
-    background-color: #FFFFFF;
+    background-color: #F5F5F7;
     color: #18181B;
-    /* clean modern background */
+    /* clean modern soothing neutral background */
     
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;

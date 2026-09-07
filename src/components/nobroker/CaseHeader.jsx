@@ -61,7 +61,7 @@ export const CaseHeader = ({ onJumpToSection }) => {
         </p>
 
         {/* Editorial Metadata Grid with Identical Spacing & Clean Typography */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-zinc-200 dark:border-zinc-800">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-6 border-t border-zinc-200 dark:border-zinc-800">
           <div className="header-meta-col flex flex-col space-y-1 will-change-transform">
             <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-semibold block">Role</span>
             <p className="text-sm font-bold font-sans text-zinc-900 dark:text-white leading-tight">Product Designer</p>
@@ -80,7 +80,7 @@ export const CaseHeader = ({ onJumpToSection }) => {
           <div className="header-meta-col flex flex-col space-y-1 will-change-transform">
             <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-semibold block">Audience</span>
             <p className="text-sm font-bold font-sans text-zinc-900 dark:text-white leading-tight">Budget Renters</p>
-            <span className="text-xs font-sans text-zinc-500 dark:text-zinc-400 leading-snug block">Bangalore Corridors</span>
+            <span className="text-xs font-sans text-zinc-500 dark:text-zinc-400 leading-snug block">Metropolitan Cities</span>
           </div>
         </div>
 
@@ -138,6 +138,15 @@ export const CaseHeader = ({ onJumpToSection }) => {
               <img 
                 src="/illustrations/logos/icon.png" 
                 alt="Tool" 
+                className="h-6 sm:h-7 w-auto object-contain transition-transform duration-300 hover:scale-110"
+              />
+            </div>
+
+            {/* Vercel */}
+            <div className="flex items-center h-7" title="Vercel">
+              <img 
+                src="/illustrations/logos/vercel.png" 
+                alt="Vercel" 
                 className="h-6 sm:h-7 w-auto object-contain transition-transform duration-300 hover:scale-110"
               />
             </div>

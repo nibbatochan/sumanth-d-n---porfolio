@@ -12,6 +12,7 @@ import { ContactModal } from './components/ContactModal';
 import { Footer } from './components/Footer';
 import { NoBrokerCasePage } from './components/NoBrokerCasePage';
 import { projects } from './data/portfolioData';
+import { Agentation } from 'agentation';
 
 export function App() {
   const [loading, setLoading] = useState(true);
@@ -55,7 +56,7 @@ export function App() {
   }, [isDarkMode]);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans text-black dark:text-white bg-white dark:bg-[#09090B] antialiased selection:bg-orange-500 selection:text-white relative transition-colors duration-300 overflow-x-hidden">
+    <div className="min-h-screen flex flex-col font-sans text-black dark:text-white bg-[#F5F5F7] dark:bg-[#09090B] antialiased selection:bg-orange-500 selection:text-white relative transition-colors duration-300 overflow-x-hidden">
       
       {/* 1. Kinetic Preloader (Full-Screen z-[9999]) */}
       {loading && (
@@ -120,7 +121,7 @@ export function App() {
 
       {/* 7. Dedicated Full Case Study Page View */}
       {activeDedicatedCase && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-white dark:bg-[#0C0C0E] animate-fade-in">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-[#F5F5F7] dark:bg-[#0C0C0E] animate-fade-in">
           <NoBrokerCasePage
             soundEnabled={soundEnabled}
             isDarkMode={isDarkMode}
@@ -149,6 +150,9 @@ export function App() {
         soundEnabled={soundEnabled}
         onClose={() => setIsContactOpen(false)}
       />
+
+      {/* 10. Agentation Visual Feedback Toolbar */}
+      <Agentation />
 
     </div>
   );

@@ -15,7 +15,11 @@ export const WorkGrid = ({ onSelectProject, soundEnabled }) => {
 
   const filteredProjects = useMemo(() => {
     if (activeCategory === 'all') return projects;
-    return projects.filter((item) => item.category === activeCategory);
+    return projects.filter((item) => 
+      item.category === activeCategory || 
+      (Array.isArray(item.categories) && item.categories.includes(activeCategory)) ||
+      (activeCategory === 'graphic-brand' && item.categoryLabel?.toLowerCase().includes('brand'))
+    );
   }, [activeCategory]);
 
   return (

@@ -38,7 +38,7 @@ export const KeyDecisionsTradeoffs = () => {
       tag: 'Attention Economics',
       icon: BellSlash,
       title: 'Quiet, high-signal alerts over daily push blasts',
-      choice: 'Send zero push notifications until a fresh, verified flat matches the renter's exact commute threshold.',
+      choice: 'Send zero push notifications until a fresh, verified flat matches the renter\'s exact commute threshold.',
       why: (
         <>
           <strong>43.2% of renters muted notifications</strong> because property apps blast repetitive marketing spam. Trading vanity daily click-throughs for <strong>high-intent, verified alerts</strong> restored trust and stopped users from turning off notifications.
@@ -49,8 +49,8 @@ export const KeyDecisionsTradeoffs = () => {
       index: '04',
       tag: 'Production Reality',
       icon: Browsers,
-      title: 'Designing inside NoBroker's system instead of a fantasy redesign',
-      choice: 'Designed strictly using NoBroker's native mobile components, colors, and layout patterns.',
+      title: 'Designing inside NoBroker\'s system instead of a fantasy redesign',
+      choice: 'Designed strictly using NoBroker\'s native mobile components, colors, and layout patterns.',
       why: (
         <>
           A complete visual redesign looks pretty in a portfolio but <strong>can never be shipped in production</strong>. Designing within real-world constraints ensures these three features can <strong>actually launch to users tomorrow</strong>.

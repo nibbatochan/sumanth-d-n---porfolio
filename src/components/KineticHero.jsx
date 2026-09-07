@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowDown, Copy, Check, CheckCircle } from '@phosphor-icons/react';
+import { ArrowDown, Copy, Check } from '@phosphor-icons/react';
 import confetti from 'canvas-confetti';
 import gsap from 'gsap';
 import { designerProfile } from '../data/portfolioData';
@@ -73,13 +73,13 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   };
 
   return (
-    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-110px)] flex flex-col justify-center pt-28 sm:pt-32 lg:pt-28 pb-4 sm:pb-6 px-4 sm:px-8 max-w-6xl mx-auto relative z-10">
+    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-110px)] flex flex-col justify-center pt-28 sm:pt-32 lg:pt-28 pb-4 sm:pb-6 px-4 sm:px-8 max-w-6xl mx-auto w-full relative z-10">
       
       {/* Main Grid: Left Column Headline & Bio + Right Column 3D ASCII Canvas (Untouched) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center my-auto">
         
         {/* Left 7 Columns: Status Badge, Headline with Flower & Portrait Capsule, Bio & Lowered CTAs */}
-        <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-3.5">
+        <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-3.5 relative z-10">
           
           {/* Availability Status Badge with Pulse Indicator */}
           <div className="flex items-center gap-2">
@@ -88,9 +88,8 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="font-semibold text-zinc-900 dark:text-white flex items-center gap-1.5 text-xs">
-                <CheckCircle size={14} weight="fill" className="text-emerald-500" />
-                <span>{designerProfile.status}</span>
+              <span className="font-semibold text-zinc-900 dark:text-white text-xs">
+                {designerProfile.status}
               </span>
             </div>
           </div>
@@ -188,8 +187,10 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
         </div>
 
         {/* Right 5 Columns: 3D ASCII Flying Dove Canvas (100% Untouched) */}
-        <div className="lg:col-span-5 flex items-center justify-center relative select-none w-full mt-6 lg:mt-0">
+        <div className="lg:col-span-5 flex items-center justify-center relative select-none w-full overflow-visible mt-6 lg:mt-0 z-0">
+            <div className="w-full lg:w-[130%] xl:w-[140%] lg:-ml-[25%] xl:-ml-[30%] flex items-center justify-center overflow-visible pointer-events-auto">
           <AsciiCanvas soundEnabled={soundEnabled} isDarkMode={isDarkMode} />
+            </div>
         </div>
 
       </div>

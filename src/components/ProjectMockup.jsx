@@ -115,58 +115,23 @@ export const ProjectMockup = ({ project, interactive = true }) => {
     );
   }
 
-  if (project.id === 'smartworks-spaces') {
-    return (
-      <div className="w-full h-full bg-[#121417] text-white p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden border border-white/10">
-        <div className="flex items-center justify-between text-xs border-b border-white/10 pb-3">
-          <div className="flex items-center gap-2">
-            <Buildings size={18} weight="duotone" className="text-[#4A7C59]" />
-            <span className="font-mono text-white/80">Smartworks Co-Working</span>
-          </div>
-          <span className="font-mono text-[10px] bg-[#4A7C59]/20 text-[#85C49B] px-2 py-0.5 rounded-full border border-[#4A7C59]/30">
-            20+ MNC BRANDS
-          </span>
-        </div>
-
-        <div className="my-3 p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
-          <p className="text-xs text-white/60 font-mono uppercase">Clients Delivered:</p>
-          <div className="flex flex-wrap gap-1.5">
-            {['HP', 'Teva Pharma', 'Havells', 'Bridgestone'].map((brand, i) => (
-              <span key={i} className="text-[11px] bg-white/10 text-white font-medium px-2 py-0.5 rounded-md">
-                {brand}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center text-[10px] text-white/40 font-mono">
-          <span>WALL ART & GLASS FROSTING</span>
-          <span>BLUEPRINT RENDERS</span>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="w-full h-full bg-[#FAF7F2] dark:bg-[#1E1B18] text-[#1E1B18] dark:text-white p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden border border-[#E6DCCE] dark:border-white/10">
-      <div className="flex justify-between items-start">
-        <div className="flex items-center gap-1.5">
-          <Coffee size={18} weight="duotone" className="text-[#D97706]" />
-          <span className="text-[10px] font-mono uppercase tracking-widest text-[#D97706] font-bold">Sorbetto Gelateria</span>
-        </div>
-        <span className="font-mono text-[10px] bg-[#FFF3D6] dark:bg-[#3D2C10] text-[#B45309] dark:text-[#FBBF24] px-2 py-0.5 rounded-full font-bold">
-          BRANDING & MENUS
+    <div className="w-full h-full bg-[#181614] text-white p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden select-none border border-white/10 shadow-inner">
+      <div className="flex items-center justify-between text-xs text-white/50 border-b border-white/5 pb-3">
+        <span className="font-mono text-[10px] bg-white/10 px-2 py-0.5 rounded-full text-orange-400">
+          {project.categoryLabel || 'Case Study'}
         </span>
+        <span className="font-mono text-[11px] text-white/60">{project.year}</span>
       </div>
 
-      <div className="my-3 p-4 bg-white dark:bg-[#25221F] rounded-2xl border border-[#E6DCCE] dark:border-white/10 shadow-sm">
-        <h4 className="font-serif text-xl italic text-[#1E1B18] dark:text-white">"Crafting appetizing visual identities."</h4>
-        <p className="text-[11px] text-[#686058] dark:text-white/70 mt-1">Menu Boards • Banners • Instagram Marketing</p>
+      <div className="my-3 p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+        <h4 className="font-sans text-xl font-bold text-white tracking-tight">{project.title}</h4>
+        <p className="text-xs text-white/70 line-clamp-2">{project.summary}</p>
       </div>
 
-      <div className="flex items-center justify-between text-[10px] font-mono text-[#686058] dark:text-white/60 border-t border-[#E6DCCE] dark:border-white/10 pt-3">
-        <span>STORE SIGNAGE</span>
-        <span>CAMPAIGN DESIGN</span>
+      <div className="flex items-center justify-between text-[10px] font-mono text-white/40 border-t border-white/5 pt-3">
+        <span>{project.company}</span>
+        <span className="text-orange-400 font-medium">Selected Work</span>
       </div>
     </div>
   );

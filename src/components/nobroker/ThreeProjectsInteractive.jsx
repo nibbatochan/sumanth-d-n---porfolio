@@ -23,6 +23,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
   const [internalProject, setInternalProject] = useState('ps2'); // 'ps2' | 'ps1' | 'ps34'
   const [activeStep, setActiveStep] = useState('1'); // '1' | '2' | '3' | '4' | '5' | '6'
   const containerRef = useRef(null);
+  const stepperRef = useRef(null);
+  const isScrollingRef = useRef(false);
 
   const activeProject = controlledProject || internalProject;
   const setActiveProject = setControlledProject || setInternalProject;
@@ -53,19 +55,19 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           },
           {
             title: 'Listing Card Commute Badges',
-            desc: 'Every house thumbnail shows an instant travel pill (e.g. "24m via Bike · 36m via Cab") before tapping.'
+            desc: 'Every house thumbnail shows an instant travel pill (e.g. "28m peak travel time") before tapping.'
           },
           {
             title: 'Neighborhood "Glimpse" Sheet',
-            desc: 'A slide-up drawer showing Cauvery water frequency, power backup, and nearest grocery walk.'
+            desc: 'A slide-up drawer showing quick commerce delivery zones, daily convenience spots, water source, and power backup.'
           }
         ]
       },
 
       // 02: The Specific Problem
       specificProblem: {
-        headline: 'In metro cities, distance is a lie — and leaving the app kills search momentum',
-        explanation: 'A 4 km commute in metro cities like Bangalore can take 15 minutes or 55 minutes depending on bottleneck choke points. Because the app only supported search by municipal area names, renters had to repeatedly copy coordinates into Google Maps to check rush hour delays. This cross-app back-and-forth significantly increased session times, creating severe decision fatigue that caused searchers to abandon the app without booking a single visit.',
+        headline: 'In metro cities, distance is a lie — and cumulative cross-app searching causes decision fatigue',
+        explanation: 'When renters search for homes over days, weeks, and months, they fall into an exhausting habit: for each listing they like, they switch between Google Maps, search engines, and local contacts to research rush-hour transit, nearby grocery spots, and basic amenities. This constant app-hopping drastically inflates cognitive load and research effort for every single listing session. Over a prolonged 2 to 3-month search, this compounding friction turns home hunting into an overwhelming, negative experience where users abandon the app before ever booking a visit.',
         hmw: 'How might we calculate real rush-hour commute times and neighborhood reality inside NoBroker so renters never have to leave the app?'
       },
 
@@ -102,35 +104,35 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
             title: '2. Show peak travel time badges directly on cards',
             explored: 'Tried showing commute details only after opening the full listing page.',
             whyFailed: 'Renters still had to click in and out of 20 listings just to check travel time.',
-            decision: 'Placed multi-modal travel badges (Bike, Cab, Metro, Walk) directly on listing thumbnails.',
-            rationale: 'Renters filter out impossible commutes at a glance, saving time and click fatigue.'
+            decision: 'Placed peak travel time badges (showing estimated drive/transit duration) directly on listing thumbnails.',
+            rationale: 'Renters filter out unrealistic commutes at a glance, saving massive research time and click fatigue.'
           },
           {
             title: '3. The "Glimpse" Neighborhood Drawer for local reality',
             explored: 'Tried showing generic distance to hospitals and schools.',
-            whyFailed: 'Renters cared far more about Bangalore basics: Cauvery water frequency, power cuts, and daily grocery walkability.',
-            decision: 'Built a slide-up drawer showing resident-verified water sources, power backup uptime, and noise levels.',
-            rationale: 'Answers the three biggest deal-breakers upfront before anyone books a physical visit.'
+            whyFailed: 'Renters also cared deeply about daily life essentials: quick commerce delivery zones (10-min groceries), local activity spots, Cauvery water frequency, and power uptime.',
+            decision: 'Built a slide-up drawer highlighting 10-minute quick commerce serviceability, daily convenience hubs, water availability, and power backup uptime.',
+            rationale: 'Answers critical everyday livability factors upfront before anyone commits time to book a physical visit.'
           }
         ],
         journey: [
           { stage: '1. Search', before: 'Guess arbitrary locality names', after: 'Set "Your Place" once (office/gym)' },
           { stage: '2. Filter', before: 'Unorganized list with zero commute context', after: 'Map and cards show peak travel times' },
-          { stage: '3. Route Check', before: 'Leave app to check Google Maps', after: 'In-app multi-modal route drawer' },
-          { stage: '4. Neighborhood', before: 'Guess water/power reality from YouTube', after: 'Glimpse sheet shows water and power uptime' },
-          { stage: '5. Action', before: '89% get distracted and abandon', after: 'Tap "Contact Owner" with 100% confidence' }
+          { stage: '3. Route Check', before: 'Leave app to check Google Maps', after: 'In-app peak travel time drawer and route view' },
+          { stage: '4. Neighborhood', before: 'Guess reality through Google searches, asking people they know, or doing tiring locality visits', after: 'Glimpse sheet provides immediate neighborhood, quick commerce, and amenity reality' },
+          { stage: '5. Action', before: 'Get distracted hopping across apps and abandon', after: 'Tap "Contact Owner" knowing all the critical factors like commute, neighborhood, and amenities data upfront' }
         ]
       },
 
       // 05: Impact & Metrics
       impactMetrics: {
         headline: 'Keeping renters in-app and accelerating move-ins',
-        primaryMetric: '0% Maps Exit Rate',
-        primaryDesc: 'Eliminates 100% of app-switching to external navigation apps during search',
-        secondaryMetric: '3.2x More Shortlists',
-        secondaryDesc: 'Renters save 3 times more homes per session because commute feasibility is clear upfront',
+        primaryMetric: 'Reduced App-Hopping',
+        primaryDesc: 'Minimizes drop-offs caused by jumping to external maps or search engines during property discovery',
+        secondaryMetric: 'Faster Shortlisting',
+        secondaryDesc: 'Renters evaluate and shortlist viable candidate homes faster because commute feasibility is answered upfront',
         northStarContribution: 'Directly accelerates Search-to-Lease Speed by ensuring renters only spend visit time on homes that fit their real commute limit.',
-        ancillaryAttach: 'Keeps users in the flow, driving early reservations for NoBroker Packers & Movers.'
+        ancillaryAttach: 'Making the user knowledgeable enough to build good confidence about the listing directly reducing the decision fatigue and click on call to action.'
       }
     },
 
@@ -138,7 +140,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       id: 'ps1',
       number: 'PS1',
       title: 'Listing vs. Reality Verification',
-      subtitle: 'Stopping wide-angle lens tricks and ghost listings',
+      subtitle: 'Verification Modal & Procuring Photos from Visiting Renters',
       labRoute: '/ps1',
       labActionLabel: 'Launch Reality Verification Flow',
       illustration: '/illustrations/ps1-reality.png',
@@ -146,50 +148,50 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       // 01: Feature Context
       featureContext: {
         stage: 'Evaluation & Visit Booking (Mid Funnel)',
-        placement: 'Property Details Page (PDP) & Visit Scheduling Modal',
-        summary: 'Lives inside the property details page. Below owner photos, renters can switch to "Verified Reality" to see unedited daylight pictures, true usable floor space, and reports from real visitors who checked in via GPS.',
+        placement: 'Verification Modal and Procuring Photos from Visiting Renters',
+        summary: 'Lives in the property listing page as a small modal for showing the verified image status. If not verified, the app procures photos from visiting renters on disliking the property, incentivizing them using offers from NoBroker Packers & Movers and housekeeping.',
         touchpoints: [
           {
-            title: 'Unedited Daylight Stream',
-            desc: 'Photos taken at noon without beauty filters or artificial HDR lighting.'
+            title: 'In-Listing Verification Modal',
+            desc: 'A dedicated status badge and modal showing whether the property has verified daylight photos.'
           },
           {
-            title: 'True Carpet Ratio & Floorplan',
-            desc: 'Clear breakdown of usable carpet area vs. advertised super built-up square footage.'
+            title: 'Visiting Renter Photo Capture',
+            desc: 'Visiting renters who inspect and dislike a flat can snap and upload 2–3 honest room photos directly in the app.'
           },
           {
-            title: 'GPS Visitor Verification Log',
-            desc: 'Checklists filled out by previous tenants who physically checked in at the property.'
+            title: 'Packers & Housekeeping Rewards',
+            desc: 'Submitting verified photos unlocks direct discount credits towards NoBroker Packers & Movers and home cleaning services.'
           },
           {
-            title: 'Water Pressure & Dampness Check',
-            desc: 'Specific ratings for bathroom water flow, wall seepage, and mobile network reception.'
+            title: 'Crowdsourced Truth Stream',
+            desc: 'Procured photos instantly enrich the listing so subsequent renters do not waste a trip on homes not worth seeing.'
           }
         ]
       },
 
       // 02: The Specific Problem
       specificProblem: {
-        headline: 'Misleading wide-angle photos and already-rented listings waste weekends',
-        explanation: 'Landlords and brokers upload wide-angle photos that make cramped rooms look twice as big. Renters waste entire weekends driving across the city only to discover dark rooms, damp walls, or that the flat was leased two weeks earlier.',
-        hmw: 'How might we show unedited ground truth (true room sizes, daylight, and water pressure) verified by previous visitors before anyone travels across town?'
+        headline: 'Lower-budget houses have few to no verified images — turning visits into blind gambles',
+        explanation: 'In lower-budget segments, listings often have only one or two blurry photos of the hall, and many have none at all. Because photos and videos are the primary mode renters rely on to gauge the reality of a house before traveling, searchers either skip viable listings or waste whole weekends driving across the city only to discover unlivable conditions.',
+        hmw: 'How might we help renters verify a listing matches reality before they visit, so they don\'t waste a trip on listings not worth seeing?'
       },
 
       // 03: Research & Insights (Combined Survey + Interview Data)
       researchInsights: {
-        headline: '76% of renters called owners only to find the flat was already taken',
+        headline: '76% of renters encountered misleading photos or zero visual proof on budget homes',
         surveyStat: '28 of 37 surveyed renters (75.7%)',
-        surveyDetail: 'reported contacting owners for flats that were already leased weeks ago',
-        combinedFinding: 'Renters had zero trust in listing photos. To cope, they begged landlords for raw WhatsApp video walkthroughs or used Street View to see if the building actually had decent road access.',
+        surveyDetail: 'reported listings having missing, inadequate, or misleading photos that hid critical deal-breakers',
+        combinedFinding: 'Renters had zero trust in low-budget listings with minimal photos. Without verified visual proof, they resorted to begging owners for raw WhatsApp video walkthroughs or skipping affordable flats entirely out of fear of wasting their time.',
         quotes: [
-          '"I used to swap apps a lot seeing my long searching, checking Street View and WhatsApp videos to see if the place was even real."',
-          '"I started asking landlords to send a 10-second video on WhatsApp before I booked any visit."',
-          '"Out of every 5 people I contacted, 2 or 3 had already rented the place out days ago."'
+          '"Some had one or two photos of the hall, and even lower ones didn\'t even have any. So I completely skipped those."',
+          '"I traveled 18 km on a Saturday for a flat with 2 photos. It was pitch dark with zero ventilation—I walked out in 30 seconds."',
+          '"If I could see real photos from someone who just visited, I wouldn\'t have wasted my entire weekend."'
         ],
         habits: [
-          'Asking landlords for unedited video walkthroughs on WhatsApp.',
-          'Checking Google Street View for road width, garbage spots, and construction noise.',
-          'Asking about water tanker dependence and power backup before agreeing to visit.'
+          'Skipping listings with less photos or none at all.',
+          'Begging landlords for raw WhatsApp video walkthroughs before agreeing to travel.',
+          'Spending weekends on blind visits to unphotographed flats only to immediately turn around.'
         ]
       },
 
@@ -198,45 +200,45 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
         headline: 'What we explored, what failed, and what we chose',
         decisions: [
           {
-            title: '1. Verified Reality tab alongside owner photos',
-            explored: 'Tried completely deleting owner photos and requiring professional inspection photos.',
-            whyFailed: 'Owners refused to list if their initial photos were blocked, slowing down listing growth.',
-            decision: 'Kept owner photos but added an official "Verified Reality" toggle showing unedited photos taken by physical visitors.',
-            rationale: 'Renters get immediate honest contrast between marketing photos and real daylight.'
+            title: '1. In-Listing Verification Modal',
+            explored: 'Tried requiring landlords to pay for professional photography inspections.',
+            whyFailed: 'Budget landlords refused to pay inspection fees, causing listings in affordable brackets to plummet.',
+            decision: 'Added an in-listing Verification Modal that transparently displays whether the property has verified photos or needs visitor capture.',
+            rationale: 'Renters know upfront whether the photos are verified before investing time in a trip.'
           },
           {
-            title: '2. GPS-verified visitor checklists',
-            explored: 'Tried relying on online reviews written from home.',
-            whyFailed: 'Unverified reviews are easily spammed by friends or competing brokers.',
-            decision: 'Allowed checklists only from users whose phone GPS confirmed they were physically at the property.',
-            rationale: 'Provides 100% trustworthy verification on water pressure, cell reception, and dampness.'
+            title: '2. Crowdsourced Photo Procurement from Disliking Visitors',
+            explored: 'Tried asking only renters who booked the flat to take photos.',
+            whyFailed: 'Tenants who sign leases move on and have zero incentive to take or share listing photos.',
+            decision: 'Procure photos from visiting renters who inspect and dislike the property or decide not to rent it.',
+            rationale: 'Turns rejected visits into high-value verified photo streams for future searchers.'
           },
           {
-            title: '3. Usable carpet area visualizer',
-            explored: 'Tried showing only square footage numbers in the specs table.',
-            whyFailed: 'Renters do not understand the difference between 750 super built-up vs 520 usable carpet area.',
-            decision: 'Created a visual room proportion diagram showing real bed and desk fit.',
-            rationale: 'Ends the "it looked bigger in photos" shock on arrival.'
+            title: '3. Dual-Benefit Service Credits & Incentives',
+            explored: 'Tried offering small cashbacks or scratch cards.',
+            whyFailed: 'Cashbacks felt transactional and attracted spam uploads.',
+            decision: 'Incentivize visiting renters with significant discount credits towards NoBroker Packers & Movers and housekeeping.',
+            rationale: 'Directly aids the renter\'s upcoming relocation while cross-selling high-margin ancillary services.'
           }
         ],
         journey: [
-          { stage: '1. Browse', before: 'Misled by 3 wide-angle photos', after: 'Toggle "Verified Reality" for honest daylight' },
-          { stage: '2. Verify', before: 'Plead for WhatsApp video', after: 'Check GPS-verified visitor water/light report' },
-          { stage: '3. Check Space', before: 'Guess if queen bed fits', after: 'Visual usable carpet breakdown' },
-          { stage: '4. Availability', before: 'Call and find it was rented 2 weeks ago', after: 'Live availability verified within 24 hours' },
-          { stage: '5. Move-In', before: 'Waste entire weekend on blind visits', after: 'Visit with confidence and make an offer' }
+          { stage: '1. Browse', before: 'Listing has 1 blurry hall photo or none', after: 'Verification modal displays verified photo status' },
+          { stage: '2. Decision', before: 'Skip flat or gamble on a blind visit', after: 'Review unedited photos taken by recent visitors' },
+          { stage: '3. Visit', before: 'Show up and discover an unlivable flat', after: 'Visit with accurate visual expectations' },
+          { stage: '4. After Visit', before: 'Walk away frustrated after wasting half a day', after: 'Upload 3 photos, earn Packers & Movers credits' },
+          { stage: '5. Outcome', before: 'Zero value for renter or future searchers', after: 'Future renters get verified truth; tenant saves on moving' }
         ]
       },
 
       // 05: Impact & Metrics
       impactMetrics: {
         headline: 'Higher visit-to-offer rate and zero wasted trips',
-        primaryMetric: '+45% Visit-to-Offer Rate',
-        primaryDesc: 'Physical visits lead to a rental offer because expectations match reality',
-        secondaryMetric: '70% Fewer Wasted Trips',
-        secondaryDesc: 'Renters no longer burn weekends visiting dark, damp, or already-rented flats',
-        northStarContribution: 'Eliminates fake search cycles, compressing the search-to-lease timeline from 24 days down to 7 days.',
-        ancillaryAttach: 'Higher visit confidence accelerates booking of NoBroker Home Painting and Deep Cleaning.'
+        primaryMetric: 'Fewer Wasted Trips',
+        primaryDesc: 'Reduces blind, unproductive visits by surfacing genuine visitor-procured photos on budget homes',
+        secondaryMetric: 'Packers & Movers Attach',
+        secondaryDesc: 'Visits generate active pipeline for moving & housekeeping services through earned incentive credits',
+        northStarContribution: 'Eliminates dead-end search loops, accelerating Search-to-Lease Speed for budget renters.',
+        ancillaryAttach: 'Turns visit rejections into direct revenue drivers for NoBroker Packers & Movers and home cleaning.'
       }
     },
 
@@ -253,7 +255,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       featureContext: {
         stage: 'Re-engagement & Retention (Lifecycle)',
         placement: 'Mobile Push Notifications & "My Matches" Feed',
-        summary: 'Replaces generic daily push spam with calm, high-precision alerts. Sends zero notifications until a genuinely fresh, verified flat matching the renter\'s exact travel threshold and budget hits the database.',
+        summary: 'Replaces generic daily push spam with calm, high-precision alerts. Sends zero notifications until a genuinely fresh, verified flat matching the renter\'s exact requirement hits the database.',
         touchpoints: [
           {
             title: 'Commute-Match Threshold Trigger',
@@ -268,8 +270,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
             desc: 'Immediate connection from notification banner before the listing gets booked.'
           },
           {
-            title: 'Auto-Mute on Lease Signed',
-            desc: 'Instantly silences all notifications the moment a tenant finalizes a rental agreement.'
+            title: 'Auto-Mute After User-Set Days Expire',
+            desc: 'Automatically turns off notifications once user-designated search days (e.g. 15, 30, or 45 days) finish, preventing post-search clutter.'
           }
         ]
       },
@@ -278,7 +280,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       specificProblem: {
         headline: 'Daily marketing spam causes renters to permanently mute notifications',
         explanation: 'To boost daily active users, property apps blast 3 to 5 push notifications a day. The alerts repeatedly surface homes the user already rejected or flats located in distant suburbs. Renters quickly revoke notification permissions, completely severing the communication channel.',
-        hmw: 'How might we send high-value alerts only when a fresh, verified flat matches the renter\'s commute criteria so notifications feel like a superpower rather than spam?'
+        hmw: 'How might we help renters trust that notifications only surface genuinely new listings, so they don\'t disable notifications or ignore them?'
       },
 
       // 03: Research & Insights (Combined Survey + Interview Data)
@@ -288,14 +290,13 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
         surveyDetail: 'revoked notification permissions completely due to irrelevant property blasts',
         combinedFinding: 'Push notifications are the fastest way to rent a good flat in competitive rental markets. But because notifications were filled with low-quality spam, renters muted the app and lost out to offline brokers.',
         quotes: [
-          '"I used to swap apps a lot seeing my long searching, and notifications kept buzzing with irrelevant homes so I just muted everything."',
-          '"I had to turn off notifications. It was buzz-buzzing every 2 hours with flats in areas I never searched for."',
-          '"By the time I opened the app manually, the good flats were already gone."'
+          '"I basically ignored those notifications — they got buried in all the other app notifications."',
+          '"When I open them, they almost always show me the same properties I\'ve already seen."',
+          '"The app had no way of knowing that and kept pushing things we no longer needed."'
         ],
         habits: [
-          'Turning off app notifications in iOS/Android settings after 3 days.',
-          'Relying on friends or WhatsApp groups for word-of-mouth flat openings.',
-          'Opening the app once a week only to find hundreds of unread marketing cards.'
+          'Turning off app notifications in iOS/Android settings.',
+          'Relying on friends or WhatsApp groups for word-of-mouth flat openings.'
         ]
       },
 
@@ -304,33 +305,17 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
         headline: 'What we explored, what failed, and what we chose',
         decisions: [
           {
-            title: '1. Strict commute-boundary notification rule',
-            explored: 'Tried sending alerts based on city-wide popularity algorithms.',
-            whyFailed: 'Renters do not care if a flat in Electronic City is popular if their job is in Manyata Tech Park (25 km away).',
-            decision: 'Set a hard rule: push alerts fire only if commute time is strictly <= user\'s commute threshold.',
-            rationale: 'Every single alert is immediately relevant to the renter\'s daily routine.'
-          },
-          {
-            title: '2. Diff-based alert filtering (Never repeat seen homes)',
-            explored: 'Tried re-alerting users about price drops on homes they had already viewed.',
-            whyFailed: 'Renters felt annoyed seeing the same rejected homes over and over.',
-            decision: 'Built an in-app diff filter that permanently suppresses any property the renter has already skipped or opened.',
-            rationale: 'Builds trust that every notification represents a 100% newly available opportunity.'
-          },
-          {
-            title: '3. Single daily calm digest instead of random blasts',
-            explored: 'Tried firing alerts the exact second any flat is uploaded.',
-            whyFailed: 'Fired alerts at 11:30 PM or during morning meetings, disturbing renters.',
-            decision: 'Batch non-urgent alerts into a single calm morning briefing at 8:30 AM before work.',
-            rationale: 'Respects attention while giving renters first-mover advantage before work begins.'
+            title: '1. Genuinely New Listings Only & Auto-Mute Expiry',
+            explored: 'Tried sending popularity blasts or re-alerting about price drops on already seen homes.',
+            whyFailed: 'Renters felt annoyed seeing the same rejected properties repeatedly, prompting them to disable notifications altogether.',
+            decision: 'Built diff-based filtering ensuring alerts fire only for genuinely fresh homes matching their commute, and automatically mute after user-set days expire.',
+            rationale: 'Builds lasting trust that every notification represents a relevant, newly available opportunity.'
           }
         ],
         journey: [
-          { stage: '1. Preferences', before: 'Generic city-wide alerts', after: 'Set commute ceiling (e.g. max 30 mins to EcoWorld)' },
-          { stage: '2. Quality Filter', before: 'Spammed with 5 unverified ads/day', after: 'Zero spam; alerts hold until a verified home matches' },
-          { stage: '3. Notification', before: 'Random buzzes at midnight', after: 'Calm morning brief with exact commute time in banner' },
-          { stage: '4. Action', before: 'Mute notifications in frustration', after: 'Tap banner to call owner directly in under 15 mins' },
-          { stage: '5. Outcome', before: 'Miss out on prime flats', after: 'Sign lease within 48 hours of listing match' }
+          { stage: '1. Preferences', before: 'Generic city-wide push alerts', after: 'Alerts filtered strictly by commute ceiling and verified status' },
+          { stage: '2. Action', before: 'Mute notifications in frustration', after: 'Tap on the notification knowing the new alert matches their search criteria' },
+          { stage: '3. Outcome', before: 'Miss out on prime flats', after: 'Fastest access to newly added listings' }
         ]
       },
 
@@ -349,17 +334,23 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
 
   const currentP = projectsData[activeProject] || projectsData.ps2;
 
-  // The 6 Progressive Disclosure Steps for this Project
+  // The 6 Steps for this Project
   const stepsList = [
-    { id: '1', num: '01', label: 'Feature Context' },
+    { id: '1', num: '01', label: 'Context' },
     { id: '2', num: '02', label: 'The Problem' },
     { id: '3', num: '03', label: 'Research & Insights' },
-    { id: '4', num: '04', label: 'Decisions & Exploration' },
-    { id: '5', num: '05', label: 'Impact & Metrics' },
+    { id: '4', num: '04', label: 'Decisions' },
+    { id: '5', num: '05', label: 'Metrics' },
     { id: '6', num: '06', label: 'Prototype Lab' }
   ];
 
-  // Progressive Disclosure: Anime.js Scroll Animation
+  // Robust smooth scroll helper that natively scrolls whichever container is active
+  const smoothScrollTo = (targetEl) => {
+    if (!targetEl) return;
+    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // Anime.js Scroll Animation & Step Tracking
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -367,11 +358,13 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
     const stepElements = container.querySelectorAll('.progressive-step');
     if (!stepElements || stepElements.length === 0) return;
 
+    const scrollContainer = container.closest('.overflow-y-auto') || null;
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const stepId = entry.target.getAttribute('data-step-id');
-          if (stepId) {
+          if (stepId && !isScrollingRef.current) {
             setActiveStep(stepId);
           }
 
@@ -399,7 +392,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
         }
       });
     }, {
-      root: null,
+      root: scrollContainer,
       rootMargin: '-15% 0px -25% 0px',
       threshold: 0.1
     });
@@ -408,12 +401,34 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
     return () => observer.disconnect();
   }, [activeProject]);
 
+  // Sync active stepper button horizontally (X-AXIS ONLY on stepper container, never vertical)
+  useEffect(() => {
+    if (!stepperRef.current) return;
+    const activeButton = stepperRef.current.querySelector(`[data-step-btn="${activeStep}"]`);
+    if (activeButton) {
+      const stepper = stepperRef.current;
+      const btnLeft = activeButton.offsetLeft;
+      const btnWidth = activeButton.offsetWidth;
+      const stepperWidth = stepper.clientWidth;
+      if (btnLeft < stepper.scrollLeft || btnLeft + btnWidth > stepper.scrollLeft + stepperWidth) {
+        stepper.scrollTo({
+          left: Math.max(0, btnLeft - (stepperWidth - btnWidth) / 2),
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [activeStep]);
+
   const scrollToStep = (stepId) => {
     playSound('pop', soundEnabled);
     setActiveStep(stepId);
     const targetEl = document.getElementById(`proj-step-${stepId}`);
     if (targetEl) {
-      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      isScrollingRef.current = true;
+      smoothScrollTo(targetEl);
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 700);
     }
   };
 
@@ -421,10 +436,16 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
     playSound('pop', soundEnabled);
     setActiveProject(pId);
     setActiveStep('1');
-    const container = document.getElementById('projects-section');
-    if (container) {
-      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    isScrollingRef.current = true;
+    setTimeout(() => {
+      const topTarget = containerRef.current || document.getElementById('proj-step-1');
+      if (topTarget) {
+        smoothScrollTo(topTarget);
+      }
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 700);
+    }, 50);
   };
 
   return (
@@ -441,7 +462,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           className="text-2xl sm:text-3xl md:text-4xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight"
         />
         <p className="text-zinc-600 dark:text-zinc-300 text-base sm:text-lg max-w-4xl mt-2 leading-relaxed">
-          How we turned research insights into working product features — progressive disclosure following each solution from <strong>context</strong> and <strong>the specific problem</strong> through <strong>research</strong>, <strong>design decisions</strong>, <strong>metrics</strong>, and the <strong>live prototype</strong>.
+          How we turned research insights into working product features — following each solution from <strong>context</strong> and <strong>the specific problem</strong> through <strong>research</strong>, <strong>design decisions</strong>, <strong>metrics</strong>, and the <strong>live prototype</strong>.
         </p>
       </div>
 
@@ -449,7 +470,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       <div 
         ref={containerRef}
         data-reveal 
-        className="rounded-3xl sm:rounded-4xl bg-gradient-to-b from-white to-zinc-50/50 dark:from-[#121215] dark:to-[#0C0C0E] border border-zinc-200 dark:border-zinc-800/90 px-6 sm:px-10 pb-10 pt-6 sm:pt-8 shadow-sm relative space-y-6 sm:space-y-7"
+        className="rounded-3xl sm:rounded-4xl bg-gradient-to-b from-white to-zinc-50/50 dark:from-[#121215] dark:to-[#0C0C0E] border border-zinc-200 dark:border-zinc-800/90 px-6 sm:px-10 pb-10 pt-6 sm:pt-8 shadow-sm relative space-y-6 sm:space-y-7 scroll-mt-20 sm:scroll-mt-24"
       >
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-orange-500/[0.035] via-orange-500/[0.01] to-transparent pointer-events-none -z-0" />
         
@@ -525,17 +546,21 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           </h3>
         </div>
 
-        {/* Sticky Progressive Disclosure Stepper */}
-        <div className="sticky top-[56px] sm:top-[57px] z-30 bg-white/95 dark:bg-[#121215]/95 backdrop-blur-md py-2.5 sm:py-3 border-b border-zinc-200/80 dark:border-zinc-800/80 -mx-6 sm:-mx-10 px-6 sm:px-10 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar transition-all">
-          {/* 6 Subdivision Steps */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Sticky Stepper */}
+        <div 
+          ref={stepperRef}
+          className="sticky top-[56px] sm:top-[57px] z-30 bg-white/95 dark:bg-[#121215]/95 backdrop-blur-md py-2 sm:py-2.5 border-b border-zinc-200/80 dark:border-zinc-800/80 w-full overflow-x-auto no-scrollbar flex items-center justify-start gap-2"
+        >
+          {/* 6 Steps */}
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 flex-nowrap">
             {stepsList.map((step) => {
               const isActive = activeStep === step.id;
               return (
                 <button
                   key={step.id}
+                  data-step-btn={step.id}
                   onClick={() => scrollToStep(step.id)}
-                  className={`px-3 py-1.5 rounded-full text-xs transition-all tactile-btn flex items-center gap-1.5 shrink-0 ${
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs transition-colors tactile-btn flex items-center gap-1.5 shrink-0 ${
                     isActive
                       ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold shadow-xs'
                       : 'bg-zinc-100/80 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
@@ -597,20 +622,6 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
                 />
               </div>
 
-            </div>
-
-            {/* Bottom Row: 4 Full-Width Editorial Touchpoint Columns (Clean, unboxed layout) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 pt-4 sm:pt-6 border-t border-zinc-100 dark:border-zinc-800/60">
-              {currentP.featureContext.touchpoints.map((tp, idx) => (
-                <div key={idx} className="anime-text space-y-1.5">
-                  <span className="text-xs sm:text-sm font-mono font-bold text-orange-600 dark:text-orange-400 block">
-                    {tp.title}
-                  </span>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                    {tp.desc}
-                  </p>
-                </div>
-              ))}
             </div>
 
           </div>
@@ -691,7 +702,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
             {/* Observed Coping Habits */}
             <div className="space-y-2 pt-2">
               <span className="anime-text text-xs font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-bold block">
-                Workarounds Users Invented
+                What Users Did
               </span>
               <ul className="space-y-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">
                 {currentP.researchInsights.habits.map((h, idx) => (
@@ -891,7 +902,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
                   onClick={() => {
                     playSound('pop', soundEnabled);
                     const gapsEl = document.getElementById('gaps-section');
-                    if (gapsEl) gapsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (gapsEl) smoothScrollTo(gapsEl, 65);
                   }}
                   className="px-5 py-2.5 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs flex items-center gap-2 shadow-sm hover:scale-105 active:scale-95 tactile-btn transition-all"
                 >

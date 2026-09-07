@@ -24,7 +24,7 @@ export const PersonalStoryContext = () => {
         </div>
         <KineticHeading 
           as="h2"
-          text="I started with an assumption — and the research broke it."
+          text="I started with an assumption — and the research refined it."
           className="text-2xl sm:text-3xl md:text-4xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight"
         />
       </div>
@@ -33,13 +33,13 @@ export const PersonalStoryContext = () => {
       <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-10 border-b border-zinc-100 dark:border-zinc-800/80">
         <div className="lg:col-span-7 space-y-4 text-zinc-600 dark:text-zinc-300 text-base sm:text-lg leading-relaxed">
           <p>
-            I started this project as an <strong>active renter in Bengaluru</strong>, spending hours after work hunting for a flat within <strong>45 minutes of my office</strong> without paying two months of rent in broker fees.
+            Moving from a <strong>tier-2 town to Bengaluru</strong> in search of better career opportunities, I experienced firsthand the daunting reality of renting in a fast-paced metropolis. Like thousands of newcomers, I spent exhausting hours after work hunting for an affordable flat without burning two months of hard-earned income on broker fees.
           </p>
           <p>
-            NoBroker promised to <strong>cut out middlemen and make renting easy</strong>. But watching friends, colleagues, and myself search for a home, the reality felt frustrating: <strong>hours of browsing</strong>, dozens of open browser tabs, and <strong>zero scheduled visits</strong> by the end of the evening.
+            NoBroker promised to <strong>cut out middlemen and make renting easy</strong>. But for budget renters migrating from different parts outside the metropolitan cities, the friction is acute. Moving into an unfamiliar city, renters navigate an overwhelming web of hyper-local challenges—unpredictable choke-point traffic, spotty water supply, and misleading distances. Evenings turn into <strong>hours of browsing</strong>, dozens of open browser tabs, and <strong>zero scheduled visits</strong>.
           </p>
           <p className="text-zinc-900 dark:text-white font-semibold">
-            I set out to discover why people with high intent to rent were <strong>dropping off before ever visiting a flat</strong>.
+            I set out to discover why budget renters with high intent were <strong>dropping off before ever visiting a flat</strong>.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export const PersonalStoryContext = () => {
 
           <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400">
             <span>Hypothesis v1 · August 2026</span>
-            <span className="text-orange-600 dark:text-orange-400 font-bold">Turned out to be wrong →</span>
+            <span className="text-orange-600 dark:text-orange-400 font-bold">Turned out to be wrong</span>
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@ export const PersonalStoryContext = () => {
           className="text-xl sm:text-2xl md:text-3xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight"
         />
         <p className="text-zinc-600 dark:text-zinc-300 text-base sm:text-lg max-w-4xl leading-relaxed">
-          I collected <strong>52 survey responses</strong> (filtering to 37 active metro renters) and conducted <strong>7 in-depth interviews</strong> across Bangalore, Mumbai, Pune, and Hyderabad. The real friction was not filter count or pricing confusion. It was the <strong>Flow Break</strong>: tenants had to invent exhausting manual workarounds because the app failed to answer basic ground truths.
+          I ran a mixed-methods research study collecting <strong>52 survey responses</strong> (filtered to 37 active metro renters) alongside <strong>7 in-depth interviews</strong>. We focused specifically on <strong>migrating professionals and budget flat-hunters</strong> moving into major metropolitan hubs (Bengaluru, Mumbai, Pune, and Hyderabad). Rather than surface-level feature requests, we investigated <strong>how tenants actually evaluate listings</strong> during grueling 45–90 minute sessions—tracking where high-intent renters hit dead ends, when they abandon the app, and the exhausting manual workarounds they resort to when digital listings conflict with offline reality.
         </p>
       </div>
 

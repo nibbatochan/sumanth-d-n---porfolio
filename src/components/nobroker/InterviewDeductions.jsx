@@ -76,10 +76,10 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
       clusterNumber: '02',
       targetPillar: 'ps1',
       name: 'Photos vs. reality discrepancy',
-      tension: 'Wide-angle lenses and filtered photos hide small rooms, low natural light, and poor water pressure.',
+      tension: 'In lower-budget segments, there are few to no photos, even though photos or videos are the primary mode of verifying the reality of a home before visiting.',
       status: 'picked',
       pillarTag: 'Solved in Redesign · PS1',
-      quote: '"Most listings only show 4 or 5 bright photos that make the room look twice as big as it actually is."'
+      quote: '"Some had one or two photos of the hall, and even lower ones didn\'t even have any. So I completely skipped those."'
     },
     {
       id: 5,
@@ -154,7 +154,7 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
           className="text-2xl sm:text-3xl md:text-4xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight"
         />
         <p className="text-zinc-600 dark:text-zinc-300 text-base sm:text-lg max-w-4xl mt-2 leading-relaxed">
-          From 52 surveys and 7 interviews, tenant frustrations fell into <strong>7 distinct patterns</strong>. To create real impact rather than shallow tweaks, I focused on <strong>three core product failures</strong> and parked external market and legal issues.
+          From 52 surveys and 7 interviews, tenant frustrations fell into <strong>7 distinct patterns</strong>. To create real impact rather than shallow tweaks, I focused on <strong>three core user behaviors</strong> and parked external market and legal issues.
         </p>
       </div>
 
@@ -270,7 +270,7 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
                   Successful Move-Ins (Search-to-Lease Velocity)
                 </h4>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                  The speed and ease with which a renter finds, visits, and leases a verified flat without broker fees—compressing Bangalore's grueling <strong>24-day fragmented search down to under 7 days</strong>.
+                  The speed and ease with which a renter finds, visits, and leases a verified flat without broker fees—compressing Bangalore's grueling 24-day fragmented search down to under 7 days.
                 </p>
               </div>
 
@@ -301,7 +301,7 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
                   01 · Commute Checks (PS2)
                 </span>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Renters check rush-hour travel times <strong>directly inside search</strong> (0% Google Maps exit rate).
+                  Renters check rush-hour travel times directly inside search (0% Google Maps exit rate).
                 </p>
               </div>
 
@@ -311,7 +311,7 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
                   02 · Visit-to-Lease Rate (PS1)
                 </span>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Physical visits that lead to a rental offer, eliminating <strong>wasted trips to misleading flats</strong>.
+                  Physical visits that lead to a rental offer, eliminating wasted trips to misleading flats.
                 </p>
               </div>
 
@@ -321,7 +321,7 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
                   03 · Alert-to-Contact Speed (PS4)
                 </span>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Renters reaching landlords within <strong>15 minutes</strong> of a verified listing going live.
+                  Renters reaching landlords within 15 minutes of a verified listing going live.
                 </p>
               </div>
 
@@ -331,7 +331,7 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
                   04 · Move-In Services
                 </span>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Renters booking <strong>rental agreements, packers & movers, and deep cleaning</strong>.
+                  Renters booking rental agreements, packers & movers, and deep cleaning.
                 </p>
               </div>
 
