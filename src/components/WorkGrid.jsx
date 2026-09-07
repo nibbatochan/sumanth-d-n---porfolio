@@ -23,7 +23,7 @@ export const WorkGrid = ({ onSelectProject, soundEnabled }) => {
   }, [activeCategory]);
 
   return (
-    <section id="work" className="py-20 sm:py-24 px-4 sm:px-8 max-w-[920px] mx-auto space-y-10">
+    <section id="work" className="py-20 sm:py-24 px-4 sm:px-8 max-w-[830px] mx-auto space-y-10">
       
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-6 border-b border-zinc-200 dark:border-zinc-800 gap-4">

@@ -157,7 +157,7 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
       aria-label="Interactive 3D Flying Dove Canvas"
       title="Aim with crosshair gun • Click to shoot colored laser projectile (dove dodges!)"
       style={{ cursor: 'crosshair' }}
-      className="w-full h-full min-h-[340px] sm:min-h-[396px] lg:min-h-[414px] relative select-none flex flex-col items-center justify-center group overflow-visible"
+      className="w-full h-full min-h-[306px] sm:min-h-[356px] lg:min-h-[372px] relative select-none flex flex-col items-center justify-center group overflow-visible"
     >
       {/* 1. Distinct Vivid Colored Projectile Tracers */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-30 overflow-visible" aria-hidden="true">
@@ -244,7 +244,7 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
       {/* 4. Ultra-Large High-Definition 3D Flying Dove Canvas */}
       <div className="w-full h-full flex items-center justify-center overflow-visible relative z-10 my-auto">
         <pre 
-          className={`font-mono text-[5.9px] xs:text-[6.5px] sm:text-[7.4px] md:text-[8.3px] lg:text-[8.8px] xl:text-[9.4px] 2xl:text-[10.1px] leading-[0.97] tracking-tighter whitespace-pre text-center select-none transition-colors duration-300 ${currentTheme.textClass} drop-shadow-sm overflow-visible`}
+          className={`font-mono text-[5.3px] xs:text-[5.8px] sm:text-[6.7px] md:text-[7.5px] lg:text-[7.9px] xl:text-[8.5px] 2xl:text-[9.1px] leading-[0.97] tracking-tighter whitespace-pre text-center select-none transition-colors duration-300 ${currentTheme.textClass} drop-shadow-sm overflow-visible`}
           style={{ margin: 0 }}
         >
           {asciiOutput}
