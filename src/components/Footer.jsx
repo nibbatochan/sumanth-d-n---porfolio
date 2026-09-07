@@ -217,7 +217,7 @@ export const Footer = ({ soundEnabled, onOpenContact, className = "" }) => {
       <div className="absolute top-0 left-0 right-0 h-32 sm:h-40 bg-gradient-to-b from-[#09090B] to-transparent z-5 pointer-events-none" />
 
       {/* Bottom Footer Bar - Fully Responsive Clean Stacking on Mobile */}
-      <div className="relative z-20 max-w-[830px] mx-auto w-full py-8 sm:py-12 px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 text-xs text-zinc-300">
+      <div className="relative z-20 max-w-5xl mx-auto w-full py-8 sm:py-12 px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 text-xs text-zinc-300">
         
         {/* Brand & Bangalore Time Indicator */}
         <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 text-center sm:text-left">

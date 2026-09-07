@@ -73,7 +73,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   };
 
   return (
-    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-110px)] flex flex-col justify-center pt-28 sm:pt-32 lg:pt-28 pb-4 sm:pb-6 px-4 sm:px-8 max-w-[830px] mx-auto w-full relative z-10">
+    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-110px)] flex flex-col justify-center pt-28 sm:pt-32 lg:pt-28 pb-4 sm:pb-6 px-4 sm:px-8 max-w-5xl mx-auto w-full relative z-10">
       
       {/* Main Grid: Left Column Headline & Bio + Right Column 3D ASCII Canvas (Untouched) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center my-auto">
@@ -99,23 +99,23 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
             
             {/* Line 1: 'Crafting thoughtful,' */}
             <div className="leading-[1.12] sm:leading-tight">
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[39px] font-sans font-bold tracking-tight">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight">
                 Crafting{' '}
               </span>
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[39px] font-serif italic font-normal text-orange-600 dark:text-orange-400">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400">
                 thoughtful,
               </span>
             </div>
 
             {/* Line 2: 'human-centered' + Scaled Pixel Flower */}
             <div className="flex items-center flex-wrap gap-1.5 sm:gap-2 leading-[1.12] sm:leading-tight">
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[39px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none">
                 human-centered
               </span>
               <PixelFlower 
                 isDarkMode={isDarkMode}
                 soundEnabled={soundEnabled} 
-                className="w-7 h-7 sm:w-9 sm:h-9 md:w-11 md:h-11 lg:w-[39px] lg:h-[39px] ml-2 sm:ml-2.5 -translate-y-0.5 sm:-translate-y-1 drop-shadow-xs" 
+                className="w-7 h-7 sm:w-9 sm:h-9 md:w-11 md:h-11 lg:w-12 lg:h-12 ml-2 sm:ml-2.5 -translate-y-0.5 sm:-translate-y-1 drop-shadow-xs" 
               />
             </div>
 
@@ -124,7 +124,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
               <span 
                 onMouseEnter={() => playSound('pop', soundEnabled)}
                 title="Sumanth D N — Hover to reveal"
-                className="inline-flex items-center justify-center rounded-full overflow-hidden border border-zinc-300 dark:border-zinc-700 shadow-md backdrop-blur-xs hover:border-orange-500 hover:shadow-orange-500/20 transition-all duration-300 select-none cursor-pointer h-8 sm:h-10 md:h-11 lg:h-[39px] w-22 sm:w-28 md:w-34 lg:w-[122px] shrink-0 group self-center bg-black"
+                className="inline-flex items-center justify-center rounded-full overflow-hidden border border-zinc-300 dark:border-zinc-700 shadow-md backdrop-blur-xs hover:border-orange-500 hover:shadow-orange-500/20 transition-all duration-300 select-none cursor-pointer h-8 sm:h-10 md:h-11 lg:h-12 w-22 sm:w-28 md:w-34 lg:w-38 shrink-0 group self-center bg-black"
               >
                 {/* Smooth pan from Face on right to Hand on left */}
                 <img 
@@ -133,14 +133,14 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
                   className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] object-[84%_center] group-hover:object-[8%_center] group-hover:scale-105"
                 />
               </span>
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[39px] font-sans font-bold tracking-tight leading-none self-center">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight leading-none self-center">
                 products &
               </span>
             </div>
 
             {/* Line 4: 'brand experiences.' */}
             <div className="pt-0.5 sm:pt-1 leading-[1.12] sm:leading-tight">
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[41px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
                 brand experiences.
               </span>
             </div>
@@ -188,7 +188,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
 
         {/* Right 5 Columns: 3D ASCII Flying Dove Canvas (100% Untouched) */}
         <div className="lg:col-span-5 flex items-center justify-center relative select-none w-full overflow-visible mt-6 lg:mt-0 z-0">
-            <div className="w-full lg:w-[114%] xl:w-[118%] lg:-ml-[14%] xl:-ml-[16%] flex items-center justify-center overflow-visible pointer-events-auto">
+            <div className="w-full lg:w-[118%] xl:w-[122%] lg:-ml-[16%] xl:-ml-[20%] flex items-center justify-center overflow-visible pointer-events-auto">
           <AsciiCanvas soundEnabled={soundEnabled} isDarkMode={isDarkMode} />
             </div>
         </div>
