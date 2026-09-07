@@ -29,7 +29,7 @@ export const AboutSection = () => {
   };
 
   return (
-    <section className="pt-20 pb-0 px-4 sm:px-8 max-w-5xl mx-auto space-y-20 relative z-30">
+    <section className="pt-20 pb-0 px-4 sm:px-8 max-w-6xl mx-auto space-y-20 relative z-30">
       
       {/* 1. Work History Section (#about) */}
       <div id="about" className="space-y-6 scroll-mt-28">
