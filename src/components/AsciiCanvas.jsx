@@ -59,14 +59,23 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
     };
   }, []);
 
+  const getZoom = () => {
+    try {
+      const docZoom = parseFloat(window.getComputedStyle(document.documentElement).zoom);
+      if (docZoom && !isNaN(docZoom) && docZoom > 0) return docZoom;
+    } catch (e) {}
+    return 1;
+  };
+
   const handleMouseMove = (e) => {
     if (!containerRef.current || !engineRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
+    const zoom = getZoom();
     
     engineRef.current.setMouse(x, y);
-    setReticlePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setReticlePos({ x: (e.clientX - rect.left) / zoom, y: (e.clientY - rect.top) / zoom });
     setIsAiming(true);
   };
 
@@ -76,23 +85,25 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
     const touch = e.touches[0];
     const x = (touch.clientX - rect.left) / rect.width;
     const y = (touch.clientY - rect.top) / rect.height;
+    const zoom = getZoom();
 
     engineRef.current.setMouse(x, y);
-    setReticlePos({ x: touch.clientX - rect.left, y: touch.clientY - rect.top });
+    setReticlePos({ x: (touch.clientX - rect.left) / zoom, y: (touch.clientY - rect.top) / zoom });
     setIsAiming(true);
   };
 
   const handleShoot = (e) => {
     if (!containerRef.current || !engineRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
+    const zoom = getZoom();
 
     const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : rect.left + rect.width / 2);
     const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : rect.top + rect.height / 2);
 
-    const startX = clientX - rect.left;
-    const startY = clientY - rect.top;
-    const normX = startX / rect.width;
-    const normY = startY / rect.height;
+    const startX = (clientX - rect.left) / zoom;
+    const startY = (clientY - rect.top) / zoom;
+    const normX = (clientX - rect.left) / rect.width;
+    const normY = (clientY - rect.top) / rect.height;
 
     // Trigger internal 3D math & evasive dodge
     engineRef.current.shootProjectile(normX, normY);

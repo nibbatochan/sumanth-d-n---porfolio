@@ -9,8 +9,16 @@ export const GlobalAsciiBackground = ({ isDarkMode = true, fullPage = false }) =
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    const getZoom = () => {
+      try {
+        const docZoom = parseFloat(window.getComputedStyle(document.documentElement).zoom);
+        if (docZoom && !isNaN(docZoom) && docZoom > 0) return docZoom;
+      } catch (e) {}
+      return 1;
+    };
+
+    let width = (canvas.width = Math.round(window.innerWidth / getZoom()));
+    let height = (canvas.height = Math.round(window.innerHeight / getZoom()));
 
     let mouseX = -1000;
     let mouseY = -1000;
@@ -18,8 +26,9 @@ export const GlobalAsciiBackground = ({ isDarkMode = true, fullPage = false }) =
     let targetMouseY = -1000;
 
     const handleMouseMove = (e) => {
-      targetMouseX = e.clientX;
-      targetMouseY = e.clientY;
+      const zoom = getZoom();
+      targetMouseX = e.clientX / zoom;
+      targetMouseY = e.clientY / zoom;
     };
 
     const handleMouseLeave = () => {
@@ -29,8 +38,9 @@ export const GlobalAsciiBackground = ({ isDarkMode = true, fullPage = false }) =
 
     const handleResize = () => {
       if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      const zoom = getZoom();
+      width = canvas.width = Math.round(window.innerWidth / zoom);
+      height = canvas.height = Math.round(window.innerHeight / zoom);
     };
 
     window.addEventListener('resize', handleResize);

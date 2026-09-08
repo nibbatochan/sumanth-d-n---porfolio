@@ -15,8 +15,28 @@ export const CustomCursor = () => {
       return;
     }
 
+    const getZoom = () => {
+      try {
+        const docZoom = parseFloat(window.getComputedStyle(document.documentElement).zoom);
+        if (docZoom && !isNaN(docZoom) && docZoom > 0) return docZoom;
+        const bodyZoom = parseFloat(window.getComputedStyle(document.body).zoom);
+        if (bodyZoom && !isNaN(bodyZoom) && bodyZoom > 0) return bodyZoom;
+        if (document.documentElement.clientWidth > 0 && window.innerWidth > 0) {
+          return window.innerWidth / document.documentElement.clientWidth;
+        }
+      } catch (e) {}
+      return 1;
+    };
+
     const onMouseMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      const zoom = getZoom();
+      const x = e.clientX / zoom;
+      const y = e.clientY / zoom;
+      if (cursorDotRef.current) {
+        cursorDotRef.current.style.left = `${x}px`;
+        cursorDotRef.current.style.top = `${y}px`;
+      }
+      setPosition({ x, y });
       setHidden(false);
     };
 
@@ -25,15 +45,22 @@ export const CustomCursor = () => {
     const onMouseLeave = () => setHidden(true);
 
     const onMouseEnterLink = (e) => {
-      const target = e.target.closest('a, button, [role="button"], input, textarea, select');
+      const target = e.target.closest(
+        'a, button, [role="button"], input, textarea, select, .cursor-pointer, [class*="cursor-pointer"], [onclick]'
+      );
       if (target) {
         setLinkHovered(true);
-      } else {
+        return;
+      }
+      try {
+        const computed = window.getComputedStyle(e.target).cursor;
+        setLinkHovered(computed === 'pointer');
+      } catch (err) {
         setLinkHovered(false);
       }
     };
 
-    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mouseup', onMouseUp);
     document.addEventListener('mouseleave', onMouseLeave);
