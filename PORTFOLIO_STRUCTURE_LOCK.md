@@ -30,6 +30,7 @@
   }
   ```
 - **Page Container Width**: Standard **`max-w-6xl` (1152px)** across all sections (`Navbar`, `KineticHero`, `WorkGrid`, `AboutSection`, `Footer`).
+- **Cursor & Mouse Coordinates**: Because `zoom: 0.85` scales CSS pixel coordinates, all mouse tracking (`CustomCursor.jsx`, `AsciiCanvas.jsx`, `GlobalAsciiBackground.jsx`) divides `e.clientX` and `e.clientY` by the computed zoom factor (`e.clientX / zoom`) to ensure 100% pixel-perfect alignment with the OS cursor pointer. Hover state detection also inspects `.cursor-pointer` and computed cursor styles.
 
 ---
 
