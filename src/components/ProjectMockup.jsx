@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameController, Buildings, Coffee, Sparkle, Compass, MapPin } from '@phosphor-icons/react';
+import { GameController, Buildings, Coffee, Sparkle, Compass, MapPin, PaintBrush } from '@phosphor-icons/react';
 
 export const ProjectMockup = ({ project, interactive = true }) => {
   if (project.id === 'nobroker-commute') {
@@ -110,6 +110,68 @@ export const ProjectMockup = ({ project, interactive = true }) => {
         <div className="flex items-center justify-between text-[11px] text-[#686058] dark:text-white/70 font-mono border-t border-[#E8DFC8] dark:border-white/10 pt-3">
           <span>KRPIET & HUMAN INVERSE</span>
           <span className="font-serif italic text-[#C86D51]">Cubism UI Theme</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (project.id === 'poster-challenge') {
+    return (
+      <div className="w-full h-full bg-[#0E0C10] text-white p-5 sm:p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden select-none border border-orange-500/20 shadow-inner">
+        {/* Ambient glow */}
+        <div className="absolute top-0 right-0 w-44 h-44 bg-[#FF4D2E]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-36 h-36 bg-[#CCFF00]/10 rounded-full blur-2xl pointer-events-none" />
+
+        {/* Top header row */}
+        <div className="flex items-center justify-between text-xs text-white/60 border-b border-white/10 pb-2.5 relative z-10">
+          <div className="flex items-center gap-1.5 font-mono">
+            <span className="w-2 h-2 rounded-full bg-[#FF4D2E] animate-pulse" />
+            <span className="text-[#FF7A5C] font-bold tracking-wider text-[11px]">30-DAY POSTER SPRINT</span>
+          </div>
+          <span className="font-mono text-[10px] bg-[#FF4D2E]/20 text-[#FF8F77] px-2.5 py-0.5 rounded-full border border-[#FF4D2E]/40 font-bold">
+            SERIES 01–30
+          </span>
+        </div>
+
+        {/* Center Poster Preview Card */}
+        <div className="my-2.5 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-br from-[#1E161C] to-[#120E15] border border-white/10 text-white shadow-xl relative z-10">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-[#CCFF00]">Daily Editorial & Grid Experiments</p>
+              <p className="text-lg sm:text-xl font-bold font-sans tracking-tight mt-0.5">Swiss Typography & Form</p>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-[#FF4D2E]/20 border border-[#FF4D2E]/40 flex items-center justify-center shrink-0">
+              <PaintBrush size={16} weight="duotone" className="text-[#FF7A5C]" />
+            </div>
+          </div>
+
+          {/* Mini 3-poster ribbon thumbnail preview */}
+          <div className="grid grid-cols-3 gap-2 mt-3">
+            <div className="h-14 rounded-lg bg-[#271E25] border border-white/10 p-1.5 flex flex-col justify-between">
+              <span className="text-[8px] font-mono text-orange-400 font-bold">#07</span>
+              <div className="w-full h-1 bg-[#FF4D2E] rounded-full" />
+              <span className="text-[7px] font-mono text-white/60 truncate">SWISS GRID</span>
+            </div>
+            <div className="h-14 rounded-lg bg-[#24211A] border border-white/10 p-1.5 flex flex-col justify-between">
+              <span className="text-[8px] font-mono text-[#CCFF00] font-bold">#18</span>
+              <div className="w-full h-1 bg-[#CCFF00] rounded-full" />
+              <span className="text-[7px] font-mono text-white/60 truncate">BRUTALIST</span>
+            </div>
+            <div className="h-14 rounded-lg bg-[#1D212A] border border-white/10 p-1.5 flex flex-col justify-between">
+              <span className="text-[8px] font-mono text-teal-400 font-bold">#29</span>
+              <div className="w-full h-1 bg-teal-400 rounded-full" />
+              <span className="text-[7px] font-mono text-white/60 truncate">KINETIC</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom meta row */}
+        <div className="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10 text-xs relative z-10">
+          <div className="flex items-center gap-1.5 font-mono text-[11px] text-white/80">
+            <span className="text-[#CCFF00] font-bold">30/30</span>
+            <span>Compositions Completed</span>
+          </div>
+          <span className="font-mono text-[10px] text-white/50">Graphic & Brand</span>
         </div>
       </div>
     );

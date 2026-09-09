@@ -11,6 +11,7 @@ import { AboutSection } from './components/AboutSection';
 import { ContactModal } from './components/ContactModal';
 import { Footer } from './components/Footer';
 import { NoBrokerCasePage } from './components/NoBrokerCasePage';
+import { PosterChallengePage } from './components/PosterChallengePage';
 import { projects } from './data/portfolioData';
 import { Agentation } from 'agentation';
 
@@ -27,6 +28,9 @@ export function App() {
       if (window.location.hash === '#/project/nobroker') {
         const nobrokerProj = projects.find(p => p.id === 'nobroker-commute');
         if (nobrokerProj) setActiveDedicatedCase(nobrokerProj);
+      } else if (window.location.hash === '#/project/poster-challenge') {
+        const posterProj = projects.find(p => p.id === 'poster-challenge');
+        if (posterProj) setActiveDedicatedCase(posterProj);
       } else {
         setActiveDedicatedCase(null);
       }
@@ -99,9 +103,15 @@ export function App() {
         <WorkGrid
           soundEnabled={soundEnabled}
           onSelectProject={(proj) => {
-            if (proj.id === 'nobroker-commute' || proj.hasDedicatedPage) {
+            if (proj.id === 'nobroker-commute') {
               setActiveDedicatedCase(proj);
               window.history.pushState(null, '', '#/project/nobroker');
+            } else if (proj.id === 'poster-challenge') {
+              setActiveDedicatedCase(proj);
+              window.history.pushState(null, '', '#/project/poster-challenge');
+            } else if (proj.hasDedicatedPage) {
+              setActiveDedicatedCase(proj);
+              window.history.pushState(null, '', `#/project/${proj.id}`);
             } else {
               setSelectedProject(proj);
             }
@@ -120,9 +130,24 @@ export function App() {
       />
 
       {/* 7. Dedicated Full Case Study Page View */}
-      {activeDedicatedCase && (
+      {activeDedicatedCase && activeDedicatedCase.id === 'nobroker-commute' && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-[#F5F5F7] dark:bg-[#0C0C0E] animate-fade-in">
           <NoBrokerCasePage
+            soundEnabled={soundEnabled}
+            isDarkMode={isDarkMode}
+            setIsDarkMode={setIsDarkMode}
+            onOpenContact={() => setIsContactOpen(true)}
+            onBack={() => {
+              setActiveDedicatedCase(null);
+              window.history.pushState(null, '', window.location.pathname);
+            }}
+          />
+        </div>
+      )}
+
+      {activeDedicatedCase && activeDedicatedCase.id === 'poster-challenge' && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-white dark:bg-[#09090B] animate-fade-in">
+          <PosterChallengePage
             soundEnabled={soundEnabled}
             isDarkMode={isDarkMode}
             setIsDarkMode={setIsDarkMode}
