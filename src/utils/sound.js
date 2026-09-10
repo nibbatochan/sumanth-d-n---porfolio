@@ -197,7 +197,7 @@ export const playSound = (type = 'click', enabled = true) => {
 };
 
 // ─────────────────────────────────────────────────────────────
-// Organic Mellow Wind Swoosh System (Audio buffers + Pink noise fallback)
+// Organic Mellow Wind Swoosh & Tactile Air Drag System
 // ─────────────────────────────────────────────────────────────
 const WIND_FILES = [
   '/sounds/wind-swoosh-1.mp3', // Air woosh
@@ -207,7 +207,14 @@ const WIND_FILES = [
   '/sounds/wind-swoosh-5.mp3', // Fast whoosh transition
 ];
 
+const USER_DRAG_FILES = [
+  '/sounds/user-drag-1.mp3',   // Soft tactile air drag start/slip
+  '/sounds/user-drag-2.mp3',   // Subtle textured swoosh glide
+  '/sounds/user-drag-3.wav',   // Smooth organic air pull / suction
+];
+
 const windBuffers = [];
+const userDragBuffers = [];
 let hasInitiatedWindPreload = false;
 
 export async function preloadWindSounds() {
@@ -216,25 +223,29 @@ export async function preloadWindSounds() {
   const ctx = getAudioContext();
   if (!ctx) return;
 
-  for (let i = 0; i < WIND_FILES.length; i++) {
+  const loadFile = async (url, bufferArray, idx) => {
     try {
-      const res = await fetch(WIND_FILES[i]);
+      const res = await fetch(url);
       if (res.ok) {
         const arrayBuf = await res.arrayBuffer();
-        ctx.decodeAudioData(arrayBuf, (decoded) => {
-          windBuffers[i] = decoded;
-        }, () => {});
+        const decoded = await ctx.decodeAudioData(arrayBuf);
+        bufferArray[idx] = decoded;
       }
     } catch (err) {
-      // Ignore network errors
+      // Ignore network/decoding errors
     }
-  }
+  };
+
+  await Promise.all([
+    ...WIND_FILES.map((url, i) => loadFile(url, windBuffers, i)),
+    ...USER_DRAG_FILES.map((url, i) => loadFile(url, userDragBuffers, i))
+  ]);
 }
 
-function synthesizeMellowWind(ctx, variant = 'soft', volume = 0.12) {
+function synthesizeMellowWind(ctx, variant = 'soft', volume = 0.28) {
   const now = ctx.currentTime;
   const sampleRate = ctx.sampleRate;
-  const duration = variant === 'depth' ? 0.85 : variant === 'focus' ? 0.65 : 0.40;
+  const duration = variant === 'depth' ? 0.95 : variant === 'focus' ? 0.75 : 0.50;
   const bufferSize = Math.floor(sampleRate * duration);
   const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
   const output = buffer.getChannelData(0);
@@ -254,14 +265,14 @@ function synthesizeMellowWind(ctx, variant = 'soft', volume = 0.12) {
 
   const filter = ctx.createBiquadFilter();
   filter.type = 'lowpass';
-  filter.Q.setValueAtTime(1.2, now);
+  filter.Q.setValueAtTime(1.0, now);
 
-  const startFreq = variant === 'depth' ? 180 : 240;
-  const peakFreq = variant === 'fling' ? 580 : variant === 'focus' ? 460 : 360;
+  const startFreq = variant === 'depth' ? 260 : 350;
+  const peakFreq = variant === 'fling' ? 820 : variant === 'focus' ? 680 : 520;
 
   filter.frequency.setValueAtTime(startFreq, now);
   filter.frequency.linearRampToValueAtTime(peakFreq, now + duration * 0.35);
-  filter.frequency.exponentialRampToValueAtTime(140, now + duration);
+  filter.frequency.exponentialRampToValueAtTime(180, now + duration);
 
   const gain = ctx.createGain();
   gain.gain.setValueAtTime(0.001, now);
@@ -277,9 +288,9 @@ function synthesizeMellowWind(ctx, variant = 'soft', volume = 0.12) {
 }
 
 /**
- * Plays very mellow, organic wind swooshes at a subtle, low volume.
+ * Plays very mellow, organic wind swooshes at an audible yet smooth volume.
  * Zero electronic tones or beeps.
- * @param {'fling' | 'depth' | 'focus' | 'soft' | 'random'} variant
+ * @param {'fling' | 'depth' | 'focus' | 'soft' | 'drag-start' | 'drag-move' | 'drag-center' | 'cruise-arrive' | 'random'} variant
  * @param {{ volume?: number, soundEnabled?: boolean }} options
  */
 export const playWindSwoosh = (variant = 'random', options = {}) => {
@@ -290,60 +301,107 @@ export const playWindSwoosh = (variant = 'random', options = {}) => {
     const ctx = getAudioContext();
     if (!ctx) return;
 
+    const play = () => {
+      let buffer = null;
+      let filterCutoff = 2400;
+      let playbackRate = 0.94 + Math.random() * 0.12;
+      let durationCap = 2.2;
+      // Default volume with +10% boost across the board
+      let defaultVol = 0.38;
+
+      if (variant === 'drag-start') {
+        // Subtle tactile grab sound from uploaded tracks
+        buffer = userDragBuffers[0] || windBuffers[0];
+        defaultVol = 0.24;
+        filterCutoff = 2600;
+        durationCap = 0.8;
+      } else if (variant === 'drag-move') {
+        // Gentle airy rustle while moving towards center
+        buffer = userDragBuffers[1] || windBuffers[4];
+        defaultVol = 0.22;
+        filterCutoff = 2200;
+        durationCap = 0.9;
+      } else if (variant === 'drag-center') {
+        // Mellow air pull / lock into center drop zone
+        buffer = userDragBuffers[2] || userDragBuffers[1] || windBuffers[1];
+        defaultVol = 0.28;
+        filterCutoff = 2000;
+        durationCap = 1.6;
+      } else if (variant === 'cruise-arrive') {
+        // Soft mellow arrival breeze when cruise advances a new card to front
+        buffer = userDragBuffers[2] || windBuffers[1];
+        defaultVol = 0.26;
+        playbackRate = 0.88 + Math.random() * 0.08; // slightly deeper pitch for arrival
+        filterCutoff = 1900;
+        durationCap = 1.8;
+      } else if (variant === 'fling') {
+        // Fast airy swoosh
+        buffer = Math.random() > 0.5 ? windBuffers[0] : windBuffers[4];
+        defaultVol = 0.39;
+        filterCutoff = 2500;
+      } else if (variant === 'depth') {
+        // Tunnel reverberant swoosh
+        buffer = Math.random() > 0.5 ? windBuffers[1] : windBuffers[3];
+        defaultVol = 0.35;
+        filterCutoff = 2200;
+      } else if (variant === 'focus') {
+        // Resonant soft air glide for center view
+        buffer = userDragBuffers[2] || windBuffers[1];
+        defaultVol = 0.39;
+        filterCutoff = 2300;
+      } else if (variant === 'soft') {
+        // Delicate whisper breeze
+        buffer = userDragBuffers[0] || windBuffers[0];
+        defaultVol = 0.28;
+        filterCutoff = 2100;
+      } else {
+        const pool = [...windBuffers, ...userDragBuffers].filter(Boolean);
+        buffer = pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : null;
+        defaultVol = 0.35;
+      }
+
+      // Allow caller to override volume (scaled by 1.1x for +10% boost)
+      const baseVol = (options.volume !== undefined ? options.volume * 1.1 : defaultVol);
+      const now = ctx.currentTime;
+
+      if (buffer) {
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.playbackRate.value = playbackRate;
+
+        // Low-pass filter to keep sound warm, soft and mellow
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(filterCutoff, now);
+
+        const playDuration = Math.min(buffer.duration, durationCap);
+
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(baseVol, now + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + playDuration);
+
+        source.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        source.start(now);
+        source.stop(now + playDuration + 0.05);
+      } else {
+        synthesizeMellowWind(ctx, variant, baseVol);
+      }
+    };
+
     if (ctx.state === 'suspended') {
-      ctx.resume().catch(() => {});
+      ctx.resume().then(() => {
+        try { play(); } catch (e) {}
+      }).catch(() => {});
+    } else {
+      play();
     }
 
     if (!hasInitiatedWindPreload) {
       preloadWindSounds();
-    }
-
-    let index = 0;
-    if (variant === 'fling') {
-      // Light, fast airy swooshes (1 or 5)
-      index = Math.random() > 0.5 ? 0 : 4;
-    } else if (variant === 'depth') {
-      // Atmospheric swirling wind from the tunnel (2 or 3)
-      index = Math.random() > 0.5 ? 1 : 3;
-    } else if (variant === 'focus') {
-      // Resonant soft air glide
-      index = 1;
-    } else if (variant === 'soft') {
-      // Very gentle whisper breeze
-      index = 0;
-    } else {
-      index = Math.floor(Math.random() * WIND_FILES.length);
-    }
-
-    const baseVol = options.volume !== undefined ? options.volume : 0.12;
-    const now = ctx.currentTime;
-
-    const buffer = windBuffers[index];
-    if (buffer) {
-      const source = ctx.createBufferSource();
-      source.buffer = buffer;
-
-      // Subtle organic pitch variation (±6%)
-      source.playbackRate.value = 0.94 + Math.random() * 0.12;
-
-      // Low-pass filter to keep sound warm, soft and mellow
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(1400, now);
-
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(baseVol, now + 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + Math.min(buffer.duration, 1.8));
-
-      source.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-
-      source.start(now);
-      source.stop(now + 1.85);
-    } else {
-      synthesizeMellowWind(ctx, variant, baseVol);
     }
   } catch (e) {
     // Fail silently
