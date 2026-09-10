@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ArrowDown, Copy, Check, CheckCircle } from '@phosphor-icons/react';
 import confetti from 'canvas-confetti';
 import gsap from 'gsap';
-import { animate, createTimeline } from 'animejs';
+import { animate, createTimeline, scrambleText } from 'animejs';
 import { designerProfile } from '../data/portfolioData';
 import { playSound } from '../utils/sound';
 import { AsciiCanvas } from './AsciiCanvas';
@@ -24,6 +24,13 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
   const ctasRef = useRef(null);
   const doveColRef = useRef(null);
 
+  // Main header text refs for ASCII loading scramble
+  const craftingTextRef = useRef(null);
+  const thoughtfulTextRef = useRef(null);
+  const humanCenteredTextRef = useRef(null);
+  const productsTextRef = useRef(null);
+  const brandTextRef = useRef(null);
+
   // Initial opacity hiding before preloader completes
   useEffect(() => {
     if (!isLoaded) {
@@ -36,7 +43,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
     }
   }, [isLoaded]);
 
-  // Anime.js kinetic text entrance timeline
+  // Anime.js kinetic text entrance timeline with ASCII loading decode for main header
   useEffect(() => {
     if (!isLoaded) return;
 
@@ -51,8 +58,15 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
           r.current.style.filter = '';
         }
       });
+      if (craftingTextRef.current) craftingTextRef.current.textContent = 'Crafting ';
+      if (thoughtfulTextRef.current) thoughtfulTextRef.current.textContent = 'thoughtful,';
+      if (humanCenteredTextRef.current) humanCenteredTextRef.current.textContent = 'human-centered';
+      if (productsTextRef.current) productsTextRef.current.textContent = 'products &';
+      if (brandTextRef.current) brandTextRef.current.textContent = 'brand experiences.';
       return;
     }
+
+    const ASCII_CHARS = '!@#$%^&*<>[]/{}_+~-=·;:01';
 
     const tl = createTimeline({
       autoplay: true,
@@ -65,6 +79,13 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
             r.current.style.filter = '';
           }
         });
+
+        // Ensure absolute textual fidelity after animation completes
+        if (craftingTextRef.current) craftingTextRef.current.textContent = 'Crafting ';
+        if (thoughtfulTextRef.current) thoughtfulTextRef.current.textContent = 'thoughtful,';
+        if (humanCenteredTextRef.current) humanCenteredTextRef.current.textContent = 'human-centered';
+        if (productsTextRef.current) productsTextRef.current.textContent = 'products &';
+        if (brandTextRef.current) brandTextRef.current.textContent = 'brand experiences.';
       }
     });
 
@@ -77,6 +98,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
       }, 0);
     }
 
+    // Line 1: entrance + ASCII decode
     if (line1Ref.current) {
       tl.add(line1Ref.current, {
         opacity: [0, 1],
@@ -86,7 +108,28 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
         ease: 'outExpo'
       }, 100);
     }
+    if (craftingTextRef.current) {
+      tl.add(craftingTextRef.current, {
+        textContent: scrambleText({
+          text: 'Crafting ',
+          chars: ASCII_CHARS,
+        }),
+        duration: 650,
+        ease: 'linear'
+      }, 100);
+    }
+    if (thoughtfulTextRef.current) {
+      tl.add(thoughtfulTextRef.current, {
+        textContent: scrambleText({
+          text: 'thoughtful,',
+          chars: ASCII_CHARS,
+        }),
+        duration: 650,
+        ease: 'linear'
+      }, 150);
+    }
 
+    // Line 2: entrance + ASCII decode
     if (line2Ref.current) {
       tl.add(line2Ref.current, {
         opacity: [0, 1],
@@ -96,7 +139,18 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
         ease: 'outExpo'
       }, 200);
     }
+    if (humanCenteredTextRef.current) {
+      tl.add(humanCenteredTextRef.current, {
+        textContent: scrambleText({
+          text: 'human-centered',
+          chars: ASCII_CHARS,
+        }),
+        duration: 700,
+        ease: 'linear'
+      }, 200);
+    }
 
+    // Line 3: entrance + ASCII decode
     if (line3Ref.current) {
       tl.add(line3Ref.current, {
         opacity: [0, 1],
@@ -106,7 +160,18 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
         ease: 'outExpo'
       }, 300);
     }
+    if (productsTextRef.current) {
+      tl.add(productsTextRef.current, {
+        textContent: scrambleText({
+          text: 'products &',
+          chars: ASCII_CHARS,
+        }),
+        duration: 650,
+        ease: 'linear'
+      }, 300);
+    }
 
+    // Line 4: entrance + ASCII decode
     if (line4Ref.current) {
       tl.add(line4Ref.current, {
         opacity: [0, 1],
@@ -116,7 +181,18 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
         ease: 'outExpo'
       }, 400);
     }
+    if (brandTextRef.current) {
+      tl.add(brandTextRef.current, {
+        textContent: scrambleText({
+          text: 'brand experiences.',
+          chars: ASCII_CHARS,
+        }),
+        duration: 750,
+        ease: 'linear'
+      }, 400);
+    }
 
+    // Bio copy
     if (bioRef.current) {
       tl.add(bioRef.current, {
         opacity: [0, 1],
@@ -126,6 +202,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
       }, 520);
     }
 
+    // CTAs
     if (ctasRef.current) {
       tl.add(ctasRef.current, {
         opacity: [0, 1],
@@ -135,6 +212,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
       }, 620);
     }
 
+    // 3D ASCII Canvas Dove Column
     if (doveColRef.current) {
       tl.add(doveColRef.current, {
         opacity: [0, 1],
@@ -152,6 +230,11 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
           r.current.style.filter = '';
         }
       });
+      if (craftingTextRef.current) craftingTextRef.current.textContent = 'Crafting ';
+      if (thoughtfulTextRef.current) thoughtfulTextRef.current.textContent = 'thoughtful,';
+      if (humanCenteredTextRef.current) humanCenteredTextRef.current.textContent = 'human-centered';
+      if (productsTextRef.current) productsTextRef.current.textContent = 'products &';
+      if (brandTextRef.current) brandTextRef.current.textContent = 'brand experiences.';
     };
   }, [isLoaded]);
 
@@ -242,17 +325,17 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
             
             {/* Line 1: 'Crafting thoughtful,' */}
             <div ref={line1Ref} className="leading-[1.12] sm:leading-tight">
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight">
+              <span ref={craftingTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight">
                 Crafting{' '}
               </span>
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400">
+              <span ref={thoughtfulTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400">
                 thoughtful,
               </span>
             </div>
 
             {/* Line 2: 'human-centered' + Scaled Pixel Flower */}
             <div ref={line2Ref} className="flex items-center flex-wrap gap-1.5 sm:gap-2 leading-[1.12] sm:leading-tight">
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none">
+              <span ref={humanCenteredTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none">
                 human-centered
               </span>
               <PixelFlower 
@@ -276,14 +359,14 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
                   className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] object-[84%_center] group-hover:object-[8%_center] group-hover:scale-105"
                 />
               </span>
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight leading-none self-center">
+              <span ref={productsTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight leading-none self-center">
                 products &
               </span>
             </div>
 
             {/* Line 4: 'brand experiences.' */}
             <div ref={line4Ref} className="pt-0.5 sm:pt-1 leading-[1.12] sm:leading-tight">
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
+              <span ref={brandTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
                 brand experiences.
               </span>
             </div>
