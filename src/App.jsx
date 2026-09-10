@@ -176,8 +176,8 @@ export function App() {
         onClose={() => setIsContactOpen(false)}
       />
 
-      {/* 10. Agentation Visual Feedback Toolbar */}
-      <Agentation />
+      {/* 10. Agentation Visual Feedback Toolbar (Local Dev Server Only) */}
+      {import.meta.env.DEV && <Agentation />}
 
     </div>
   );
