@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { 
   Briefcase, 
   Wrench, 
@@ -14,9 +14,15 @@ import {
   Layout, 
   Sparkle 
 } from '@phosphor-icons/react';
+import { animate, stagger } from 'animejs';
 import { experienceTimeline, toolstack } from '../data/portfolioData';
 
 export const AboutSection = () => {
+  const historyListRef = useRef(null);
+  const toolsGridRef = useRef(null);
+  const hasAnimatedHistory = useRef(false);
+  const hasAnimatedTools = useRef(false);
+
   const toolIcons = {
     'Figma': FigmaLogo,
     'Adobe XD': Layout,
@@ -27,6 +33,83 @@ export const AboutSection = () => {
     'Miro': Graph,
     'Blender': Cube,
   };
+
+  // Viewport reveal for Work History items
+  useEffect(() => {
+    if (!historyListRef.current) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAnimatedHistory.current) {
+          hasAnimatedHistory.current = true;
+          const items = Array.from(historyListRef.current.children);
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (prefersReducedMotion) {
+            items.forEach((item) => {
+              if (item) item.style.opacity = '1';
+            });
+            return;
+          }
+          animate(items, {
+            opacity: [0, 1],
+            y: [24, 0],
+            duration: 600,
+            ease: 'outCubic',
+            delay: stagger(90),
+            onComplete: () => {
+              items.forEach((item) => {
+                if (item) {
+                  item.style.transform = '';
+                  item.style.opacity = '';
+                }
+              });
+            }
+          });
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(historyListRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Viewport reveal for Software Arsenal grid items
+  useEffect(() => {
+    if (!toolsGridRef.current) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAnimatedTools.current) {
+          hasAnimatedTools.current = true;
+          const items = Array.from(toolsGridRef.current.children);
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (prefersReducedMotion) {
+            items.forEach((item) => {
+              if (item) item.style.opacity = '1';
+            });
+            return;
+          }
+          animate(items, {
+            opacity: [0, 1],
+            scale: [0.94, 1],
+            y: [16, 0],
+            duration: 500,
+            ease: 'outCubic',
+            delay: stagger(40),
+            onComplete: () => {
+              items.forEach((item) => {
+                if (item) {
+                  item.style.transform = '';
+                  item.style.opacity = '';
+                }
+              });
+            }
+          });
+        }
+      });
+    }, { threshold: 0.15 });
+
+    observer.observe(toolsGridRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="pt-20 pb-0 px-4 sm:px-8 max-w-6xl mx-auto space-y-20 relative z-30">
@@ -42,7 +125,7 @@ export const AboutSection = () => {
           </h3>
         </div>
 
-        <div className="space-y-4">
+        <div ref={historyListRef} className="space-y-4">
           {experienceTimeline.map((exp, idx) => (
             <div 
               key={idx} 
@@ -81,7 +164,7 @@ export const AboutSection = () => {
         </div>
 
         <div className="p-6 sm:p-8 bg-white/95 dark:bg-[#121215]/95 backdrop-blur-md rounded-4xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-2xl relative z-30">
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-4">
+          <div ref={toolsGridRef} className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-4">
             {toolstack.map((t, idx) => {
               const Icon = toolIcons[t.name] || Sparkle;
               return (

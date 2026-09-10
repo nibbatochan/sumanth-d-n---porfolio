@@ -94,6 +94,7 @@ export function App() {
           soundEnabled={soundEnabled}
           isDarkMode={isDarkMode}
           onOpenContact={() => setIsContactOpen(true)}
+          isLoaded={!loading}
         />
 
         {/* Continuous Skills Marquee Banner */}

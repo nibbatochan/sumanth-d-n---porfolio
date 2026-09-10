@@ -2,16 +2,158 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ArrowDown, Copy, Check, CheckCircle } from '@phosphor-icons/react';
 import confetti from 'canvas-confetti';
 import gsap from 'gsap';
+import { animate, createTimeline } from 'animejs';
 import { designerProfile } from '../data/portfolioData';
 import { playSound } from '../utils/sound';
 import { AsciiCanvas } from './AsciiCanvas';
 import { PixelFlower } from './PixelFlower';
 
-export const KineticHero = ({ soundEnabled, isDarkMode }) => {
+export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded = true }) => {
   const [copied, setCopied] = useState(false);
 
   const workBtnRef = useRef(null);
   const copyBtnRef = useRef(null);
+
+  // Entrance animation refs
+  const badgeRef = useRef(null);
+  const line1Ref = useRef(null);
+  const line2Ref = useRef(null);
+  const line3Ref = useRef(null);
+  const line4Ref = useRef(null);
+  const bioRef = useRef(null);
+  const ctasRef = useRef(null);
+  const doveColRef = useRef(null);
+
+  // Initial opacity hiding before preloader completes
+  useEffect(() => {
+    if (!isLoaded) {
+      const elements = [badgeRef, line1Ref, line2Ref, line3Ref, line4Ref, bioRef, ctasRef, doveColRef];
+      elements.forEach((r) => {
+        if (r.current) {
+          r.current.style.opacity = '0';
+        }
+      });
+    }
+  }, [isLoaded]);
+
+  // Anime.js kinetic text entrance timeline
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const elements = [badgeRef, line1Ref, line2Ref, line3Ref, line4Ref, bioRef, ctasRef, doveColRef];
+
+    if (prefersReducedMotion) {
+      elements.forEach((r) => {
+        if (r.current) {
+          r.current.style.opacity = '1';
+          r.current.style.transform = '';
+          r.current.style.filter = '';
+        }
+      });
+      return;
+    }
+
+    const tl = createTimeline({
+      autoplay: true,
+      onComplete: () => {
+        // Clear all inline styles so GSAP magnetic physics, hover transforms, and CSS filters have zero matrix locks
+        elements.forEach((r) => {
+          if (r.current) {
+            r.current.style.transform = '';
+            r.current.style.opacity = '';
+            r.current.style.filter = '';
+          }
+        });
+      }
+    });
+
+    if (badgeRef.current) {
+      tl.add(badgeRef.current, {
+        opacity: [0, 1],
+        y: [18, 0],
+        duration: 650,
+        ease: 'outCubic'
+      }, 0);
+    }
+
+    if (line1Ref.current) {
+      tl.add(line1Ref.current, {
+        opacity: [0, 1],
+        y: [28, 0],
+        filter: ['blur(8px)', 'blur(0px)'],
+        duration: 750,
+        ease: 'outExpo'
+      }, 100);
+    }
+
+    if (line2Ref.current) {
+      tl.add(line2Ref.current, {
+        opacity: [0, 1],
+        y: [28, 0],
+        filter: ['blur(8px)', 'blur(0px)'],
+        duration: 750,
+        ease: 'outExpo'
+      }, 200);
+    }
+
+    if (line3Ref.current) {
+      tl.add(line3Ref.current, {
+        opacity: [0, 1],
+        y: [28, 0],
+        filter: ['blur(8px)', 'blur(0px)'],
+        duration: 750,
+        ease: 'outExpo'
+      }, 300);
+    }
+
+    if (line4Ref.current) {
+      tl.add(line4Ref.current, {
+        opacity: [0, 1],
+        y: [28, 0],
+        filter: ['blur(8px)', 'blur(0px)'],
+        duration: 750,
+        ease: 'outExpo'
+      }, 400);
+    }
+
+    if (bioRef.current) {
+      tl.add(bioRef.current, {
+        opacity: [0, 1],
+        y: [18, 0],
+        duration: 650,
+        ease: 'outCubic'
+      }, 520);
+    }
+
+    if (ctasRef.current) {
+      tl.add(ctasRef.current, {
+        opacity: [0, 1],
+        y: [18, 0],
+        duration: 650,
+        ease: 'outCubic'
+      }, 620);
+    }
+
+    if (doveColRef.current) {
+      tl.add(doveColRef.current, {
+        opacity: [0, 1],
+        scale: [0.94, 1],
+        duration: 950,
+        ease: 'outCubic'
+      }, 150);
+    }
+
+    return () => {
+      elements.forEach((r) => {
+        if (r.current) {
+          r.current.style.transform = '';
+          r.current.style.opacity = '';
+          r.current.style.filter = '';
+        }
+      });
+    };
+  }, [isLoaded]);
 
   // GSAP Magnetic Hover Physics for CTAs
   useEffect(() => {
@@ -73,7 +215,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
   };
 
   return (
-    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-110px)] flex flex-col justify-center pt-28 sm:pt-32 lg:pt-28 pb-4 sm:pb-6 px-4 sm:px-8 max-w-6xl mx-auto relative z-10 my-14">
+    <section id="home" className="min-h-[auto] lg:min-h-[calc(100vh-110px)] flex flex-col justify-center pt-28 sm:pt-32 lg:pt-28 pb-4 sm:pb-6 px-4 sm:px-8 max-w-6xl mx-auto relative z-10 my-14 scroll-mt-32">
       
       {/* Main Grid: Left Column Headline & Bio + Right Column 3D ASCII Canvas (Untouched) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center my-auto">
@@ -82,7 +224,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
         <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-3.5">
           
           {/* Availability Status Badge with Pulse Indicator */}
-          <div className="flex items-center gap-2">
+          <div ref={badgeRef} className="flex items-center gap-2">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xs text-xs text-zinc-700 dark:text-zinc-200">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -99,7 +241,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
           <div className="space-y-0.5 sm:space-y-1 text-zinc-900 dark:text-white select-none max-w-xl">
             
             {/* Line 1: 'Crafting thoughtful,' */}
-            <div className="leading-[1.12] sm:leading-tight">
+            <div ref={line1Ref} className="leading-[1.12] sm:leading-tight">
               <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight">
                 Crafting{' '}
               </span>
@@ -109,7 +251,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
             </div>
 
             {/* Line 2: 'human-centered' + Scaled Pixel Flower */}
-            <div className="flex items-center flex-wrap gap-1.5 sm:gap-2 leading-[1.12] sm:leading-tight">
+            <div ref={line2Ref} className="flex items-center flex-wrap gap-1.5 sm:gap-2 leading-[1.12] sm:leading-tight">
               <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none">
                 human-centered
               </span>
@@ -121,7 +263,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
             </div>
 
             {/* Line 3: Scaled Action Portrait Capsule + 'products &' */}
-            <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap pt-1 sm:pt-1.5 leading-[1.12] sm:leading-tight">
+            <div ref={line3Ref} className="flex items-center gap-2.5 sm:gap-3 flex-wrap pt-1 sm:pt-1.5 leading-[1.12] sm:leading-tight">
               <span 
                 onMouseEnter={() => playSound('pop', soundEnabled)}
                 title="Sumanth D N — Hover to reveal"
@@ -140,7 +282,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
             </div>
 
             {/* Line 4: 'brand experiences.' */}
-            <div className="pt-0.5 sm:pt-1 leading-[1.12] sm:leading-tight">
+            <div ref={line4Ref} className="pt-0.5 sm:pt-1 leading-[1.12] sm:leading-tight">
               <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
                 brand experiences.
               </span>
@@ -149,16 +291,23 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
           </div>
 
           {/* Bio Copy */}
-          <p className="text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-lg pt-1">
+          <p ref={bioRef} className="text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans max-w-lg pt-1">
             I’m <strong className="text-zinc-900 dark:text-white font-bold">{designerProfile.name}</strong> — a Bengaluru-based Graphic & UI/UX Designer. Specializing in scalable design systems, tactile web interactions, and distinctive brand identities.
           </p>
 
           {/* GSAP Magnetic Action CTAs */}
-          <div className="pt-6 sm:pt-8 md:pt-10 flex flex-wrap items-center gap-3">
+          <div ref={ctasRef} className="pt-6 sm:pt-8 md:pt-10 flex flex-wrap items-center gap-3">
             <a
               ref={workBtnRef}
               href="#work"
-              onClick={() => playSound('whoosh', soundEnabled)}
+              onClick={(e) => {
+                e.preventDefault();
+                playSound('whoosh', soundEnabled);
+                const el = document.querySelector('#work');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
               className="bg-zinc-900 dark:bg-white hover:bg-black dark:hover:bg-zinc-100 text-white dark:text-zinc-900 px-5 sm:px-6 py-3 rounded-full text-xs sm:text-sm font-bold shadow-md flex items-center gap-2 transition-colors duration-200 group cursor-pointer"
             >
               <span>Explore Selected Work</span>
@@ -188,7 +337,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode }) => {
         </div>
 
         {/* Right 5 Columns: 3D ASCII Flying Dove Canvas (100% Untouched) */}
-        <div className="lg:col-span-5 flex items-center justify-center relative select-none w-full mt-6 lg:mt-0">
+        <div ref={doveColRef} className="lg:col-span-5 flex items-center justify-center relative select-none w-full mt-6 lg:mt-0">
           <AsciiCanvas soundEnabled={soundEnabled} isDarkMode={isDarkMode} />
         </div>
 

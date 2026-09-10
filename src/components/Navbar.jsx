@@ -5,27 +5,58 @@ import {
   ArrowUpRight, 
   FolderSimple, 
   User, 
-  Wrench,
+  Wrench, 
   FileText, 
   DownloadSimple, 
   Sun, 
-  Moon,
-  List,
-  X
+  Moon, 
+  List, 
+  X 
 } from '@phosphor-icons/react';
 import gsap from 'gsap';
+import { animate } from 'animejs';
 import { SumanthLogo } from './SumanthLogo';
 import { playSound } from '../utils/sound';
 
-export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMode, setIsDarkMode }) => {
+export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMode, setIsDarkMode, isLoaded = true }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const headerRef = useRef(null);
   const logoRef = useRef(null);
   const themeBtnRef = useRef(null);
   const resumeBtnRef = useRef(null);
   const soundBtnRef = useRef(null);
   const connectBtnRef = useRef(null);
+
+  // Entrance reveal with anime.js once preloader completes
+  useEffect(() => {
+    if (!headerRef.current) return;
+    if (!isLoaded) {
+      headerRef.current.style.opacity = '0';
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      headerRef.current.style.opacity = '1';
+      headerRef.current.style.transform = '';
+      return;
+    }
+
+    animate(headerRef.current, {
+      opacity: [0, 1],
+      y: [-12, 0],
+      duration: 650,
+      ease: 'outCubic',
+      onComplete: () => {
+        if (headerRef.current) {
+          headerRef.current.style.transform = '';
+          headerRef.current.style.opacity = '';
+        }
+      }
+    });
+  }, [isLoaded]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,9 +124,19 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
     playSound('pop', soundEnabled);
   };
 
-  const handleNavClick = (anchor) => {
+  const handleNavClick = (eOrAnchor, maybeAnchor) => {
+    let anchor = maybeAnchor;
+    if (typeof eOrAnchor === 'string') {
+      anchor = eOrAnchor;
+    } else if (eOrAnchor && eOrAnchor.preventDefault) {
+      eOrAnchor.preventDefault();
+    }
     setMobileMenuOpen(false);
     playSound('pop', soundEnabled);
+    if (anchor === '#home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const el = document.querySelector(anchor);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -103,14 +144,14 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-8 py-3 sm:py-4 ${scrolled ? 'pt-2.5 sm:pt-3' : 'pt-3 sm:pt-4'}`}>
+    <header ref={headerRef} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-8 py-3 sm:py-4 ${scrolled ? 'pt-2.5 sm:pt-3' : 'pt-3 sm:pt-4'}`}>
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">
         
         {/* Authentic Signature Logo + Sumanth Reddy Name */}
         <a 
           ref={logoRef}
           href="#home"
-          onClick={() => playSound('click', soundEnabled)}
+          onClick={(e) => handleNavClick(e, '#home')}
           aria-label="Sumanth Reddy Portfolio Home"
           className="flex items-center gap-2.5 group focus:outline-none select-none shrink-0"
         >
@@ -126,7 +167,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
         <nav aria-label="Main navigation" className="hidden md:flex bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-800 px-5 py-2 rounded-full shadow-sm backdrop-blur-md items-center gap-2 text-xs font-bold text-zinc-800 dark:text-zinc-200">
           <a 
             href="#work" 
-            onClick={() => playSound('pop', soundEnabled)}
+            onClick={(e) => handleNavClick(e, '#work')}
             className="px-3.5 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-all duration-200 flex items-center gap-1.5 hover:scale-105"
           >
             <FolderSimple size={14} weight="bold" />
@@ -134,7 +175,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
           </a>
           <a 
             href="#about" 
-            onClick={() => playSound('pop', soundEnabled)}
+            onClick={(e) => handleNavClick(e, '#about')}
             className="px-3.5 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-all duration-200 flex items-center gap-1.5 hover:scale-105"
           >
             <User size={14} weight="bold" />
@@ -142,7 +183,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
           </a>
           <a 
             href="#tools" 
-            onClick={() => playSound('pop', soundEnabled)}
+            onClick={(e) => handleNavClick(e, '#tools')}
             className="px-3.5 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-all duration-200 flex items-center gap-1.5 hover:scale-105"
           >
             <Wrench size={14} weight="bold" />
