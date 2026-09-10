@@ -8,7 +8,7 @@ import {
   Info
 } from '@phosphor-icons/react';
 import { posterChallengeList } from '../data/portfolioData';
-import { playSound } from '../utils/sound';
+import { playWindSwoosh, preloadWindSounds } from '../utils/sound';
 
 export const PosterChallengePage = ({ 
   onBack, 
@@ -27,6 +27,12 @@ export const PosterChallengePage = ({
   const [showProjectInfo, setShowProjectInfo] = useState(false);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const lastInteractionRef = useRef(Date.now());
+  const lastWheelSoundRef = useRef(0);
+
+  // Preload authentic wind swoosh audio buffers on mount
+  useEffect(() => {
+    preloadWindSounds();
+  }, []);
 
   // Thrown cards animating into the abyss
   const [thrownCardIds, setThrownCardIds] = useState(new Set());
@@ -532,7 +538,7 @@ export const PosterChallengePage = ({
   // 3. Fling / Throw Cardboard Logic (Left or Right)
   // ─────────────────────────────────────────────────────────────
   const triggerThrow = useCallback((cardId, direction = 1) => {
-    playSound('pop', soundEnabled);
+    playWindSwoosh('fling', { volume: 0.15, soundEnabled });
 
     const throwSeed = {
       cardId,
@@ -568,7 +574,7 @@ export const PosterChallengePage = ({
 
   // Realistic smooth 1100ms ease-to-front animation when clicking ANY card in the background
   const bringCardToFront = useCallback((cardId) => {
-    playSound('pop', soundEnabled);
+    playWindSwoosh('depth', { volume: 0.14, soundEnabled });
     registerInteraction();
 
     if (easeZRef.current) cancelAnimationFrame(easeZRef.current);
@@ -613,6 +619,13 @@ export const PosterChallengePage = ({
       e.preventDefault();
       registerInteraction();
       physics.current.targetZ += e.deltaY * 1.5;
+
+      // Very subtle, mellow wind flutter when cruising through tunnel (low volume 0.06)
+      const now = Date.now();
+      if (now - lastWheelSoundRef.current > 750 && Math.abs(e.deltaY) > 25) {
+        lastWheelSoundRef.current = now;
+        playWindSwoosh('soft', { volume: 0.06, soundEnabled });
+      }
     };
 
     const container = containerRef.current;
@@ -623,7 +636,7 @@ export const PosterChallengePage = ({
     return () => {
       if (container) container.removeEventListener('wheel', handleWheel);
     };
-  }, [focusedId, registerInteraction]);
+  }, [focusedId, registerInteraction, soundEnabled]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -697,7 +710,7 @@ export const PosterChallengePage = ({
 
       // 1. DRAG TO CENTER TO VIEW: If card is dropped within center viewing zone
       if (distToCenter < 210 && totalMove > 15) {
-        playSound('pop', soundEnabled);
+        playWindSwoosh('focus', { volume: 0.16, soundEnabled });
         setFocusedId(cardId);
       }
       // 2. Fling / Throw horizontally into the abyss
@@ -755,7 +768,7 @@ export const PosterChallengePage = ({
       <header className="absolute top-0 left-0 right-0 z-40 px-4 sm:px-10 py-4 sm:py-5 flex items-center justify-between pointer-events-auto">
         <button
           onClick={() => {
-            playSound('click', soundEnabled);
+            playWindSwoosh('soft', { volume: 0.11, soundEnabled });
             onBack();
           }}
           className="group inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider bg-white/10 hover:bg-white text-white hover:text-black border border-white/15 backdrop-blur-md transition-all duration-200"
@@ -783,7 +796,7 @@ export const PosterChallengePage = ({
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => {
-              playSound('pop', soundEnabled);
+              playWindSwoosh('soft', { volume: 0.11, soundEnabled });
               setIsAutoPlay(prev => !prev);
             }}
             className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white/80 hover:text-white transition-colors cursor-pointer"
@@ -805,7 +818,7 @@ export const PosterChallengePage = ({
           {/* Details Modal Trigger Icon Button */}
           <button
             onClick={() => {
-              playSound('pop', soundEnabled);
+              playWindSwoosh('focus', { volume: 0.13, soundEnabled });
               setShowProjectInfo(true);
             }}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white/80 hover:text-white transition-colors cursor-pointer"
@@ -915,7 +928,7 @@ export const PosterChallengePage = ({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          playSound('pop', soundEnabled);
+                          playWindSwoosh('focus', { volume: 0.15, soundEnabled });
                           setFocusedId(poster.id);
                         }}
                         className="px-5 py-2.5 rounded-full bg-black/80 hover:bg-orange-500 text-white text-xs font-mono font-bold flex items-center gap-2 border border-white/25 hover:border-orange-500 shadow-2xl backdrop-blur-md transition-all duration-200 transform group-hover:scale-105 active:scale-95"
@@ -963,7 +976,7 @@ export const PosterChallengePage = ({
           onClick={(e) => {
             // Clicking anywhere outside interactive children closes focus
             if (e.target === e.currentTarget || e.target.getAttribute('data-backdrop-close') === 'true') {
-              playSound('click', soundEnabled);
+              playWindSwoosh('soft', { volume: 0.10, soundEnabled });
               setFocusedId(null);
             }
           }}
@@ -976,7 +989,7 @@ export const PosterChallengePage = ({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  playSound('click', soundEnabled);
+                  playWindSwoosh('soft', { volume: 0.10, soundEnabled });
                   setFocusedId(null);
                 }}
                 className="absolute right-0 -top-14 sm:-right-20 md:-right-24 sm:-top-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-all shadow-2xl backdrop-blur-md cursor-pointer pointer-events-auto transform hover:scale-105 active:scale-95"
@@ -991,7 +1004,7 @@ export const PosterChallengePage = ({
           <div 
             data-backdrop-close="true"
             onClick={() => {
-              playSound('click', soundEnabled);
+              playWindSwoosh('soft', { volume: 0.10, soundEnabled });
               setFocusedId(null);
             }}
             className="flex-1 w-full flex items-center justify-center cursor-pointer"
@@ -1033,7 +1046,7 @@ export const PosterChallengePage = ({
         <div 
           onClick={(e) => {
             if (e.target === e.currentTarget || e.target.getAttribute('data-backdrop-info') === 'true') {
-              playSound('click', soundEnabled);
+              playWindSwoosh('soft', { volume: 0.10, soundEnabled });
               setShowProjectInfo(false);
             }
           }}
@@ -1050,7 +1063,7 @@ export const PosterChallengePage = ({
             {/* Close Button at top-right */}
             <button
               onClick={() => {
-                playSound('click', soundEnabled);
+                playWindSwoosh('soft', { volume: 0.10, soundEnabled });
                 setShowProjectInfo(false);
               }}
               className="absolute top-5 right-5 sm:top-6 sm:right-6 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-all shadow-lg backdrop-blur-md cursor-pointer transform hover:scale-105 active:scale-95 z-20"
