@@ -764,14 +764,17 @@ export const PosterChallengePage = ({
           <span>Exit</span>
         </button>
 
-        {/* Center Title & Day indicator */}
-        <div className="hidden sm:flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-          <span className="text-xs font-mono tracking-widest uppercase font-bold text-white/90">
+        {/* Center Title & Day indicator (Mathematically centered on screen) */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md z-10 pointer-events-auto whitespace-nowrap shadow-sm">
+          <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse shrink-0" />
+          <span className="hidden md:inline text-xs font-mono tracking-widest uppercase font-bold text-white/90">
             30-Day Poster Sprint
           </span>
+          <span className="md:hidden text-[11px] font-mono tracking-wider uppercase font-bold text-white/90">
+            Sprint
+          </span>
           <span className="text-white/40 text-xs font-mono">•</span>
-          <span className="text-xs font-mono text-orange-400 font-bold">
+          <span className="text-[11px] sm:text-xs font-mono text-orange-400 font-bold">
             {activeCard ? activeCard.day : 'Day 01'} / 30
           </span>
         </div>
