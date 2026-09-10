@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ArrowDown, Copy, Check, CheckCircle } from '@phosphor-icons/react';
 import confetti from 'canvas-confetti';
 import gsap from 'gsap';
-import { animate, createTimeline, scrambleText } from 'animejs';
+import { animate, createTimeline } from 'animejs';
 import { designerProfile } from '../data/portfolioData';
 import { playSound } from '../utils/sound';
 import { AsciiCanvas } from './AsciiCanvas';
@@ -24,18 +24,33 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
   const ctasRef = useRef(null);
   const doveColRef = useRef(null);
 
-  // Main header text refs for ASCII loading scramble
+  // Individual typographic word & element refs for staggered editorial reveal
   const craftingTextRef = useRef(null);
   const thoughtfulTextRef = useRef(null);
   const humanCenteredTextRef = useRef(null);
+  const flowerRef = useRef(null);
+  const portraitRef = useRef(null);
   const productsTextRef = useRef(null);
   const brandTextRef = useRef(null);
+
+  const animTargets = [
+    badgeRef,
+    craftingTextRef,
+    thoughtfulTextRef,
+    humanCenteredTextRef,
+    flowerRef,
+    portraitRef,
+    productsTextRef,
+    brandTextRef,
+    bioRef,
+    ctasRef,
+    doveColRef
+  ];
 
   // Initial opacity hiding before preloader completes
   useEffect(() => {
     if (!isLoaded) {
-      const elements = [badgeRef, line1Ref, line2Ref, line3Ref, line4Ref, bioRef, ctasRef, doveColRef];
-      elements.forEach((r) => {
+      animTargets.forEach((r) => {
         if (r.current) {
           r.current.style.opacity = '0';
         }
@@ -43,54 +58,38 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
     }
   }, [isLoaded]);
 
-  // Anime.js kinetic text entrance timeline with ASCII loading decode for main header
+  // Anime.js smooth editorial typography cascade on page load
   useEffect(() => {
     if (!isLoaded) return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const elements = [badgeRef, line1Ref, line2Ref, line3Ref, line4Ref, bioRef, ctasRef, doveColRef];
 
     if (prefersReducedMotion) {
-      elements.forEach((r) => {
+      animTargets.forEach((r) => {
         if (r.current) {
           r.current.style.opacity = '1';
           r.current.style.transform = '';
           r.current.style.filter = '';
         }
       });
-      if (craftingTextRef.current) craftingTextRef.current.textContent = 'Crafting ';
-      if (thoughtfulTextRef.current) thoughtfulTextRef.current.textContent = 'thoughtful,';
-      if (humanCenteredTextRef.current) humanCenteredTextRef.current.textContent = 'human-centered';
-      if (productsTextRef.current) productsTextRef.current.textContent = 'products &';
-      if (brandTextRef.current) brandTextRef.current.textContent = 'brand experiences.';
       return;
     }
-
-    // Pure alphabetical characters for a calm, editorial typographic reveal
-    const ALPHA_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const ALPHA_LOWER = 'abcdefghijklmnopqrstuvwxyz';
 
     const tl = createTimeline({
       autoplay: true,
       onComplete: () => {
         // Clear all inline styles so GSAP magnetic physics, hover transforms, and CSS filters have zero matrix locks
-        elements.forEach((r) => {
+        animTargets.forEach((r) => {
           if (r.current) {
             r.current.style.transform = '';
             r.current.style.opacity = '';
             r.current.style.filter = '';
           }
         });
-
-        // Ensure absolute textual fidelity after animation completes
-        if (craftingTextRef.current) craftingTextRef.current.textContent = 'Crafting ';
-        if (thoughtfulTextRef.current) thoughtfulTextRef.current.textContent = 'thoughtful,';
-        if (humanCenteredTextRef.current) humanCenteredTextRef.current.textContent = 'human-centered';
-        if (productsTextRef.current) productsTextRef.current.textContent = 'products &';
-        if (brandTextRef.current) brandTextRef.current.textContent = 'brand experiences.';
       }
     });
 
+    // 1. Status Badge floats in first
     if (badgeRef.current) {
       tl.add(badgeRef.current, {
         opacity: [0, 1],
@@ -100,153 +99,115 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
       }, 0);
     }
 
-    // Line 1: entrance + subtle alphabetical decode
-    if (line1Ref.current) {
-      tl.add(line1Ref.current, {
-        opacity: [0, 1],
-        y: [16, 0],
-        filter: ['blur(4px)', 'blur(0px)'],
-        duration: 600,
-        ease: 'outExpo'
-      }, 80);
-    }
+    // 2. Line 1: 'Crafting' then 'thoughtful,' glide in softly
     if (craftingTextRef.current) {
       tl.add(craftingTextRef.current, {
-        textContent: scrambleText({
-          text: 'Crafting ',
-          chars: ALPHA_CHARS,
-          revealRate: 24,
-          settleDuration: 160,
-        }),
-        duration: 480,
-        ease: 'linear'
+        opacity: [0, 1],
+        y: [18, 0],
+        filter: ['blur(5px)', 'blur(0px)'],
+        duration: 650,
+        ease: 'outExpo'
       }, 80);
     }
     if (thoughtfulTextRef.current) {
       tl.add(thoughtfulTextRef.current, {
-        textContent: scrambleText({
-          text: 'thoughtful,',
-          chars: ALPHA_LOWER,
-          revealRate: 24,
-          settleDuration: 160,
-        }),
-        duration: 480,
-        ease: 'linear'
-      }, 120);
-    }
-
-    // Line 2: entrance + subtle alphabetical decode
-    if (line2Ref.current) {
-      tl.add(line2Ref.current, {
         opacity: [0, 1],
-        y: [16, 0],
-        filter: ['blur(4px)', 'blur(0px)'],
-        duration: 600,
+        y: [18, 0],
+        filter: ['blur(5px)', 'blur(0px)'],
+        duration: 650,
         ease: 'outExpo'
       }, 160);
     }
+
+    // 3. Line 2: 'human-centered' arrives, then Pixel Flower blooms in with organic spin
     if (humanCenteredTextRef.current) {
       tl.add(humanCenteredTextRef.current, {
-        textContent: scrambleText({
-          text: 'human-centered',
-          chars: ALPHA_LOWER,
-          revealRate: 24,
-          settleDuration: 160,
-        }),
-        duration: 520,
-        ease: 'linear'
-      }, 160);
-    }
-
-    // Line 3: entrance + subtle alphabetical decode
-    if (line3Ref.current) {
-      tl.add(line3Ref.current, {
         opacity: [0, 1],
-        y: [16, 0],
-        filter: ['blur(4px)', 'blur(0px)'],
-        duration: 600,
+        y: [18, 0],
+        filter: ['blur(5px)', 'blur(0px)'],
+        duration: 650,
         ease: 'outExpo'
       }, 240);
+    }
+    if (flowerRef.current) {
+      tl.add(flowerRef.current, {
+        opacity: [0, 1],
+        scale: [0.6, 1],
+        rotate: [-35, 0],
+        duration: 600,
+        ease: 'outBack(1.4)'
+      }, 300);
+    }
+
+    // 4. Line 3: Portrait pill slides into slot, then 'products &' follows
+    if (portraitRef.current) {
+      tl.add(portraitRef.current, {
+        opacity: [0, 1],
+        scale: [0.88, 1],
+        y: [14, 0],
+        duration: 650,
+        ease: 'outCubic'
+      }, 320);
     }
     if (productsTextRef.current) {
       tl.add(productsTextRef.current, {
-        textContent: scrambleText({
-          text: 'products &',
-          chars: ALPHA_LOWER,
-          revealRate: 24,
-          settleDuration: 160,
-        }),
-        duration: 480,
-        ease: 'linear'
-      }, 240);
+        opacity: [0, 1],
+        y: [18, 0],
+        filter: ['blur(5px)', 'blur(0px)'],
+        duration: 650,
+        ease: 'outExpo'
+      }, 400);
     }
 
-    // Line 4: entrance + subtle alphabetical decode
-    if (line4Ref.current) {
-      tl.add(line4Ref.current, {
-        opacity: [0, 1],
-        y: [16, 0],
-        filter: ['blur(4px)', 'blur(0px)'],
-        duration: 600,
-        ease: 'outExpo'
-      }, 320);
-    }
+    // 5. Line 4: 'brand experiences.' arrives with confident weight
     if (brandTextRef.current) {
       tl.add(brandTextRef.current, {
-        textContent: scrambleText({
-          text: 'brand experiences.',
-          chars: ALPHA_LOWER,
-          revealRate: 24,
-          settleDuration: 160,
-        }),
-        duration: 540,
-        ease: 'linear'
-      }, 320);
+        opacity: [0, 1],
+        y: [18, 0],
+        filter: ['blur(5px)', 'blur(0px)'],
+        duration: 700,
+        ease: 'outExpo'
+      }, 480);
     }
 
-    // Bio copy
+    // 6. Bio copy gently fades in
     if (bioRef.current) {
       tl.add(bioRef.current, {
         opacity: [0, 1],
-        y: [18, 0],
-        duration: 650,
+        y: [14, 0],
+        duration: 600,
         ease: 'outCubic'
-      }, 520);
+      }, 560);
     }
 
-    // CTAs
+    // 7. Interactive action CTAs spring in
     if (ctasRef.current) {
       tl.add(ctasRef.current, {
         opacity: [0, 1],
-        y: [18, 0],
-        duration: 650,
+        y: [14, 0],
+        duration: 600,
         ease: 'outCubic'
-      }, 620);
+      }, 640);
     }
 
-    // 3D ASCII Canvas Dove Column
+    // 8. 3D ASCII Canvas Dove Column ascends softly
     if (doveColRef.current) {
       tl.add(doveColRef.current, {
         opacity: [0, 1],
         scale: [0.94, 1],
         duration: 950,
         ease: 'outCubic'
-      }, 150);
+      }, 140);
     }
 
     return () => {
-      elements.forEach((r) => {
+      animTargets.forEach((r) => {
         if (r.current) {
           r.current.style.transform = '';
           r.current.style.opacity = '';
           r.current.style.filter = '';
         }
       });
-      if (craftingTextRef.current) craftingTextRef.current.textContent = 'Crafting ';
-      if (thoughtfulTextRef.current) thoughtfulTextRef.current.textContent = 'thoughtful,';
-      if (humanCenteredTextRef.current) humanCenteredTextRef.current.textContent = 'human-centered';
-      if (productsTextRef.current) productsTextRef.current.textContent = 'products &';
-      if (brandTextRef.current) brandTextRef.current.textContent = 'brand experiences.';
     };
   }, [isLoaded]);
 
@@ -337,29 +298,32 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
             
             {/* Line 1: 'Crafting thoughtful,' */}
             <div ref={line1Ref} className="leading-[1.12] sm:leading-tight">
-              <span ref={craftingTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight">
-                Crafting{' '}
+              <span ref={craftingTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight inline-block mr-2 sm:mr-2.5">
+                Crafting
               </span>
-              <span ref={thoughtfulTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400">
+              <span ref={thoughtfulTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400 inline-block">
                 thoughtful,
               </span>
             </div>
 
             {/* Line 2: 'human-centered' + Scaled Pixel Flower */}
             <div ref={line2Ref} className="flex items-center flex-wrap gap-1.5 sm:gap-2 leading-[1.12] sm:leading-tight">
-              <span ref={humanCenteredTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none">
+              <span ref={humanCenteredTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-serif italic font-normal text-orange-600 dark:text-orange-400 leading-none inline-block">
                 human-centered
               </span>
-              <PixelFlower 
-                isDarkMode={isDarkMode}
-                soundEnabled={soundEnabled} 
-                className="w-7 h-7 sm:w-9 sm:h-9 md:w-11 md:h-11 lg:w-12 lg:h-12 ml-2 sm:ml-2.5 -translate-y-0.5 sm:-translate-y-1 drop-shadow-xs" 
-              />
+              <span ref={flowerRef} className="inline-flex items-center">
+                <PixelFlower 
+                  isDarkMode={isDarkMode}
+                  soundEnabled={soundEnabled} 
+                  className="w-7 h-7 sm:w-9 sm:h-9 md:w-11 md:h-11 lg:w-12 lg:h-12 ml-2 sm:ml-2.5 -translate-y-0.5 sm:-translate-y-1 drop-shadow-xs" 
+                />
+              </span>
             </div>
 
             {/* Line 3: Scaled Action Portrait Capsule + 'products &' */}
             <div ref={line3Ref} className="flex items-center gap-2.5 sm:gap-3 flex-wrap pt-1 sm:pt-1.5 leading-[1.12] sm:leading-tight">
               <span 
+                ref={portraitRef}
                 onMouseEnter={() => playSound('pop', soundEnabled)}
                 title="Sumanth D N — Hover to reveal"
                 className="inline-flex items-center justify-center rounded-full overflow-hidden border border-zinc-300 dark:border-zinc-700 shadow-md backdrop-blur-xs hover:border-orange-500 hover:shadow-orange-500/20 transition-all duration-300 select-none cursor-pointer h-8 sm:h-10 md:h-11 lg:h-12 w-22 sm:w-28 md:w-34 lg:w-38 shrink-0 group self-center bg-black"
@@ -371,14 +335,14 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
                   className="w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] object-[84%_center] group-hover:object-[8%_center] group-hover:scale-105"
                 />
               </span>
-              <span ref={productsTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight leading-none self-center">
+              <span ref={productsTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-sans font-bold tracking-tight leading-none self-center inline-block">
                 products &
               </span>
             </div>
 
             {/* Line 4: 'brand experiences.' */}
             <div ref={line4Ref} className="pt-0.5 sm:pt-1 leading-[1.12] sm:leading-tight">
-              <span ref={brandTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
+              <span ref={brandTextRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-sans font-bold tracking-tight text-zinc-900 dark:text-white leading-none inline-block">
                 brand experiences.
               </span>
             </div>
