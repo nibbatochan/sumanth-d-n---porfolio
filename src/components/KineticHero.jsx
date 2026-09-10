@@ -66,7 +66,9 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
       return;
     }
 
-    const ASCII_CHARS = '!@#$%^&*<>[]/{}_+~-=·;:01';
+    // Pure alphabetical characters for a calm, editorial typographic reveal
+    const ALPHA_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const ALPHA_LOWER = 'abcdefghijklmnopqrstuvwxyz';
 
     const tl = createTimeline({
       autoplay: true,
@@ -92,104 +94,114 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
     if (badgeRef.current) {
       tl.add(badgeRef.current, {
         opacity: [0, 1],
-        y: [18, 0],
-        duration: 650,
+        y: [14, 0],
+        duration: 550,
         ease: 'outCubic'
       }, 0);
     }
 
-    // Line 1: entrance + ASCII decode
+    // Line 1: entrance + subtle alphabetical decode
     if (line1Ref.current) {
       tl.add(line1Ref.current, {
         opacity: [0, 1],
-        y: [28, 0],
-        filter: ['blur(8px)', 'blur(0px)'],
-        duration: 750,
+        y: [16, 0],
+        filter: ['blur(4px)', 'blur(0px)'],
+        duration: 600,
         ease: 'outExpo'
-      }, 100);
+      }, 80);
     }
     if (craftingTextRef.current) {
       tl.add(craftingTextRef.current, {
         textContent: scrambleText({
           text: 'Crafting ',
-          chars: ASCII_CHARS,
+          chars: ALPHA_CHARS,
+          revealRate: 24,
+          settleDuration: 160,
         }),
-        duration: 650,
+        duration: 480,
         ease: 'linear'
-      }, 100);
+      }, 80);
     }
     if (thoughtfulTextRef.current) {
       tl.add(thoughtfulTextRef.current, {
         textContent: scrambleText({
           text: 'thoughtful,',
-          chars: ASCII_CHARS,
+          chars: ALPHA_LOWER,
+          revealRate: 24,
+          settleDuration: 160,
         }),
-        duration: 650,
+        duration: 480,
         ease: 'linear'
-      }, 150);
+      }, 120);
     }
 
-    // Line 2: entrance + ASCII decode
+    // Line 2: entrance + subtle alphabetical decode
     if (line2Ref.current) {
       tl.add(line2Ref.current, {
         opacity: [0, 1],
-        y: [28, 0],
-        filter: ['blur(8px)', 'blur(0px)'],
-        duration: 750,
+        y: [16, 0],
+        filter: ['blur(4px)', 'blur(0px)'],
+        duration: 600,
         ease: 'outExpo'
-      }, 200);
+      }, 160);
     }
     if (humanCenteredTextRef.current) {
       tl.add(humanCenteredTextRef.current, {
         textContent: scrambleText({
           text: 'human-centered',
-          chars: ASCII_CHARS,
+          chars: ALPHA_LOWER,
+          revealRate: 24,
+          settleDuration: 160,
         }),
-        duration: 700,
+        duration: 520,
         ease: 'linear'
-      }, 200);
+      }, 160);
     }
 
-    // Line 3: entrance + ASCII decode
+    // Line 3: entrance + subtle alphabetical decode
     if (line3Ref.current) {
       tl.add(line3Ref.current, {
         opacity: [0, 1],
-        y: [28, 0],
-        filter: ['blur(8px)', 'blur(0px)'],
-        duration: 750,
+        y: [16, 0],
+        filter: ['blur(4px)', 'blur(0px)'],
+        duration: 600,
         ease: 'outExpo'
-      }, 300);
+      }, 240);
     }
     if (productsTextRef.current) {
       tl.add(productsTextRef.current, {
         textContent: scrambleText({
           text: 'products &',
-          chars: ASCII_CHARS,
+          chars: ALPHA_LOWER,
+          revealRate: 24,
+          settleDuration: 160,
         }),
-        duration: 650,
+        duration: 480,
         ease: 'linear'
-      }, 300);
+      }, 240);
     }
 
-    // Line 4: entrance + ASCII decode
+    // Line 4: entrance + subtle alphabetical decode
     if (line4Ref.current) {
       tl.add(line4Ref.current, {
         opacity: [0, 1],
-        y: [28, 0],
-        filter: ['blur(8px)', 'blur(0px)'],
-        duration: 750,
+        y: [16, 0],
+        filter: ['blur(4px)', 'blur(0px)'],
+        duration: 600,
         ease: 'outExpo'
-      }, 400);
+      }, 320);
     }
     if (brandTextRef.current) {
       tl.add(brandTextRef.current, {
         textContent: scrambleText({
           text: 'brand experiences.',
-          chars: ASCII_CHARS,
+          chars: ALPHA_LOWER,
+          revealRate: 24,
+          settleDuration: 160,
         }),
-        duration: 750,
+        duration: 540,
         ease: 'linear'
-      }, 400);
+      }, 320);
     }
 
     // Bio copy
