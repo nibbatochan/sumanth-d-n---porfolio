@@ -13,6 +13,7 @@ import { Footer } from './components/Footer';
 import { NoBrokerCasePage } from './components/NoBrokerCasePage';
 import { PosterChallengePage } from './components/PosterChallengePage';
 import { projects } from './data/portfolioData';
+import { preloadWindSounds } from './utils/sound';
 import { Agentation } from 'agentation';
 
 export function App() {
@@ -21,6 +22,11 @@ export function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeDedicatedCase, setActiveDedicatedCase] = useState(null);
   const [isContactOpen, setIsContactOpen] = useState(false);
+
+  // Preload audio assets into Web Audio buffers on initial app load
+  useEffect(() => {
+    preloadWindSounds();
+  }, []);
 
   // Synchronize hash routing for deep linking into case pages
   useEffect(() => {

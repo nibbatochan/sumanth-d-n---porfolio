@@ -12,29 +12,52 @@ function getAudioContext() {
   return audioCtx;
 }
 
-// Global browser autoplay policy unlocker on first user interaction
-if (typeof window !== 'undefined') {
-  const unlockAudio = () => {
-    try {
-      const ctx = getAudioContext();
-      if (ctx && ctx.state === 'suspended') {
-        ctx.resume();
-      }
-    } catch (e) {
-      // Ignore
-    }
-  };
+// Global browser autoplay policy unlocker on first user gesture
+let isAudioUnlocked = false;
 
-  const interactionEvents = ['click', 'touchstart', 'touchend', 'keydown', 'pointerdown', 'mousedown'];
+export function unlockAudio() {
+  if (typeof window === 'undefined') return;
+  try {
+    const ctx = getAudioContext();
+    if (ctx) {
+      if (ctx.state === 'suspended') {
+        ctx.resume().then(() => {
+          isAudioUnlocked = true;
+        }).catch(() => {});
+      } else if (ctx.state === 'running') {
+        isAudioUnlocked = true;
+      }
+    }
+  } catch (e) {
+    // Ignore
+  }
+}
+
+if (typeof window !== 'undefined') {
+  const interactionEvents = [
+    'pointerdown', 
+    'pointerup', 
+    'pointermove', 
+    'click', 
+    'touchstart', 
+    'touchend', 
+    'keydown', 
+    'mousedown', 
+    'wheel'
+  ];
+
   const handleFirstInteraction = () => {
     unlockAudio();
+    if (!hasInitiatedWindPreload) {
+      preloadWindSounds();
+    }
     interactionEvents.forEach(evt => {
-      window.removeEventListener(evt, handleFirstInteraction);
+      window.removeEventListener(evt, handleFirstInteraction, { capture: true });
     });
   };
 
   interactionEvents.forEach(evt => {
-    window.addEventListener(evt, handleFirstInteraction, { passive: true });
+    window.addEventListener(evt, handleFirstInteraction, { capture: true, passive: true });
   });
 }
 
@@ -215,24 +238,45 @@ const USER_DRAG_FILES = [
 
 const windBuffers = [];
 const userDragBuffers = [];
+const arrayBufferCache = new Map();
 let hasInitiatedWindPreload = false;
 
+// Immediate background fetch of raw audio files into memory cache so they're instantly available
+if (typeof window !== 'undefined') {
+  [...WIND_FILES, ...USER_DRAG_FILES].forEach(url => {
+    fetch(url)
+      .then(res => res.ok ? res.arrayBuffer() : null)
+      .then(buf => {
+        if (buf) arrayBufferCache.set(url, buf);
+      })
+      .catch(() => {});
+  });
+}
+
 export async function preloadWindSounds() {
-  if (typeof window === 'undefined' || hasInitiatedWindPreload) return;
-  hasInitiatedWindPreload = true;
+  if (typeof window === 'undefined') return;
   const ctx = getAudioContext();
   if (!ctx) return;
+  if (hasInitiatedWindPreload && windBuffers.length > 0) return;
+  hasInitiatedWindPreload = true;
 
   const loadFile = async (url, bufferArray, idx) => {
     try {
-      const res = await fetch(url);
-      if (res.ok) {
-        const arrayBuf = await res.arrayBuffer();
-        const decoded = await ctx.decodeAudioData(arrayBuf);
+      let arrayBuf = arrayBufferCache.get(url);
+      if (!arrayBuf) {
+        const res = await fetch(url);
+        if (res.ok) {
+          arrayBuf = await res.arrayBuffer();
+          arrayBufferCache.set(url, arrayBuf);
+        }
+      }
+      if (arrayBuf) {
+        // Slice the buffer because decodeAudioData detaches the ArrayBuffer
+        const decoded = await ctx.decodeAudioData(arrayBuf.slice(0));
         bufferArray[idx] = decoded;
       }
     } catch (err) {
-      // Ignore network/decoding errors
+      // Ignore decoding errors
     }
   };
 
