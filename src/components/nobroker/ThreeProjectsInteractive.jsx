@@ -15,7 +15,7 @@ import {
   Eye,
   ArrowsDownUp,
   ArrowUp,
-  ArrowsClockwise
+  GitCommit
 } from '@phosphor-icons/react';
 import { animate, stagger } from 'animejs';
 import { playSound } from '../../utils/sound';
@@ -658,15 +658,12 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
               </p>
             </div>
 
-            {/* Pre-Redesign Customer Journey Flow Illustration */}
+            {/* Pre-Redesign Customer Journey Flow */}
             {currentP.problemFlowIllustration && (
-              <div className="anime-text w-full my-6 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-2xl p-4 sm:p-6 shadow-sm overflow-hidden flex flex-col items-center">
-                <div className="w-full flex items-center justify-between pb-3 mb-3 border-b border-zinc-100 dark:border-zinc-800 text-[11px] font-mono text-zinc-400">
-                  <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
-                    <ArrowsClockwise className="w-3.5 h-3.5" />
-                    Pre-Redesign Customer Journey Flow
-                  </span>
-                  <span>Sequential Loop Metaphor</span>
+              <div className="anime-text w-full my-5 flex flex-col items-center">
+                <div className="w-full flex items-center gap-1.5 mb-2.5 text-xs font-mono text-orange-600 dark:text-orange-400 font-bold uppercase tracking-wider">
+                  <GitCommit className="w-3.5 h-3.5" />
+                  <span>Pre-Redesign Customer Journey Flow</span>
                 </div>
                 <img 
                   src={currentP.problemFlowIllustration} 
