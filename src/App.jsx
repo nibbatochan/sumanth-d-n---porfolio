@@ -153,7 +153,7 @@ export function App() {
       )}
 
       {activeDedicatedCase && activeDedicatedCase.id === 'poster-challenge' && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-white dark:bg-[#09090B] animate-fade-in">
+        <div className="fixed inset-0 z-50 overflow-hidden bg-[#050507] animate-fade-in">
           <PosterChallengePage
             soundEnabled={soundEnabled}
             isDarkMode={isDarkMode}
@@ -161,7 +161,9 @@ export function App() {
             onOpenContact={() => setIsContactOpen(true)}
             onBack={() => {
               setActiveDedicatedCase(null);
-              window.history.pushState(null, '', window.location.pathname);
+              if (window.location.hash) {
+                window.location.hash = '';
+              }
             }}
           />
         </div>

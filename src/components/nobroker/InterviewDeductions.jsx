@@ -13,48 +13,94 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
   const scrollSectionRef = useRef(null);
+  const stickyRef = useRef(null);
   const trackRef = useRef(null);
 
   useEffect(() => {
     const section = scrollSectionRef.current;
+    const sticky = stickyRef.current;
     const track = trackRef.current;
-    if (!section || !track) return;
+    if (!section || !sticky || !track) return;
 
     // Detect the real scroll container (.overflow-y-auto in App.jsx or window)
     const scroller = section.closest('.overflow-y-auto') || window;
 
-    const ctx = gsap.context(() => {
-      const getScrollAmount = () => {
-        const trackWidth = track.scrollWidth;
-        const containerWidth = track.parentElement?.clientWidth || window.innerWidth;
-        return Math.max(0, trackWidth - containerWidth + 40);
-      };
+    let rafId = null;
 
-      gsap.fromTo(track, 
-        { x: 0 },
-        {
-          x: () => -getScrollAmount(),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            scroller: scroller,
-            start: 'top top+=70',
-            end: 'bottom bottom',
-            scrub: 1,
-            invalidateOnRefresh: true,
-          }
-        }
-      );
-    }, section);
+    const updateTrackPosition = () => {
+      const sectionRect = section.getBoundingClientRect();
+      const stickyRect = sticky.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const cardHeight = stickyRect.height || sticky.offsetHeight;
 
-    // Refresh ScrollTrigger after elements mount and layout settles
-    const refreshTimer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 150);
+      // The exact Y position in the viewport where the card centers and locks:
+      const centerLockY = Math.max(72, (vh - cardHeight) / 2);
+
+      // Calculate total horizontal travel
+      const trackWidth = track.scrollWidth;
+      const containerWidth = track.parentElement?.clientWidth || window.innerWidth;
+      const maxTravel = Math.max(0, trackWidth - containerWidth + 40);
+
+      // If the section top is still below the center lock point (i.e. entering from below)
+      if (sectionRect.top >= centerLockY) {
+        // Firmly clamp at 0 so Card 1 & Card 2 are 100% visible and undisturbed
+        gsap.set(track, { x: 0 });
+        return;
+      }
+
+      // Total distance the card remains locked in the center
+      const totalStuckDist = Math.max(1, sectionRect.height - cardHeight);
+      const scrolledPastLock = centerLockY - sectionRect.top;
+      const rawProgress = Math.min(1, Math.max(0, scrolledPastLock / totalStuckDist));
+
+      // 6% entry cushion so cards 1 & 2 rest calmly when the section locks,
+      // and 6% exit cushion so the final cards rest before scrolling away
+      let progress = 0;
+      if (rawProgress <= 0.06) {
+        progress = 0;
+      } else if (rawProgress >= 0.94) {
+        progress = 1;
+      } else {
+        progress = (rawProgress - 0.06) / 0.88;
+      }
+
+      const targetX = -progress * maxTravel;
+      
+      if (progress === 0) {
+        gsap.set(track, { x: 0 });
+      } else {
+        gsap.to(track, {
+          x: targetX,
+          duration: 0.15,
+          ease: 'power1.out',
+          overwrite: 'auto'
+        });
+      }
+    };
+
+    const handleScroll = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateTrackPosition);
+    };
+
+    scroller.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+
+    // Initial positioning check
+    handleScroll();
+
+    // Re-check after images/fonts settle
+    const t1 = setTimeout(handleScroll, 100);
+    const t2 = setTimeout(handleScroll, 400);
+    const t3 = setTimeout(handleScroll, 1000);
 
     return () => {
-      clearTimeout(refreshTimer);
-      ctx.revert();
+      if (rafId) cancelAnimationFrame(rafId);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      scroller.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
@@ -141,35 +187,32 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
   };
 
   return (
-    <section className="py-16 border-b border-zinc-200 dark:border-zinc-800 relative space-y-12">
-      {/* Section 03 Header */}
-      <div>
-        <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-widest text-orange-600 dark:text-orange-400 font-bold mb-2">
-          <Sparkle size={14} weight="fill" />
-          <span>03 · Synthesis & Affinity Mapping</span>
-        </div>
-        <KineticHeading 
-          as="h2"
-          text="Sorting Research into 7 Behavioral Patterns"
-          className="text-2xl sm:text-3xl md:text-4xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight"
-        />
-        <p className="text-zinc-600 dark:text-zinc-300 text-base sm:text-lg max-w-4xl mt-2 leading-relaxed">
-          From 52 surveys and 7 interviews, tenant frustrations fell into <strong>7 distinct patterns</strong>. To create real impact rather than shallow tweaks, I focused on <strong>three core user behaviors</strong> and parked external market and legal issues.
-        </p>
-      </div>
+    <section className="py-12 border-b border-zinc-200 dark:border-zinc-800 relative space-y-12">
+      {/* Scroll-Driven Progressive Disclosure Container */}
+      <div ref={scrollSectionRef} className="relative h-[280vh]">
+        <div 
+          ref={stickyRef} 
+          style={{ top: 'max(72px, calc(50vh - 270px))' }}
+          className="sticky w-full space-y-4 sm:space-y-6"
+        >
+          {/* Section 03 Header - Locked with the container */}
+          <div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-widest text-orange-600 dark:text-orange-400 font-bold mb-2">
+              <Sparkle size={14} weight="fill" />
+              <span>03 · Synthesis & Affinity Mapping</span>
+            </div>
+            <KineticHeading 
+              as="h2"
+              text="Sorting Research into 7 Behavioral Patterns"
+              className="text-2xl sm:text-3xl md:text-4xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight"
+            />
+            <p className="text-zinc-600 dark:text-zinc-300 text-sm sm:text-base max-w-4xl mt-2 leading-relaxed">
+              From 52 surveys and 7 interviews, tenant frustrations fell into <strong>7 distinct patterns</strong>. To create real impact rather than shallow tweaks, I focused on <strong>three core user behaviors</strong> and parked external market and legal issues.
+            </p>
+          </div>
 
-      {/* Kicker Header - Positioned OUTSIDE the image container */}
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-orange-500 font-bold">
-          <UsersThree size={18} weight="bold" />
-          <span>The 7 Behavioral Patterns</span>
-        </div>
-
-        {/* Scroll-Driven Progressive Disclosure Container */}
-        <div ref={scrollSectionRef} className="relative h-[240vh]">
-          <div className="sticky top-20 sm:top-24 w-full">
-            {/* Background Image Frame: Full Image Seen Clear without Dark Overlay */}
-            <div className="rounded-3xl sm:rounded-4xl overflow-hidden relative border border-zinc-200/80 dark:border-zinc-800/80 shadow-2xl min-h-[460px] sm:min-h-[540px] flex items-end pb-8 sm:pb-10 pt-36 sm:pt-48">
+          {/* Background Image Frame: Full Image Seen Clear without Dark Overlay */}
+          <div className="rounded-3xl sm:rounded-4xl overflow-hidden relative border border-zinc-200/80 dark:border-zinc-800/80 shadow-2xl min-h-[420px] sm:min-h-[480px] flex items-end pb-6 sm:pb-8 pt-24 sm:pt-32">
               <img 
                 src="/illustrations/fdgdfgdfg.jpg" 
                 alt="Behavioral Patterns Synthesis Background" 
@@ -237,7 +280,6 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
             </div>
           </div>
         </div>
-      </div>
 
       {/* Section 04: Deriving the Problem Statements & North Star Alignment */}
       <div className="space-y-8 pt-6 border-t border-zinc-100 dark:border-zinc-800/80">

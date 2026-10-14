@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   ArrowLeft, 
   ArrowSquareOut,
+  Sparkle,
   Sun,
   Moon
 } from '@phosphor-icons/react';
@@ -14,7 +15,6 @@ import { CaseHeader } from './nobroker/CaseHeader';
 import { PersonalStoryContext } from './nobroker/PersonalStoryContext';
 import { InterviewDeductions } from './nobroker/InterviewDeductions';
 import { ThreeProjectsInteractive } from './nobroker/ThreeProjectsInteractive';
-import { ReflectionsAndGaps } from './nobroker/ReflectionsAndGaps';
 import { Footer } from './Footer';
 import { initScrollReveals } from '../utils/motion';
 
@@ -41,7 +41,7 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
     { id: 'story-section', label: 'Assumption & Discovery', kicker: '01–02' },
     { id: 'deductions-section', label: '7 Clusters & Metrics Framework', kicker: '03–04' },
     { id: 'projects-section', label: '3 Solved Pillars', kicker: '05' },
-    { id: 'gaps-section', label: 'Reflections & Gaps', kicker: '06' },
+    { id: 'prototype-section', label: 'Interactive Prototypes', kicker: 'Lab' },
   ];
 
   // 60FPS Scroll Reveal Initialization
@@ -287,13 +287,46 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
               />
             </div>
 
-            {/* Section 6: Honest Gaps, Assumptions & Master Lab CTA */}
-            <div id="gaps-section">
-              <ReflectionsAndGaps 
-                labHost={labHost} 
-                soundEnabled={soundEnabled} 
-              />
+            {/* Closing Master Prototype Lab CTA Container */}
+            <div id="prototype-section" className="py-12 relative">
+              <div data-reveal className="w-full max-w-4xl mx-auto p-8 sm:p-12 rounded-4xl bg-gradient-to-b from-white/95 to-zinc-50/90 dark:from-[#151519]/95 dark:to-[#0F0F12]/95 backdrop-blur-md border border-zinc-200/90 dark:border-zinc-800/90 shadow-2xl text-center relative z-30 space-y-4 overflow-hidden">
+                <div className="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t from-orange-500/[0.08] via-orange-500/[0.02] to-transparent pointer-events-none -z-0" />
+
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-widest text-orange-600 dark:text-orange-400 font-bold bg-orange-500/10 border border-orange-500/20">
+                  <Sparkle size={14} weight="fill" />
+                  <span>Interactive Demos Ready</span>
+                </div>
+
+                <h3 className="text-xl sm:text-3xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight">
+                  Explore the Interactive Prototypes
+                </h3>
+
+                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-300 max-w-xl mx-auto leading-relaxed">
+                  Test all three redesign features live in the interactive lab with realistic Bangalore commute data, verified photography, and calm notification feeds.
+                </p>
+
+                <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (soundEnabled) playSound('pop');
+                      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+                      const targetUrl = isMobile 
+                        ? `${labHost}/ps1/prototype`
+                        : labHost;
+                      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+                    }}
+                    className="px-6 py-3 rounded-full bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 transition-all hover:scale-105 active:scale-95 tactile-btn"
+                  >
+                    <span>Open All 3 Lab Prototypes</span>
+                    <ArrowSquareOut size={16} weight="bold" />
+                  </a>
+                </div>
+              </div>
             </div>
+
+
 
           </main>
         </div>

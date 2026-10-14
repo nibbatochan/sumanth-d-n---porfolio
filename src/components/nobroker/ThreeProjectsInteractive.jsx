@@ -13,7 +13,9 @@ import {
   ShieldCheck,
   BellSlash,
   Eye,
-  ArrowsDownUp
+  ArrowsDownUp,
+  ArrowUp,
+  ArrowsClockwise
 } from '@phosphor-icons/react';
 import { animate, stagger } from 'animejs';
 import { playSound } from '../../utils/sound';
@@ -38,6 +40,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       labRoute: '/ps2',
       labActionLabel: 'Launch Commute Map Prototype',
       illustration: '/illustrations/ps2-commute.png',
+      problemFlowIllustration: '/illustrations/ps2-journey-flow.png',
+      problemFlowAlt: 'PS2 Commute & Locality Pre-Redesign Multi-App Journey Flow',
       
       // 01: Feature Context
       featureContext: {
@@ -144,6 +148,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       labRoute: '/ps1',
       labActionLabel: 'Launch Reality Verification Flow',
       illustration: '/illustrations/ps1-reality.png',
+      problemFlowIllustration: '/illustrations/ps1-journey-flow.jpg',
+      problemFlowAlt: 'PS1 Listing vs Reality Pre-Redesign Blind Visit Journey Flow',
       
       // 01: Feature Context
       featureContext: {
@@ -250,6 +256,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       labRoute: '/ps4',
       labActionLabel: 'Launch Calm Signal Prototype',
       illustration: '/illustrations/ps4-alerts.png',
+      problemFlowIllustration: '/illustrations/ps4-journey-flow.jpg',
+      problemFlowAlt: 'PS4 Calm Signal Alerts Pre-Redesign Spam Loop Journey Flow',
       
       // 01: Feature Context
       featureContext: {
@@ -650,6 +658,25 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
               </p>
             </div>
 
+            {/* Pre-Redesign Customer Journey Flow Illustration */}
+            {currentP.problemFlowIllustration && (
+              <div className="anime-text w-full my-6 bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 rounded-2xl p-4 sm:p-6 shadow-sm overflow-hidden flex flex-col items-center">
+                <div className="w-full flex items-center justify-between pb-3 mb-3 border-b border-zinc-100 dark:border-zinc-800 text-[11px] font-mono text-zinc-400">
+                  <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+                    <ArrowsClockwise className="w-3.5 h-3.5" />
+                    Pre-Redesign Customer Journey Flow
+                  </span>
+                  <span>Sequential Loop Metaphor</span>
+                </div>
+                <img 
+                  src={currentP.problemFlowIllustration} 
+                  alt={currentP.problemFlowAlt || currentP.title}
+                  className="w-full max-h-[380px] sm:max-h-[460px] object-contain transition-transform duration-300 hover:scale-[1.01]"
+                  loading="lazy"
+                />
+              </div>
+            )}
+
             {/* Design Goal / How Might We */}
             <div className="anime-text text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 pl-3.5 border-l-2 border-orange-500 py-0.5">
               <span className="font-mono text-[10px] uppercase font-bold text-orange-600 dark:text-orange-400 block mb-0.5">Design Goal (How Might We)</span>
@@ -901,12 +928,12 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
                 <button
                   onClick={() => {
                     playSound('pop', soundEnabled);
-                    const gapsEl = document.getElementById('gaps-section');
-                    if (gapsEl) smoothScrollTo(gapsEl, 65);
+                    const protoEl = document.getElementById('prototype-section');
+                    if (protoEl) smoothScrollTo(protoEl, 65);
                   }}
                   className="px-5 py-2.5 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs flex items-center gap-2 shadow-sm hover:scale-105 active:scale-95 tactile-btn transition-all"
                 >
-                  <span>Move to Next Section · Reflections & Gaps</span>
+                  <span>Explore Interactive Prototypes</span>
                   <ArrowRight size={14} weight="bold" className="text-orange-500" />
                 </button>
               )}

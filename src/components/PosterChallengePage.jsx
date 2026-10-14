@@ -5,7 +5,9 @@ import {
   Pause, 
   Eye, 
   X,
-  Info
+  Info,
+  CaretLeft,
+  CaretRight
 } from '@phosphor-icons/react';
 import { posterChallengeList } from '../data/portfolioData';
 import { playWindSwoosh, preloadWindSounds } from '../utils/sound';
@@ -23,6 +25,7 @@ export const PosterChallengePage = ({
 
   // In-scene focus state
   const [focusedId, setFocusedId] = useState(null);
+  const [closingCardId, setClosingCardId] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [showProjectInfo, setShowProjectInfo] = useState(false);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
@@ -143,6 +146,47 @@ export const PosterChallengePage = ({
   const registerInteraction = useCallback(() => {
     lastInteractionRef.current = Date.now();
   }, []);
+
+  const closeFocus = useCallback(() => {
+    if (!focusedId) return;
+    playWindSwoosh('soft', { volume: 0.25, soundEnabled });
+    const prevId = focusedId;
+    setClosingCardId(prevId);
+    setFocusedId(null);
+    setTimeout(() => {
+      setClosingCardId(null);
+    }, 750);
+  }, [focusedId, soundEnabled]);
+
+  const openFocus = useCallback((cardId) => {
+    playWindSwoosh('focus', { volume: 0.35, soundEnabled });
+    registerInteraction();
+    const currentPos = cardCoordsRef.current[cardId];
+    if (currentPos) {
+      physics.current.targetZ = physics.current.scrollZ - currentPos.z;
+    }
+    setFocusedId(cardId);
+  }, [registerInteraction, soundEnabled]);
+
+  const goToNextPoster = useCallback(() => {
+    if (!focusedId) return;
+    const currIdx = items.findIndex(c => c.id === focusedId);
+    const nextIdx = (currIdx + 1) % items.length;
+    const nextCard = items[nextIdx];
+    if (nextCard) {
+      openFocus(nextCard.id);
+    }
+  }, [focusedId, items, openFocus]);
+
+  const goToPrevPoster = useCallback(() => {
+    if (!focusedId) return;
+    const currIdx = items.findIndex(c => c.id === focusedId);
+    const prevIdx = (currIdx - 1 + items.length) % items.length;
+    const prevCard = items[prevIdx];
+    if (prevCard) {
+      openFocus(prevCard.id);
+    }
+  }, [focusedId, items, openFocus]);
 
   // Delay details display until the card has eased into the center
   useEffect(() => {
@@ -402,17 +446,35 @@ export const PosterChallengePage = ({
         drag.isOverCenter = isOverCenter;
 
         const indicator = dropZoneRef.current.querySelector('[data-drop-indicator]');
+        const dropIcon = dropZoneRef.current.querySelector('[data-drop-icon]');
+        const dropTitle = dropZoneRef.current.querySelector('[data-drop-title]');
         if (indicator) {
           if (isOverCenter) {
             indicator.style.borderColor = 'rgba(249, 115, 22, 0.9)';
             indicator.style.backgroundColor = 'rgba(249, 115, 22, 0.16)';
             indicator.style.transform = 'scale(1.06)';
             indicator.style.boxShadow = '0 0 35px rgba(249, 115, 22, 0.35)';
+            if (dropIcon) {
+              dropIcon.style.borderColor = 'rgba(249, 115, 22, 0.8)';
+              dropIcon.style.backgroundColor = 'rgba(249, 115, 22, 0.25)';
+              dropIcon.style.color = '#F97316';
+            }
+            if (dropTitle) {
+              dropTitle.style.color = '#F97316';
+            }
           } else {
             indicator.style.borderColor = 'rgba(255, 255, 255, 0.25)';
             indicator.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
             indicator.style.transform = 'scale(1.0)';
             indicator.style.boxShadow = 'none';
+            if (dropIcon) {
+              dropIcon.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+              dropIcon.style.backgroundColor = 'rgba(255, 255, 255, 0.10)';
+              dropIcon.style.color = 'rgba(255, 255, 255, 0.80)';
+            }
+            if (dropTitle) {
+              dropTitle.style.color = 'rgba(255, 255, 255, 0.90)';
+            }
           }
         }
 
@@ -475,6 +537,17 @@ export const PosterChallengePage = ({
           el.style.pointerEvents = 'auto';
           el.style.filter = 'none';
           el.style.transform = `translate3d(0px, -20px, 150px) scale(1.15) rotateY(0deg) rotateZ(0deg)`;
+          el.style.zIndex = '100';
+          return;
+        }
+
+        // When closing focus, smoothly ease the card back into its tunnel coordinate
+        if (closingCardId === cardId) {
+          el.style.display = 'flex';
+          el.style.opacity = '1';
+          el.style.pointerEvents = 'auto';
+          el.style.filter = 'none';
+          el.style.transform = `translate3d(${finalX}px, ${finalY}px, ${finalZ}px) rotateY(${offset.rotY + p.panX * 0.015}deg) rotateZ(${offset.rotZ}deg)`;
           el.style.zIndex = '100';
           return;
         }
@@ -551,7 +624,7 @@ export const PosterChallengePage = ({
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
       if (easeZRef.current) cancelAnimationFrame(easeZRef.current);
     };
-  }, [focusedId, isAutoPlay, itemSpacingZ, layoutOffsets, totalSpanZ, thrownCardIds, throwAnimations]);
+  }, [focusedId, closingCardId, isAutoPlay, itemSpacingZ, layoutOffsets, totalSpanZ, thrownCardIds, throwAnimations, soundEnabled]);
 
   // ─────────────────────────────────────────────────────────────
   // 3. Fling / Throw Cardboard Logic (Left or Right)
@@ -660,7 +733,13 @@ export const PosterChallengePage = ({
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (focusedId) {
-        if (e.key === 'Escape') setFocusedId(null);
+        if (e.key === 'Escape') {
+          closeFocus();
+        } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          goToNextPoster();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          goToPrevPoster();
+        }
         return;
       }
       if (showProjectInfo) {
@@ -680,12 +759,12 @@ export const PosterChallengePage = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [focusedId, showProjectInfo, registerInteraction]);
+  }, [focusedId, showProjectInfo, registerInteraction, closeFocus, goToNextPoster, goToPrevPoster]);
 
   const handleCanvasPointerDown = (e) => {
     if (focusedId || showProjectInfo || dragRef.current.isDragging) return;
-    // Don't start canvas drag if the user clicked on a poster card
-    if (e.target.closest('[data-poster-card]')) return;
+    // Don't start canvas drag if the user clicked on a poster card, button, or header
+    if (e.target.closest('button, header, [data-poster-card]')) return;
 
     registerInteraction();
     const p = physics.current;
@@ -737,8 +816,7 @@ export const PosterChallengePage = ({
 
       // 1. DRAG TO CENTER TO VIEW: If card is dropped within center viewing zone
       if (distToCenter < 210 && totalMove > 15) {
-        playWindSwoosh('focus', { volume: 0.35, soundEnabled });
-        setFocusedId(cardId);
+        openFocus(cardId);
       }
       // 2. Fling / Throw horizontally into the abyss
       else if (Math.abs(deltaX) > 110 || Math.abs(velocity) > 10) {
@@ -764,6 +842,7 @@ export const PosterChallengePage = ({
 
   const activeCard = items[activePosterIndex] || items[0];
   const focusedCard = items.find(c => c.id === focusedId);
+  const displayCard = focusedCard || activeCard;
 
   return (
     <div 
@@ -785,14 +864,17 @@ export const PosterChallengePage = ({
 
       {/* ── Ambient Background Tint Layer (Positioned behind cards at z-5) ── */}
       <div 
-        onClick={() => setFocusedId(null)}
+        onClick={() => closeFocus()}
         className={`absolute inset-0 z-5 bg-black/60 transition-opacity duration-600 ${
           focusedId ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       />
 
       {/* ── Minimalist Top Navigation ── */}
-      <header className="absolute top-0 left-0 right-0 z-40 px-4 sm:px-10 py-4 sm:py-5 flex items-center justify-between pointer-events-auto">
+      <header 
+        onPointerDown={(e) => e.stopPropagation()}
+        className="absolute top-0 left-0 right-0 z-40 px-4 sm:px-10 py-4 sm:py-5 flex items-center justify-between pointer-events-auto"
+      >
         <button
           onClick={() => {
             playWindSwoosh('soft', { volume: 0.25, soundEnabled });
@@ -815,7 +897,7 @@ export const PosterChallengePage = ({
           </span>
           <span className="text-white/40 text-xs font-mono">•</span>
           <span className="text-[11px] sm:text-xs font-mono text-orange-400 font-bold">
-            {activeCard ? activeCard.day : 'Day 01'} / 30
+            {displayCard ? displayCard.day : 'Day 01'} / 30
           </span>
         </div>
 
@@ -873,6 +955,7 @@ export const PosterChallengePage = ({
             const imagePath = `/posters/${encodeURIComponent(poster.filename)}`;
             const isThrowing = thrownCardIds.has(poster.id);
             const isFocused = focusedId === poster.id;
+            const isClosing = closingCardId === poster.id;
 
             return (
               <div
@@ -920,6 +1003,8 @@ export const PosterChallengePage = ({
                     ? 'transition-transform duration-500 ease-in' 
                     : isFocused 
                     ? 'transition-[transform,box-shadow,border-color] duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_35px_100px_rgba(0,0,0,0.98)] border-white/40' 
+                    : isClosing
+                    ? 'transition-[transform,box-shadow,border-color] duration-[750ms] ease-[cubic-bezier(0.16,1,0.3,1)]'
                     : draggingCardId === poster.id 
                     ? 'transition-none cursor-grabbing shadow-[0_30px_90px_rgba(249,115,22,0.35)] border-orange-500' 
                     : 'transition-none cursor-grab active:cursor-grabbing hover:border-orange-500/60'
@@ -954,10 +1039,10 @@ export const PosterChallengePage = ({
                   {index === activePosterIndex && !focusedId && (
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-auto z-20">
                       <button
+                        onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => {
                           e.stopPropagation();
-                          playWindSwoosh('focus', { volume: 0.35, soundEnabled });
-                          setFocusedId(poster.id);
+                          openFocus(poster.id);
                         }}
                         className="px-5 py-2.5 rounded-full bg-black/80 hover:bg-orange-500 text-white text-xs font-mono font-bold flex items-center gap-2 border border-white/25 hover:border-orange-500 shadow-2xl backdrop-blur-md transition-all duration-200 transform group-hover:scale-105 active:scale-95"
                       >
@@ -984,11 +1069,17 @@ export const PosterChallengePage = ({
           data-drop-indicator
           className="w-[280px] xs:w-[325px] sm:w-[370px] md:w-[415px] aspect-square rounded-2xl sm:rounded-3xl border-2 border-dashed border-white/25 bg-white/[0.03] backdrop-blur-[2px] flex flex-col items-center justify-center gap-3 transition-all duration-200 pointer-events-none"
         >
-          <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white/80 border border-white/15">
+          <div 
+            data-drop-icon
+            className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white/80 border border-white/15 transition-all duration-200"
+          >
             <Eye size={22} weight="bold" />
           </div>
           <div className="text-center">
-            <span className="text-xs font-mono tracking-widest uppercase font-bold text-white/90 block">
+            <span 
+              data-drop-title
+              className="text-xs font-mono tracking-widest uppercase font-bold text-white/90 block transition-colors duration-200"
+            >
               Drop to View
             </span>
             <span className="text-[10px] font-mono text-white/40 tracking-wider">
@@ -1004,21 +1095,45 @@ export const PosterChallengePage = ({
           onClick={(e) => {
             // Clicking anywhere outside interactive children closes focus
             if (e.target === e.currentTarget || e.target.getAttribute('data-backdrop-close') === 'true') {
-              playWindSwoosh('soft', { volume: 0.25, soundEnabled });
-              setFocusedId(null);
+              closeFocus();
             }
           }}
           className="absolute inset-0 z-50 flex flex-col justify-between items-center py-6 sm:py-8 pointer-events-auto select-none"
         >
-          {/* Close button positioned top-right NEXT TO the focused image container with a clean gap */}
+          {/* Close button and Navigation buttons positioned around the focused image container */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            {/* Exactly matches focused card's 3D rendered box (md: 415px * 1.15 = 477px, -20px offset) */}
+            {/* Exactly matches focused card's 3D rendered box (md: 415px * 1.15 = 478px, -20px offset) */}
             <div className="relative w-[322px] xs:w-[374px] sm:w-[425px] md:w-[478px] aspect-square flex items-center justify-center pointer-events-none -translate-y-5">
+              
+              {/* Previous Poster Button (Left) */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  playWindSwoosh('soft', { volume: 0.25, soundEnabled });
-                  setFocusedId(null);
+                  goToPrevPoster();
+                }}
+                className="absolute -left-4 sm:-left-16 md:-left-20 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-all shadow-2xl backdrop-blur-md cursor-pointer pointer-events-auto transform hover:scale-105 active:scale-95"
+                title="Previous Poster (Left Arrow)"
+              >
+                <CaretLeft size={20} weight="bold" />
+              </button>
+
+              {/* Next Poster Button (Right) */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToNextPoster();
+                }}
+                className="absolute -right-4 sm:-right-16 md:-right-20 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-all shadow-2xl backdrop-blur-md cursor-pointer pointer-events-auto transform hover:scale-105 active:scale-95"
+                title="Next Poster (Right Arrow)"
+              >
+                <CaretRight size={20} weight="bold" />
+              </button>
+
+              {/* Close Button positioned top-right NEXT TO the focused image container with a clean gap */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeFocus();
                 }}
                 className="absolute right-0 -top-14 sm:-right-20 md:-right-24 sm:-top-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-all shadow-2xl backdrop-blur-md cursor-pointer pointer-events-auto transform hover:scale-105 active:scale-95"
                 title="Close (Esc or Click Outside)"
@@ -1032,8 +1147,7 @@ export const PosterChallengePage = ({
           <div 
             data-backdrop-close="true"
             onClick={() => {
-              playWindSwoosh('soft', { volume: 0.25, soundEnabled });
-              setFocusedId(null);
+              closeFocus();
             }}
             className="flex-1 w-full flex items-center justify-center cursor-pointer"
           />
@@ -1051,8 +1165,8 @@ export const PosterChallengePage = ({
                 <span className="text-orange-400/90 font-medium">Art Style: {focusedCard.artStyle || `${focusedCard.tag} Modernism`}</span>
               </div>
 
-              {/* Poster Title */}
-              <h2 className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-white drop-shadow-md">
+              {/* Poster Title - 32px bold font-sans */}
+              <h2 className="text-2xl sm:text-[32px] font-bold font-sans tracking-tight text-white drop-shadow-md">
                 {focusedCard.title}
               </h2>
             </div>
@@ -1138,7 +1252,7 @@ export const PosterChallengePage = ({
               <div className="flex items-center gap-3.5">
                 <span><strong className="text-white font-bold">Tool:</strong> Adobe Photoshop</span>
                 <span>•</span>
-                <span><strong className="text-white font-bold">Limit:</strong> &lt; 2 Hours / Day</span>
+                <span><strong className="text-white font-bold">Limit:</strong> &lt; 2 Hours</span>
                 <span>•</span>
                 <span><strong className="text-white font-bold">Pacing:</strong> 30 Days</span>
               </div>
