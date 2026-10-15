@@ -24,30 +24,24 @@ export const PersonalStoryContext = () => {
         </div>
         <KineticHeading 
           as="h2"
-          text="I started with an assumption — and the research refined it."
+          text="I started with an assumption, and the research refined it."
           className="text-2xl sm:text-3xl md:text-4xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight"
         />
       </div>
 
-      {/* Story Narrative in Sumanth's Personal Voice */}
+      {/* Story Narrative on Left + Hypothesis Box on Right */}
       <div data-reveal className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-10 border-b border-zinc-100 dark:border-zinc-800/80">
         <div className="lg:col-span-7 space-y-4 text-zinc-600 dark:text-zinc-300 text-base sm:text-lg leading-relaxed">
           <p>
-            Moving from a <strong>tier-2 town to Bengaluru</strong> in search of better career opportunities, I experienced firsthand the daunting reality of renting in a fast-paced metropolis. Like thousands of newcomers, I spent exhausting hours after work hunting for an affordable flat without burning two months of hard-earned income on broker fees.
+            When I moved from a smaller town to Bengaluru, I spent evenings after work searching for a flat so I could avoid paying two months of rent in broker fees. NoBroker was supposed to make that easy, but in a new city, distances are deceptive. Choke-point traffic, tanker water schedules, and misleading commute times meant hours spent bouncing across open tabs with zero actual visits scheduled.
           </p>
           <p>
-            NoBroker promised to <strong>cut out middlemen and make renting easy</strong>. But for budget renters migrating from different parts outside the metropolitan cities, the friction is acute. Moving into an unfamiliar city, renters navigate an overwhelming web of hyper-local challenges—unpredictable choke-point traffic, spotty water supply, and misleading distances. Evenings turn into <strong>hours of browsing</strong>, dozens of open browser tabs, and <strong>zero scheduled visits</strong>.
-          </p>
-          <p className="text-zinc-900 dark:text-white font-semibold">
-            I set out to discover why budget renters with high intent were <strong>dropping off before ever visiting a flat</strong>.
+            I initially assumed renters struggled because comparing amenities and pricing was overwhelming, and that adding travel-time tags would fix it. That hypothesis turned out to be wrong. Research showed that people were dropping out not because comparing listings was difficult, but because the listings hid everyday offline realities, forcing renters to manually vet every single property on other apps before taking a step.
           </p>
         </div>
 
         {/* Narrative Sidebox: The Initial Statement */}
-        <div className="lg:col-span-5 bg-gradient-to-b from-white to-zinc-50/50 dark:from-[#151518] dark:to-[#0F0F12] border border-zinc-200 dark:border-zinc-800/90 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-sm relative overflow-hidden">
-          <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-orange-500/[0.08] via-orange-500/[0.02] to-transparent pointer-events-none -z-0" />
-          <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/[0.05] rounded-full blur-2xl pointer-events-none" />
-          
+        <div className="lg:col-span-5 bg-[#FAF9F6] dark:bg-[#121215] border border-[#E5E3DC] dark:border-zinc-800/90 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-xs relative overflow-hidden">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-orange-600 dark:text-orange-400 font-bold mb-3">
               <LightbulbFilament size={16} weight="bold" />
@@ -58,7 +52,7 @@ export const PersonalStoryContext = () => {
             </blockquote>
           </div>
 
-          <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400">
+          <div className="pt-4 border-t border-[#E5E3DC]/70 dark:border-zinc-800/80 flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400">
             <span>Hypothesis v1 · August 2026</span>
             <span className="text-orange-600 dark:text-orange-400 font-bold">Turned out to be wrong</span>
           </div>
@@ -73,11 +67,11 @@ export const PersonalStoryContext = () => {
         </div>
         <KineticHeading 
           as="h3"
-          text="What 52 surveys and 7 interviews actually revealed"
+          text="What 52 surveys and 7 interviews revealed"
           className="text-xl sm:text-2xl md:text-3xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight"
         />
         <p className="text-zinc-600 dark:text-zinc-300 text-base sm:text-lg max-w-4xl leading-relaxed">
-          I ran a mixed-methods research study collecting <strong>52 survey responses</strong> (filtered to 37 active metro renters) alongside <strong>7 in-depth interviews</strong>. We focused specifically on <strong>migrating professionals and budget flat-hunters</strong> moving into major metropolitan hubs (Bengaluru, Mumbai, Pune, and Hyderabad). Rather than surface-level feature requests, we investigated <strong>how tenants actually evaluate listings</strong> during grueling 45–90 minute sessions—tracking where high-intent renters hit dead ends, when they abandon the app, and the exhausting manual workarounds they resort to when digital listings conflict with offline reality.
+          I surveyed <strong>52 renters</strong> (filtering to 37 actively searching across Bengaluru, Mumbai, Pune, and Hyderabad) and conducted <strong>7 in-depth interviews</strong> with migrating professionals. Instead of asking what features people wanted, I watched them search. Over 45-to-90-minute sessions, I noted where they got stuck, why they left the app, and how they scrambled to verify listing details on their own.
         </p>
       </div>
 
@@ -166,7 +160,7 @@ export const PersonalStoryContext = () => {
                 Backchannel Checks
               </div>
               <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-                Cross-referencing <strong>water schedules, power uptime, and safety</strong> with local friends and Telegram groups instead of trusting app claims.
+                Asking friends and local Telegram groups about <strong>water supply, power cuts, and neighborhood safety</strong> instead of trusting listing claims.
               </p>
             </div>
           </div>
@@ -218,7 +212,7 @@ export const PersonalStoryContext = () => {
                 Search Abandonment
               </div>
               <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-                Closed NoBroker mid-search and <strong>never returned to finish</strong> after switching to other apps.
+                Closed NoBroker mid-search and <strong>never came back</strong> after switching to other apps.
               </p>
             </div>
           </div>
@@ -238,7 +232,7 @@ export const PersonalStoryContext = () => {
                 Phantom Listings
               </div>
               <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-                Contacted owners only to be told the property was <strong>already rented out</strong> days or weeks earlier.
+                Contacted owners only to find the home was <strong>already rented out</strong> days or weeks earlier.
               </p>
             </div>
           </div>
@@ -258,7 +252,7 @@ export const PersonalStoryContext = () => {
                 Notification Mutes
               </div>
               <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-                <strong>Muted notifications completely</strong> because alerts repeatedly pushed already-seen or irrelevant homes.
+                <strong>Muted notifications completely</strong> because alerts repeatedly pushed irrelevant or already-seen homes.
               </p>
             </div>
           </div>

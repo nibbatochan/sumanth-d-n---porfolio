@@ -207,7 +207,7 @@ export const InterviewDeductions = ({ soundEnabled, onSelectSolvedPillar }) => {
               className="text-2xl sm:text-3xl md:text-4xl font-bold font-sans text-zinc-900 dark:text-white tracking-tight"
             />
             <p className="text-zinc-600 dark:text-zinc-300 text-sm sm:text-base max-w-4xl mt-2 leading-relaxed">
-              From 52 surveys and 7 interviews, tenant frustrations fell into <strong>7 distinct patterns</strong>. To create real impact rather than shallow tweaks, I focused on <strong>three core user behaviors</strong> and parked external market and legal issues.
+              Across 52 surveys and 7 interviews, tenant frustrations grouped into <strong>7 distinct patterns</strong>. I focused on <strong>three problems</strong> I could solve directly in the product and parked the market and legal issues outside our control.
             </p>
           </div>
 

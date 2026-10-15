@@ -11,6 +11,7 @@ import { AboutSection } from './components/AboutSection';
 import { ContactModal } from './components/ContactModal';
 import { Footer } from './components/Footer';
 import { NoBrokerCasePage } from './components/NoBrokerCasePage';
+import { NoBrokerRestructuredPage } from './components/NoBrokerRestructuredPage';
 import { PosterChallengePage } from './components/PosterChallengePage';
 import { projects } from './data/portfolioData';
 import { preloadWindSounds } from './utils/sound';
@@ -33,7 +34,10 @@ export function App() {
     const handleHash = () => {
       if (window.location.hash === '#/project/nobroker') {
         const nobrokerProj = projects.find(p => p.id === 'nobroker-commute');
-        if (nobrokerProj) setActiveDedicatedCase(nobrokerProj);
+        if (nobrokerProj) setActiveDedicatedCase({ ...nobrokerProj, variant: 'timeline' });
+      } else if (window.location.hash === '#/project/nobroker-restructured' || window.location.hash === '#/project/nobroker-v2') {
+        const nobrokerProj = projects.find(p => p.id === 'nobroker-commute');
+        if (nobrokerProj) setActiveDedicatedCase({ ...nobrokerProj, variant: 'restructured' });
       } else if (window.location.hash === '#/project/poster-challenge') {
         const posterProj = projects.find(p => p.id === 'poster-challenge');
         if (posterProj) setActiveDedicatedCase(posterProj);
@@ -139,16 +143,32 @@ export function App() {
       {/* 7. Dedicated Full Case Study Page View */}
       {activeDedicatedCase && activeDedicatedCase.id === 'nobroker-commute' && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-[#F5F5F7] dark:bg-[#0C0C0E] animate-fade-in">
-          <NoBrokerCasePage
-            soundEnabled={soundEnabled}
-            isDarkMode={isDarkMode}
-            setIsDarkMode={setIsDarkMode}
-            onOpenContact={() => setIsContactOpen(true)}
-            onBack={() => {
-              setActiveDedicatedCase(null);
-              window.history.pushState(null, '', window.location.pathname);
-            }}
-          />
+          {activeDedicatedCase.variant === 'restructured' ? (
+            <NoBrokerRestructuredPage
+              soundEnabled={soundEnabled}
+              isDarkMode={isDarkMode}
+              setIsDarkMode={setIsDarkMode}
+              onOpenContact={() => setIsContactOpen(true)}
+              onBack={() => {
+                setActiveDedicatedCase(null);
+                window.history.pushState(null, '', window.location.pathname);
+              }}
+              onSwitchToTimeline={() => {
+                window.location.hash = '#/project/nobroker';
+              }}
+            />
+          ) : (
+            <NoBrokerCasePage
+              soundEnabled={soundEnabled}
+              isDarkMode={isDarkMode}
+              setIsDarkMode={setIsDarkMode}
+              onOpenContact={() => setIsContactOpen(true)}
+              onBack={() => {
+                setActiveDedicatedCase(null);
+                window.history.pushState(null, '', window.location.pathname);
+              }}
+            />
+          )}
         </div>
       )}
 

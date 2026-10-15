@@ -6,7 +6,6 @@ import {
   Sun,
   Moon
 } from '@phosphor-icons/react';
-import { Agentation } from 'agentation';
 import { playSound } from '../utils/sound';
 import { GlobalAsciiBackground } from './GlobalAsciiBackground';
 
@@ -15,6 +14,7 @@ import { CaseHeader } from './nobroker/CaseHeader';
 import { PersonalStoryContext } from './nobroker/PersonalStoryContext';
 import { InterviewDeductions } from './nobroker/InterviewDeductions';
 import { ThreeProjectsInteractive } from './nobroker/ThreeProjectsInteractive';
+import { ValidationSection } from './nobroker/ValidationSection';
 import { Footer } from './Footer';
 import { initScrollReveals } from '../utils/motion';
 
@@ -41,6 +41,9 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
     { id: 'story-section', label: 'Assumption & Discovery', kicker: '01–02' },
     { id: 'deductions-section', label: '7 Clusters & Metrics Framework', kicker: '03–04' },
     { id: 'projects-section', label: '3 Solved Pillars', kicker: '05' },
+    { id: 'validation-section', label: 'Validation & Results', kicker: '06' },
+    { id: 'learnings-section', label: 'User Signals', kicker: '07' },
+    { id: 'next-steps-section', label: 'Learnings', kicker: '08' },
     { id: 'prototype-section', label: 'Interactive Prototypes', kicker: 'Lab' },
   ];
 
@@ -122,13 +125,13 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
   return (
     <div 
       ref={containerRef}
-      className="min-h-screen bg-[#F5F5F7] dark:bg-[#09090B] text-zinc-900 dark:text-zinc-100 selection:bg-orange-500 selection:text-white antialiased relative font-sans transition-colors duration-300"
+      className="min-h-screen bg-[#FAF9F6] dark:bg-[#09090B] text-zinc-900 dark:text-zinc-100 selection:bg-orange-500 selection:text-white antialiased relative font-sans transition-colors duration-300"
     >
       {/* Global Ambient '+' Grid Hover Spotlight across the entire case study page */}
       <GlobalAsciiBackground isDarkMode={isDarkMode} fullPage={true} />
 
       {/* Floating Top Bar (Sticky Navigation & Back Button) */}
-      <nav className="sticky top-0 z-50 bg-[#F5F5F7]/85 dark:bg-[#09090B]/80 backdrop-blur-xl border-b border-zinc-200/90 dark:border-zinc-800 px-4 sm:px-6 xl:px-0 py-3.5 transition-all">
+      <nav className="sticky top-0 z-50 bg-[#FAF9F6]/85 dark:bg-[#09090B]/80 backdrop-blur-xl border-b border-zinc-200/90 dark:border-zinc-800 px-4 sm:px-6 xl:px-0 py-3.5 transition-all">
         <div className="max-w-[1240px] w-full mx-auto flex items-center justify-between gap-4">
           
           {/* Left Action: Back to Portfolio */}
@@ -287,6 +290,9 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
               />
             </div>
 
+            {/* Sections 6, 7 & 8: Validation, Learnings & Next Iterations */}
+            <ValidationSection soundEnabled={soundEnabled} />
+
             {/* Closing Master Prototype Lab CTA Container */}
             <div id="prototype-section" className="py-12 relative">
               <div data-reveal className="w-full max-w-4xl mx-auto p-8 sm:p-12 rounded-4xl bg-gradient-to-b from-white/95 to-zinc-50/90 dark:from-[#151519]/95 dark:to-[#0F0F12]/95 backdrop-blur-md border border-zinc-200/90 dark:border-zinc-800/90 shadow-2xl text-center relative z-30 space-y-4 overflow-hidden">
@@ -338,9 +344,6 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
         onOpenContact={onOpenContact} 
         className="-mt-[270px] sm:-mt-[370px] md:-mt-[430px]" 
       />
-
-      {/* Visual Feedback & AI Review directly active via Agentation during local development only */}
-      {import.meta.env.DEV && <Agentation />}
     </div>
   );
 };

@@ -70,8 +70,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
 
       // 02: The Specific Problem
       specificProblem: {
-        headline: 'In metro cities, distance is a lie — and cumulative cross-app searching causes decision fatigue',
-        explanation: 'When renters search for homes over days, weeks, and months, they fall into an exhausting habit: for each listing they like, they switch between Google Maps, search engines, and local contacts to research rush-hour transit, nearby grocery spots, and basic amenities. This constant app-hopping drastically inflates cognitive load and research effort for every single listing session. Over a prolonged 2 to 3-month search, this compounding friction turns home hunting into an overwhelming, negative experience where users abandon the app before ever booking a visit.',
+        headline: 'Distance in metro cities is deceptive, and bouncing between apps exhausts searchers',
+        explanation: 'For every listing they like, renters switch between Google Maps, search engines, and messaging groups to check rush-hour commute times, grocery stores, and basic amenities. Doing this for dozens of flats takes hours and wears people down. Many give up and abandon the search before ever scheduling a visit.',
         hmw: 'How might we calculate real rush-hour commute times and neighborhood reality inside NoBroker so renters never have to leave the app?'
       },
 
@@ -79,10 +79,10 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       researchInsights: {
         headline: '65% of renters switch to Google Maps for every single listing',
         surveyStat: '24 of 37 surveyed renters (64.9%)',
-        surveyDetail: 'routinely alt-tabbed into Google Maps while searching for homes',
-        combinedFinding: 'In interviews, renters explained that they never think in municipal area names like "Kasavanahalli". They think relative to where they have to be every morning. Because the app failed to answer basic commute feasibility, renters invented exhausting manual workarounds.',
+        surveyDetail: 'routinely switched to Google Maps while searching for homes',
+        combinedFinding: 'In interviews, renters explained that they never think in municipal area names like "Kasavanahalli". They think relative to where they have to be every morning. Because the app failed to answer basic commute questions, renters created tedious manual workarounds.',
         quotes: [
-          '"I used to swap apps a lot seeing my long searching just to check if a flat was actually reachable. Switching back and forth made the whole search exhausting."',
+          '"I used to swap apps a lot just to check if a flat was actually reachable. Switching back and forth made the whole search exhausting."',
           '"I always switch to Google Maps to see how long it actually takes to get to my workplace at 9 AM."',
           '"If I saw the commute was too long on Maps, I just gave up and closed everything."'
         ],
@@ -100,16 +100,16 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
           {
             title: '1. Anchor search around "Your Place" rather than area names',
             explored: 'Tried traditional 5 km radius filters around pincodes.',
-            whyFailed: 'A 5 km radius in Bangalore is useless because railway crossings and flyovers can turn 5 km into an hour of traffic.',
+            whyFailed: 'A 5 km radius in Bangalore is misleading because railway crossings and flyovers can turn 5 km into an hour of traffic.',
             decision: 'Let users set "Your Place" (office or gym) once. The app anchors all search results to that daily destination.',
-            rationale: 'Renters do not pick homes in isolation — they pick homes relative to where they spend their day.'
+            rationale: 'Renters do not pick homes in isolation; they pick them relative to where they spend their day.'
           },
           {
             title: '2. Show peak travel time badges directly on cards',
             explored: 'Tried showing commute details only after opening the full listing page.',
             whyFailed: 'Renters still had to click in and out of 20 listings just to check travel time.',
             decision: 'Placed peak travel time badges (showing estimated drive/transit duration) directly on listing thumbnails.',
-            rationale: 'Renters filter out unrealistic commutes at a glance, saving massive research time and click fatigue.'
+            rationale: 'Renters filter out unrealistic commutes at a glance, saving search time and repeated clicks.'
           },
           {
             title: '3. The "Glimpse" Neighborhood Drawer for local reality',
@@ -135,8 +135,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
         primaryDesc: 'Minimizes drop-offs caused by jumping to external maps or search engines during property discovery',
         secondaryMetric: 'Faster Shortlisting',
         secondaryDesc: 'Renters evaluate and shortlist viable candidate homes faster because commute feasibility is answered upfront',
-        northStarContribution: 'Directly accelerates Search-to-Lease Speed by ensuring renters only spend visit time on homes that fit their real commute limit.',
-        ancillaryAttach: 'Making the user knowledgeable enough to build good confidence about the listing directly reducing the decision fatigue and click on call to action.'
+        northStarContribution: 'Accelerates Search-to-Lease speed by ensuring renters only spend visit time on homes that fit their real commute limit.',
+        ancillaryAttach: 'Giving renters clear commute and neighborhood details upfront gives them the confidence to contact owners faster.'
       }
     },
 
@@ -178,8 +178,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
 
       // 02: The Specific Problem
       specificProblem: {
-        headline: 'Lower-budget houses have few to no verified images — turning visits into blind gambles',
-        explanation: 'In lower-budget segments, listings often have only one or two blurry photos of the hall, and many have none at all. Because photos and videos are the primary mode renters rely on to gauge the reality of a house before traveling, searchers either skip viable listings or waste whole weekends driving across the city only to discover unlivable conditions.',
+        headline: 'Lower-budget listings rarely have good photos, turning visits into blind gambles',
+        explanation: 'In lower-budget segments, listings often have only one or two blurry photos of the hall, and many have none at all. Because photos and videos are the main way renters judge a house before traveling, searchers either skip viable listings or waste whole weekends driving across the city only to discover unlivable conditions.',
         hmw: 'How might we help renters verify a listing matches reality before they visit, so they don\'t waste a trip on listings not worth seeing?'
       },
 
@@ -191,11 +191,11 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
         combinedFinding: 'Renters had zero trust in low-budget listings with minimal photos. Without verified visual proof, they resorted to begging owners for raw WhatsApp video walkthroughs or skipping affordable flats entirely out of fear of wasting their time.',
         quotes: [
           '"Some had one or two photos of the hall, and even lower ones didn\'t even have any. So I completely skipped those."',
-          '"I traveled 18 km on a Saturday for a flat with 2 photos. It was pitch dark with zero ventilation—I walked out in 30 seconds."',
+          '"I traveled 18 km on a Saturday for a flat with 2 photos. It was pitch dark with zero ventilation. I walked out in 30 seconds."',
           '"If I could see real photos from someone who just visited, I wouldn\'t have wasted my entire weekend."'
         ],
         habits: [
-          'Skipping listings with less photos or none at all.',
+          'Skipping listings with few photos or none at all.',
           'Begging landlords for raw WhatsApp video walkthroughs before agreeing to travel.',
           'Spending weekends on blind visits to unphotographed flats only to immediately turn around.'
         ]
@@ -243,8 +243,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
         primaryDesc: 'Reduces blind, unproductive visits by surfacing genuine visitor-procured photos on budget homes',
         secondaryMetric: 'Packers & Movers Attach',
         secondaryDesc: 'Visits generate active pipeline for moving & housekeeping services through earned incentive credits',
-        northStarContribution: 'Eliminates dead-end search loops, accelerating Search-to-Lease Speed for budget renters.',
-        ancillaryAttach: 'Turns visit rejections into direct revenue drivers for NoBroker Packers & Movers and home cleaning.'
+        northStarContribution: 'Cuts out dead-end visits, helping budget renters find and lease a flat sooner.',
+        ancillaryAttach: 'Turns unviable visits into helpful discounts for NoBroker moving and cleaning services.'
       }
     },
 
@@ -252,7 +252,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
       id: 'ps34',
       number: 'PS4',
       title: 'Calm Signal-Only Alerts',
-      subtitle: 'Ending alert fatigue with high-precision commute matching',
+      subtitle: 'Sending high-precision commute alerts instead of daily notifications',
       labRoute: '/ps4',
       labActionLabel: 'Launch Calm Signal Prototype',
       illustration: '/illustrations/ps4-alerts.png',
@@ -298,7 +298,7 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
         surveyDetail: 'revoked notification permissions completely due to irrelevant property blasts',
         combinedFinding: 'Push notifications are the fastest way to rent a good flat in competitive rental markets. But because notifications were filled with low-quality spam, renters muted the app and lost out to offline brokers.',
         quotes: [
-          '"I basically ignored those notifications — they got buried in all the other app notifications."',
+          '"I ignored those notifications because they got buried under everything else."',
           '"When I open them, they almost always show me the same properties I\'ve already seen."',
           '"The app had no way of knowing that and kept pushing things we no longer needed."'
         ],
@@ -334,8 +334,8 @@ export const ThreeProjectsInteractive = ({ labHost, soundEnabled, activeProject:
         primaryDesc: 'Dropped mute rate from 43.2% down to under 1.5% by guaranteeing zero spam',
         secondaryMetric: '<15 min Contact Speed',
         secondaryDesc: 'Renters reach verified landlords within 15 minutes of listing publication',
-        northStarContribution: 'Enables high-intent renters to lock in prime flats before offline brokers grab them, maximizing direct move-in velocity.',
-        ancillaryAttach: 'Immediate tenant engagement drives seamless early attach for NoBroker Rental Agreements.'
+        northStarContribution: 'Helps renters connect with owners of good flats immediately, before properties get taken offline.',
+        ancillaryAttach: 'Earlier contact helps renters quickly generate digital rental agreements directly through NoBroker.'
       }
     }
   };

@@ -9,9 +9,9 @@
   }
 
   body {
-    background-color: #FFFFFF;
+    background-color: #FAF9F6;
     color: #18181B;
-    /* clean modern background */
+    /* clean warm off-white background */
     
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -22,6 +22,25 @@
     color: #FFFFFF;
     /* clean modern dark background */
   }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Agentation Coordinate & Selection Box Offset Fix
+   Compensates for the root html { zoom: 0.85 } scale factor.
+   Chromium scales fixed-position overlays by root zoom, causing
+   selection rectangles and highlights to be shifted left by 15%.
+   Setting zoom: calc(1 / 0.85) on the Agentation portal container
+   restores 1.0x physical viewport coordinates with zero offset.
+   ───────────────────────────────────────────────────────────── */
+div[data-agentation-root] {
+  display: block !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  overflow: visible;
+  zoom: calc(1 / 0.85) !important;
 }
 
 /* Custom Sleek Scrollbar */
