@@ -11,7 +11,8 @@ import {
   Sun, 
   Moon, 
   List, 
-  X 
+  X,
+  DotsThreeVertical 
 } from '@phosphor-icons/react';
 import gsap from 'gsap';
 import { animate } from 'animejs';
@@ -72,8 +73,17 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
         setMobileMenuOpen(false);
       }
     };
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   // GSAP Magnetic Physics on Header Controls
@@ -158,7 +168,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center p-1 sm:p-1.5 group-hover:scale-105 group-hover:border-orange-500 transition-all">
             <SumanthLogo className="w-6 h-6 sm:w-7 sm:h-7" isDarkMode={isDarkMode} />
           </div>
-          <p className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white tracking-tight font-sans">
+          <p className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white tracking-tight font-sans truncate max-w-[130px] sm:max-w-none">
             Sumanth Reddy
           </p>
         </a>
@@ -250,15 +260,18 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
           </button>
         </div>
 
-        {/* Mobile Right Controls */}
-        <div className="flex md:hidden items-center gap-2">
+        {/* Mobile Right Controls: Unified Floating Island with Theme Switch & Three-Dot Navigation */}
+        <div className="flex md:hidden items-center gap-1 bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-800 p-1 rounded-full shadow-xs backdrop-blur-md shrink-0">
           <button 
             onClick={toggleTheme}
             aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            className="w-9 h-9 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center text-zinc-800 dark:text-zinc-200"
+            title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
-            {isDarkMode ? <Sun size={15} weight="bold" className="text-amber-400" /> : <Moon size={15} weight="bold" className="text-zinc-800" />}
+            {isDarkMode ? <Sun size={15} weight="bold" className="text-amber-400" /> : <Moon size={15} weight="bold" className="text-zinc-700" />}
           </button>
+
+          <div className="w-[1px] h-3.5 bg-zinc-200 dark:border-zinc-800 dark:bg-zinc-800 my-auto" />
 
           <button
             onClick={() => {
@@ -267,17 +280,38 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
               playSound('pop', soundEnabled);
             }}
             aria-label="Toggle navigation menu"
-            className="w-9 h-9 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 flex items-center justify-center shadow-sm"
+            className="w-8 h-8 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 flex items-center justify-center shadow-xs transition-transform active:scale-90"
           >
-            {mobileMenuOpen ? <X size={18} weight="bold" /> : <List size={18} weight="bold" />}
+            {mobileMenuOpen ? <X size={15} weight="bold" /> : <DotsThreeVertical size={17} weight="bold" />}
           </button>
         </div>
 
       </div>
 
+      {/* Mobile Backdrop Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          onClick={() => setMobileMenuOpen(false)}
+          className="fixed inset-0 z-40 bg-black/40 dark:bg-black/60 backdrop-blur-xs md:hidden"
+        />
+      )}
+
       {/* Mobile Animated Dropdown Sheet */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 max-w-6xl mx-auto bg-white/95 dark:bg-[#121216]/95 backdrop-blur-2xl border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 shadow-2xl space-y-4 animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="relative z-50 md:hidden mt-3 max-w-6xl mx-auto bg-white/95 dark:bg-[#121216]/95 backdrop-blur-2xl border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 shadow-2xl space-y-4 animate-in fade-in slide-in-from-top-4 duration-200">
+          <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800/80">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-400 dark:text-zinc-500 font-bold">
+              Menu & Quick Links
+            </span>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-xs font-mono text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 flex items-center gap-1"
+            >
+              <span>Close</span>
+              <X size={12} weight="bold" />
+            </button>
+          </div>
+
           <div className="flex flex-col space-y-1">
             <button
               onClick={() => handleNavClick('#work')}
@@ -320,7 +354,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
                 setMobileMenuOpen(false);
                 playSound('success', soundEnabled);
               }}
-              className="px-3.5 py-3 rounded-2xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white text-xs font-bold flex items-center justify-center gap-1.5"
+              className="px-3.5 py-3 rounded-2xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
             >
               <FileText size={15} weight="bold" className="text-orange-500" />
               <span>Resume PDF</span>
@@ -333,7 +367,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
                 playSound('toggle', next);
               }}
               aria-label={soundEnabled ? "Mute sound effects" : "Enable sound effects"}
-              className="px-3.5 py-3 rounded-2xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white text-xs font-bold flex items-center justify-center gap-1.5"
+              className="px-3.5 py-3 rounded-2xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
             >
               {soundEnabled ? <SpeakerHigh size={16} weight="bold" className="text-orange-500" /> : <SpeakerSlash size={16} weight="bold" className="text-zinc-400" />}
               <span>{soundEnabled ? 'Audio: ON' : 'Audio: OFF'}</span>
@@ -347,7 +381,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
               onOpenContact();
             }}
             aria-label="Open contact and project collaboration modal"
-            className="w-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-black py-3.5 rounded-2xl text-xs font-bold shadow-md flex items-center justify-center gap-2"
+            className="w-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-black py-3.5 rounded-2xl text-xs font-bold shadow-md flex items-center justify-center gap-2 transition-transform active:scale-98"
           >
             <span>Let's Connect & Collaborate</span>
             <ArrowUpRight size={14} weight="bold" className="text-orange-400 dark:text-orange-600" />

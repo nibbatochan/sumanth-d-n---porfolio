@@ -102,18 +102,19 @@ export const NoBrokerRestructuredPage = ({
 
       {/* Floating Top Navigation Header */}
       <header className="sticky top-0 z-40 backdrop-blur-md bg-white/85 dark:bg-[#0C0C0E]/85 border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               onClick={() => {
                 if (soundEnabled) playSound('pop', soundEnabled);
                 onBack();
               }}
-              className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-700 transition text-xs font-mono font-medium"
+              className="group flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-700 transition text-xs font-mono font-medium shrink-0"
               title="Return to Portfolio Index"
             >
               <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
-              <span>Back to Index</span>
+              <span className="hidden sm:inline">Back to Index</span>
+              <span className="inline sm:hidden text-xs">Back</span>
             </button>
 
             <span className="hidden sm:inline-block text-xs font-mono text-zinc-400">/</span>
@@ -122,7 +123,7 @@ export const NoBrokerRestructuredPage = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {/* View Switcher: Restructured vs Classic Timeline */}
             {onSwitchToTimeline && (
               <button
@@ -130,11 +131,13 @@ export const NoBrokerRestructuredPage = ({
                   if (soundEnabled) playSound('pop', soundEnabled);
                   onSwitchToTimeline();
                 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-medium border border-orange-500/30 bg-orange-500/10 text-orange-600 dark:text-orange-400 hover:bg-orange-500/20 transition"
+                className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-mono font-medium border border-orange-500/30 bg-orange-500/10 text-orange-600 dark:text-orange-400 hover:bg-orange-500/20 transition shrink-0"
                 title="Switch back to the chronological timeline process view"
               >
                 <ArrowsClockwise size={13} weight="bold" />
-                <span className="hidden md:inline">Switch to</span> Timeline View
+                <span className="hidden md:inline">Switch to </span>
+                <span className="hidden sm:inline">Timeline View</span>
+                <span className="inline sm:hidden">Timeline</span>
               </button>
             )}
 
@@ -144,7 +147,7 @@ export const NoBrokerRestructuredPage = ({
                 if (soundEnabled) playSound('pop', soundEnabled);
                 setIsDarkMode(!isDarkMode);
               }}
-              className="p-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition"
+              className="p-1.5 sm:p-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition shrink-0"
               aria-label="Toggle Theme"
             >
               {isDarkMode ? <Sun size={15} weight="bold" /> : <Moon size={15} weight="bold" />}
@@ -156,7 +159,7 @@ export const NoBrokerRestructuredPage = ({
                 if (soundEnabled) playSound('pop', soundEnabled);
                 if (onOpenContact) onOpenContact();
               }}
-              className="px-3.5 py-1.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-mono text-xs font-bold transition shadow-sm"
+              className="px-2.5 sm:px-3.5 py-1.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-mono text-xs font-bold transition shadow-sm shrink-0"
             >
               Contact
             </button>

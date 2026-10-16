@@ -50,4 +50,35 @@ test.describe('NoBroker Timeline Case Page (Original File)', () => {
     await expect(section).toContainText('I started with a hypothesis');
     await expect(section).toContainText('agentic workflows');
   });
+
+  test('verifies navigation bar responsive shrink mechanics on mobile and desktop', async ({ page }) => {
+    // 1. Mobile Viewport (375px)
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('http://localhost:3000/#/project/nobroker');
+    await expect(page.locator('#header-section')).toBeVisible();
+
+    const nav = page.locator('div.fixed.inset-0 nav').first();
+    await expect(nav).toBeVisible();
+
+    // Verify condensed mobile labels
+    const backBtn = nav.locator('button').first();
+    await expect(backBtn.locator('span.inline.sm\\:hidden')).toHaveText('Back');
+    await expect(backBtn.locator('span.hidden.sm\\:inline')).toBeHidden();
+
+    const labLink = nav.locator('a').first();
+    await expect(labLink.locator('span.inline.sm\\:hidden')).toHaveText('Lab');
+    await expect(labLink.locator('span.hidden.sm\\:inline')).toBeHidden();
+
+    // Verify middle pill navigation is flexible and visible
+    const pillsContainer = nav.locator('div.flex-1.min-w-0');
+    await expect(pillsContainer).toBeVisible();
+
+    // 2. Desktop Viewport (1280px)
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await expect(backBtn.locator('span.hidden.sm\\:inline')).toBeVisible();
+    await expect(backBtn.locator('span.inline.sm\\:hidden')).toBeHidden();
+    await expect(labLink.locator('span.hidden.sm\\:inline')).toBeVisible();
+    await expect(labLink.locator('span.inline.sm\\:hidden')).toBeHidden();
+  });
 });
+

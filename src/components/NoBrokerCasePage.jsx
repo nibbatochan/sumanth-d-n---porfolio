@@ -4,7 +4,9 @@ import {
   ArrowSquareOut,
   Sparkle,
   Sun,
-  Moon
+  Moon,
+  DotsThreeVertical,
+  X
 } from '@phosphor-icons/react';
 import { playSound } from '../utils/sound';
 import { GlobalAsciiBackground } from './GlobalAsciiBackground';
@@ -131,30 +133,32 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
       <GlobalAsciiBackground isDarkMode={isDarkMode} fullPage={true} />
 
       {/* Floating Top Bar (Sticky Navigation & Back Button) */}
-      <nav className="sticky top-0 z-50 bg-[#FAF9F6]/85 dark:bg-[#09090B]/80 backdrop-blur-xl border-b border-zinc-200/90 dark:border-zinc-800 px-4 sm:px-6 xl:px-0 py-3.5 transition-all">
-        <div className="max-w-[1240px] w-full mx-auto flex items-center justify-between gap-4">
+      <nav className="sticky top-0 z-50 bg-[#FAF9F6]/85 dark:bg-[#09090B]/80 backdrop-blur-xl border-b border-zinc-200/90 dark:border-zinc-800 px-3 sm:px-6 xl:px-0 py-2.5 sm:py-3.5 transition-all">
+        <div className="max-w-[1240px] w-full mx-auto flex items-center justify-between gap-2 sm:gap-4">
           
-          {/* Left Action: Back to Portfolio */}
+          {/* Left Action: Back to Portfolio with responsive shrink text */}
           <button
             onClick={() => {
               playSound('pop', soundEnabled);
               onBack ? onBack() : (window.location.hash = '');
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-xs font-bold text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-700 transition-all hover:scale-105 active:scale-95 tactile-btn shrink-0"
+            title="Back to Portfolio"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-xs font-bold text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-700 transition-all hover:scale-105 active:scale-95 tactile-btn shrink-0"
           >
             <ArrowLeft size={14} weight="bold" />
-            <span>Back to Portfolio</span>
+            <span className="hidden sm:inline">Back to Portfolio</span>
+            <span className="inline sm:hidden text-xs">Back</span>
           </button>
 
-          {/* Quick Jump Navigation Pills (for mobile and tablet) */}
-          <div className="flex xl:hidden items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+          {/* Quick Jump Navigation Pills (for mobile and tablet) - Flexible container with horizontal scroll */}
+          <div className="flex xl:hidden flex-1 min-w-0 items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-1 mask-linear-fade">
             {tocItems.map((nav) => {
               const isActive = activeSection === nav.id;
               return (
                 <button
                   key={nav.id}
                   onClick={() => scrollToSection(nav.id)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors tactile-btn whitespace-nowrap ${
+                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-colors tactile-btn whitespace-nowrap shrink-0 ${
                     isActive
                       ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900'
                       : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
@@ -167,7 +171,7 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
           </div>
 
           {/* Right Actions: Dark/Light Mode Toggle & Direct CTA to High-Fidelity Annotation Lab */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Dark / Light Theme Toggle Button */}
             <button 
               onClick={() => {
@@ -181,9 +185,9 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
               className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shadow-xs flex items-center justify-center text-zinc-800 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all hover:scale-105 active:scale-95 tactile-btn"
             >
               {isDarkMode ? (
-                <Sun size={15} weight="bold" className="text-amber-400 hover:rotate-45 transition-transform duration-300" />
+                <Sun size={14} weight="bold" className="text-amber-400 sm:w-[15px] sm:h-[15px] hover:rotate-45 transition-transform duration-300" />
               ) : (
-                <Moon size={15} weight="bold" className="text-zinc-800 hover:-rotate-12 transition-transform duration-300" />
+                <Moon size={14} weight="bold" className="text-zinc-800 sm:w-[15px] sm:h-[15px] hover:-rotate-12 transition-transform duration-300" />
               )}
             </button>
 
@@ -198,10 +202,12 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
                   : `${labHost}/high-fid-annotation-lab`;
                 window.open(targetUrl, '_blank', 'noopener,noreferrer');
               }}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs transition-all shadow-sm hover:scale-105 active:scale-95 tactile-btn"
+              title="Open High-Fidelity Prototype Lab"
+              className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-bold text-xs transition-all shadow-sm hover:scale-105 active:scale-95 tactile-btn"
             >
-              <span>Open Hi-Fi Lab</span>
-              <ArrowSquareOut size={14} weight="bold" />
+              <span className="hidden sm:inline">Open Hi-Fi Lab</span>
+              <span className="inline sm:hidden">Lab</span>
+              <ArrowSquareOut size={13} weight="bold" className="sm:w-[14px] sm:h-[14px]" />
             </a>
           </div>
         </div>
