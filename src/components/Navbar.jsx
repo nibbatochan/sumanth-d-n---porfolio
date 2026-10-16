@@ -12,7 +12,8 @@ import {
   Moon, 
   List, 
   X,
-  DotsThreeVertical 
+  DotsThreeVertical,
+  Sparkle 
 } from '@phosphor-icons/react';
 import gsap from 'gsap';
 import { animate } from 'animejs';
@@ -144,7 +145,22 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
     setMobileMenuOpen(false);
     playSound('pop', soundEnabled);
     if (anchor === '#home') {
+      if (window.location.hash.startsWith('#/')) {
+        window.location.hash = '';
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (anchor === '#/playground' || anchor === '#playground') {
+      window.location.hash = '#/playground';
+      return;
+    }
+    if (window.location.hash.startsWith('#/')) {
+      window.location.hash = '';
+      setTimeout(() => {
+        const el = document.querySelector(anchor);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
       return;
     }
     const el = document.querySelector(anchor);
@@ -184,12 +200,12 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
             <span>Work</span>
           </a>
           <a 
-            href="#about" 
-            onClick={(e) => handleNavClick(e, '#about')}
+            href="#/playground" 
+            onClick={(e) => handleNavClick(e, '#/playground')}
             className="px-3.5 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-all duration-200 flex items-center gap-1.5 hover:scale-105"
           >
-            <User size={14} weight="bold" />
-            <span>About</span>
+            <Sparkle size={14} weight="fill" className="text-orange-500 animate-pulse" />
+            <span>AI Playground</span>
           </a>
           <a 
             href="#tools" 
@@ -324,12 +340,15 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
               <ArrowUpRight size={14} className="text-zinc-400" />
             </button>
             <button
-              onClick={() => handleNavClick('#about')}
+              onClick={() => handleNavClick('#/playground')}
               className="w-full px-4 py-3 rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 text-left font-bold text-sm text-zinc-900 dark:text-white flex items-center justify-between transition-colors"
             >
               <span className="flex items-center gap-2.5">
-                <User size={17} weight="bold" className="text-orange-500" />
-                <span>Work History & About</span>
+                <Sparkle size={17} weight="fill" className="text-orange-500" />
+                <span>AI Playground</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                  NEW
+                </span>
               </span>
               <ArrowUpRight size={14} className="text-zinc-400" />
             </button>

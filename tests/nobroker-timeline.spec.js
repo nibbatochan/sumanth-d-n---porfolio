@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('NoBroker Timeline Case Page (Original File)', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate directly to original case page hash
-    await page.goto('http://localhost:3000/#/project/nobroker');
+    await page.goto('http://localhost:4173/#/project/nobroker');
     await expect(page.locator('#header-section')).toBeVisible();
   });
 
@@ -54,7 +54,7 @@ test.describe('NoBroker Timeline Case Page (Original File)', () => {
   test('verifies navigation bar responsive shrink mechanics on mobile and desktop', async ({ page }) => {
     // 1. Mobile Viewport (375px)
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('http://localhost:3000/#/project/nobroker');
+    await page.goto('http://localhost:4173/#/project/nobroker');
     await expect(page.locator('#header-section')).toBeVisible();
 
     const nav = page.locator('div.fixed.inset-0 nav').first();

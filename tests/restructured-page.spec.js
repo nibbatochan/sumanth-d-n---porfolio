@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('NoBroker Restructured Case Study Page', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate directly to restructured case page hash
-    await page.goto('http://localhost:3000/#/project/nobroker-restructured');
+    await page.goto('http://localhost:4173/#/project/nobroker-restructured');
     // Wait for the main heading to appear
     await expect(page.locator('h1')).toContainText('Ending the rental app-hopping loop');
   });
