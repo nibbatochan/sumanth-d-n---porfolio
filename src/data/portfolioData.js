@@ -149,92 +149,6 @@ export const projects = [
         description: 'Selected highlights across the 30-day sprint demonstrating typographic range and composition.'
       }
     ]
-  },
-  {
-    id: 'image-of-a-child',
-    title: 'Image Of A Child — LMS & Early Childhood Gaming Platform',
-    company: 'Image Of A Child Pvt Ltd. (Amphiventures)',
-    category: 'ui-ux',
-    categoryLabel: 'UI/UX Product',
-    year: '2023 — 2024',
-    featured: true,
-    summary: 'Lead designer for complete website and LMS product UI across web and mobile apps. Created design systems, user flows, and 2,000+ gaming UI activity templates using Midjourney AI while managing a 12-member design team.',
-    tags: ['LMS Product', 'Design System', 'Mobile App', 'Midjourney AI', 'Team Leadership'],
-    heroColor: 'from-[#FFF1EB] to-[#FFE3D6]',
-    accentColor: '#E07A5F',
-    coverImage: 'image-of-a-child',
-    challenge: 'Early childhood educators and children required an engaging, frictionless learning management system with intuitive gamified activities that simplified complex curriculum flows.',
-    solution: 'Designed comprehensive web and mobile LMS interfaces, created scalable modular UI templates for mini-games with AI asset generation, and built unified cross-platform design tokens.',
-    designTokens: {
-      fonts: ['Plus Jakarta Sans (Display & Body)', 'Outfit (Playful Headings)'],
-      colors: [
-        { name: 'Warm Terracotta', hex: '#E07A5F' },
-        { name: 'Sunny Butter', hex: '#F4A261' },
-        { name: 'Sage Mint', hex: '#588157' },
-        { name: 'Espresso Ink', hex: '#1E1B18' }
-      ],
-      density: 'Accessible Child & Educator Friendly Spacing'
-    },
-    screens: [
-      {
-        title: 'LMS Web & Mobile Dashboard',
-        type: 'Product Interface',
-        description: 'Comprehensive curriculum navigation, progress tracking, and student activity hub.'
-      },
-      {
-        title: 'Mini-Game UI Template Engine',
-        type: 'Interactive Gamification',
-        description: 'Over 2,000+ mini-game activities with custom UI components and Midjourney AI visual assets.'
-      },
-      {
-        title: 'Brand Collateral & Launch Materials',
-        type: 'Brand & Event Design',
-        description: 'Event branding and launch collateral for Le Meridien Coimbatore and IOAC video series.'
-      }
-    ]
-  },
-  {
-    id: 'freckled-cubism',
-    title: 'Freckled — Cubism Rebrand & Web Platform Revamp',
-    company: 'Freckled Pvt Ltd. (Amphiventures)',
-    category: 'ui-ux',
-    categoryLabel: 'UI/UX & Brand',
-    year: '2023 — 2024',
-    featured: true,
-    summary: 'Revamped the full website experience resulting in 2.5x faster load time and 33% higher traffic. Reconceptualized company branding in a bold Cubism theme across UI and corporate events.',
-    tags: ['Website Redesign', 'Cubism Branding', 'Performance', 'Event Design'],
-    heroColor: 'from-[#F5EFEB] to-[#EAE0D5]',
-    accentColor: '#C86D51',
-    coverImage: 'freckled',
-    challenge: 'The legacy website suffered from slow load times, confusing user flows, and an outdated visual brand identity.',
-    solution: 'Engineered streamlined user flows, low-to-high fidelity component libraries, and a distinctive Cubism brand identity that elevated user engagement and corporate presence.',
-    designTokens: {
-      fonts: ['Instrument Serif (Headings)', 'Plus Jakarta Sans (Body)'],
-      colors: [
-        { name: 'Cubist Terracotta', hex: '#C86D51' },
-        { name: 'Oat Canvas', hex: '#FAF7F2' },
-        { name: 'Basalt Charcoal', hex: '#22201D' },
-        { name: 'Gold Ochre', hex: '#E9C46A' }
-      ],
-      density: 'High-Conversion Responsive Layout'
-    },
-    screens: [
-      {
-        title: 'High-Performance Web Architecture',
-        type: 'Responsive Web',
-        description: 'Re-architected user journeys driving 2.5x faster performance and +33% traffic uplift.'
-      },
-      {
-        title: 'Cubism Brand Identity System',
-        type: 'Visual Identity',
-        description: 'Geometric brandmarks, vector icon packs, and social media marketing assets.'
-      },
-      {
-        title: 'Corporate Event Branding',
-        type: 'Event Collateral',
-        description: 'Brand collateral and presentation decks for KRPIET Coimbatore and Human Inverse.'
-      }
-    ]
   }
 ];
 
@@ -333,14 +247,20 @@ export const skillsGrouped = [
 ];
 
 export const toolstack = [
-  { name: "Figma", level: "Expert", category: "UI/UX & Prototyping" },
-  { name: "Adobe XD", level: "Advanced", category: "UI/UX Prototyping" },
-  { name: "Adobe Illustrator", level: "Expert", category: "Vector & Brand" },
-  { name: "Adobe Photoshop", level: "Advanced", category: "Visual Design" },
+  // Line 1: Modern Product, Agentic AI & Deployment Stack
+  { name: "Figma", level: "Expert", category: "UI/UX & Systems" },
+  { name: "Cursor", level: "Advanced", category: "AI Code Editor" },
+  { name: "Claude", level: "Advanced", category: "Agentic Reasoning & LLM" },
+  { name: "Antigravity", level: "Expert", category: "Agentic IDE & Workflows" },
+  { name: "Vercel", level: "Advanced", category: "Deployment & Edge" },
+  { name: "Midjourney", level: "Advanced", category: "AI Asset Synthesis" },
+  // Line 2: Craft, Motion, 3D & Vector Stack
+  { name: "Illustrator", level: "Expert", category: "Vector & Identity" },
+  { name: "Photoshop", level: "Advanced", category: "Visual Compositing" },
   { name: "After Effects", level: "Intermediate", category: "Motion & Micro-animations" },
-  { name: "Midjourney AI", level: "Advanced", category: "AI Creative Generation" },
-  { name: "Miro", level: "Advanced", category: "Journey Mapping & Brainstorming" },
-  { name: "Blender", level: "Intermediate", category: "3D Visuals" }
+  { name: "Blender", level: "Intermediate", category: "3D Spatial Graphics" },
+  { name: "Tailwind CSS", level: "Expert", category: "Design Systems & UI" },
+  { name: "Miro", level: "Advanced", category: "UX Journey & Strategy" }
 ];
 
 export const languages = [

@@ -69,11 +69,16 @@ test.describe('NoBroker Timeline Case Page (Original File)', () => {
     await expect(labLink.locator('span.inline.sm\\:hidden')).toHaveText('Lab');
     await expect(labLink.locator('span.hidden.sm\\:inline')).toBeHidden();
 
-    // Verify middle pill navigation is flexible and visible
+    // Verify mobile section jump selector is visible on small screen
+    const sectionSelector = nav.locator('button[aria-label="Jump to Case Study Section"]');
+    await expect(sectionSelector).toBeVisible();
+
+    // 2. Tablet Viewport (800px) - horizontal pills strip is visible
+    await page.setViewportSize({ width: 800, height: 800 });
     const pillsContainer = nav.locator('div.flex-1.min-w-0');
     await expect(pillsContainer).toBeVisible();
 
-    // 2. Desktop Viewport (1280px)
+    // 3. Desktop Viewport (1280px)
     await page.setViewportSize({ width: 1280, height: 800 });
     await expect(backBtn.locator('span.hidden.sm\\:inline')).toBeVisible();
     await expect(backBtn.locator('span.inline.sm\\:hidden')).toBeHidden();
