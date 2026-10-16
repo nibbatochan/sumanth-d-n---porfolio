@@ -180,27 +180,6 @@ export const NameGeniusSubPage = ({
               </a>
             </div>
           </div>
-
-          {/* Technical Spec Metrics Ribbon */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 sm:p-6 bg-zinc-50/50 dark:bg-zinc-900/40 border-t border-zinc-200 dark:border-zinc-800">
-            <div>
-              <span className="text-[10px] font-mono uppercase text-zinc-400 font-bold block">Registry Protocol</span>
-              <span className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-0.5 block">Direct IANA RDAP Bootstrap</span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase text-zinc-400 font-bold block">Verification Model</span>
-              <span className="text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block">4 States (0 False Positives)</span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase text-zinc-400 font-bold block">Interactive Hardware</span>
-              <span className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-0.5 block">NG-01 Tactile Game Console</span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase text-zinc-400 font-bold block">Cultural Algorithm</span>
-              <span className="text-xs sm:text-sm font-bold text-orange-600 dark:text-orange-400 mt-0.5 block">Avakahada Chakra Vastu</span>
-            </div>
-          </div>
-
         </div>
 
         {/* Section 1: The Broken Loop */}

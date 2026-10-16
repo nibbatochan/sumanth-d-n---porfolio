@@ -181,27 +181,6 @@ export const FlowsySubPage = ({
               </a>
             </div>
           </div>
-
-          {/* Technical Spec Metrics Ribbon */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 sm:p-6 bg-zinc-50/50 dark:bg-zinc-900/40 border-t border-zinc-200 dark:border-zinc-800">
-            <div>
-              <span className="text-[10px] font-mono uppercase text-zinc-400 font-bold block">Inference Engine</span>
-              <span className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-0.5 block">Llama 3.3 70B (Groq)</span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase text-zinc-400 font-bold block">Response Time</span>
-              <span className="text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block">&lt; 450ms First Token</span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase text-zinc-400 font-bold block">Voice Synthesis</span>
-              <span className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-0.5 block">Web Speech API</span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase text-zinc-400 font-bold block">Infrastructure Cost</span>
-              <span className="text-xs sm:text-sm font-bold text-orange-600 dark:text-orange-400 mt-0.5 block">$0 (Free Edge Tier)</span>
-            </div>
-          </div>
-
         </div>
 
         {/* Section 1: The Problem Framing */}

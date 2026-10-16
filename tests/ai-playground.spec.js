@@ -17,10 +17,10 @@ test.describe('AI Playground Feature Suite', () => {
 
     // 4. Verify AI Playground Landing Page contents
     await expect(page.locator('h1')).toContainText('Where agentic AI meets');
-    await expect(page.getByText('AUTONOMOUS EXPERIMENTAL SANDBOX // 2026')).toBeVisible();
+    await expect(page.getByText('AI EXPERIMENTAL LAB')).toBeVisible();
 
     // Verify both project cards are rendered
-    const flowsyCard = page.locator('article').filter({ hasText: 'Flowsy' });
+    const flowsyCard = page.locator('article').filter({ hasText: 'What’s the point of Flowsy?' });
     const namegeniusCard = page.locator('article').filter({ hasText: 'NameGenius' });
     await expect(flowsyCard).toBeVisible();
     await expect(namegeniusCard).toBeVisible();
@@ -30,12 +30,12 @@ test.describe('AI Playground Feature Suite', () => {
     await expect(namegeniusCard.getByRole('link', { name: /Launch Live App/i })).toHaveAttribute('href', 'https://namegenius-lilac.vercel.app');
 
     // 5. Navigate to Flowsy sub-page
-    await flowsyCard.getByRole('button', { name: /Explore Case & System/i }).click();
+    await flowsyCard.getByRole('button', { name: /Details/i }).click();
     await expect(page).toHaveURL(/#\/playground\/flowsy$/);
 
     // Verify Flowsy sub-page
     await expect(page.locator('h1')).toHaveText('Flowsy');
-    await expect(page.getByText('Llama 3.3 70B (Groq)')).toBeVisible();
+    await expect(page.getByText('Silence-Based Coaching')).toBeVisible();
     await expect(page.getByText('Clipsy ASCII Character')).toBeVisible();
     await expect(page.getByRole('link', { name: /Launch Flowsy/i })).toHaveAttribute('href', 'https://talkflow-mvp.vercel.app');
 
@@ -44,12 +44,12 @@ test.describe('AI Playground Feature Suite', () => {
     await expect(page).toHaveURL(/#\/playground$/);
 
     // 7. Navigate to NameGenius sub-page
-    await page.locator('article').filter({ hasText: 'NameGenius' }).getByRole('button', { name: /Explore Case & System/i }).click();
+    await page.locator('article').filter({ hasText: 'NameGenius' }).getByRole('button', { name: /Details/i }).click();
     await expect(page).toHaveURL(/#\/playground\/namegenius$/);
 
     // Verify NameGenius sub-page
     await expect(page.locator('h1')).toHaveText('NameGenius');
-    await expect(page.getByText('Direct IANA RDAP Bootstrap')).toBeVisible();
+    await expect(page.getByText('Generate-Then-Verify Pipeline')).toBeVisible();
     await expect(page.getByText('Tactile NG-01 Handheld Console')).toBeVisible();
     await expect(page.getByText('Vedic & Vastu Compliance Mode')).toBeVisible();
     await expect(page.getByRole('link', { name: /Launch NameGenius/i })).toHaveAttribute('href', 'https://namegenius-lilac.vercel.app');

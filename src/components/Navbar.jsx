@@ -13,7 +13,7 @@ import {
   List, 
   X,
   DotsThreeVertical,
-  Sparkle 
+  Flask 
 } from '@phosphor-icons/react';
 import gsap from 'gsap';
 import { animate } from 'animejs';
@@ -204,7 +204,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
             onClick={(e) => handleNavClick(e, '#/playground')}
             className="px-3.5 py-1.5 rounded-full hover:text-orange-600 dark:hover:text-orange-400 hover:bg-orange-500/10 dark:hover:bg-orange-500/15 transition-all duration-200 flex items-center gap-1.5 hover:scale-105"
           >
-            <Sparkle size={14} weight="fill" className="text-orange-500 animate-pulse" />
+            <Flask size={14} weight="bold" className="text-orange-500" />
             <span>AI Playground</span>
           </a>
           <a 
@@ -344,7 +344,7 @@ export const Navbar = ({ soundEnabled, setSoundEnabled, onOpenContact, isDarkMod
               className="w-full px-4 py-3 rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-800 text-left font-bold text-sm text-zinc-900 dark:text-white flex items-center justify-between transition-colors"
             >
               <span className="flex items-center gap-2.5">
-                <Sparkle size={17} weight="fill" className="text-orange-500" />
+                <Flask size={17} weight="bold" className="text-orange-500" />
                 <span>AI Playground</span>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
                   NEW
