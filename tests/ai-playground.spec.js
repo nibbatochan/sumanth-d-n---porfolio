@@ -16,47 +16,31 @@ test.describe('AI Playground Feature Suite', () => {
     await expect(page).toHaveURL(/#\/playground$/);
 
     // 4. Verify AI Playground Landing Page contents
-    await expect(page.locator('h1')).toContainText('Where agentic AI meets');
-    await expect(page.getByText('AI EXPERIMENTAL LAB')).toBeVisible();
+    await expect(page.locator('h1')).toContainText('Experiments built to be touched');
+    await expect(page.getByText('AI EXPERIMENTAL LAB')).not.toBeVisible();
 
-    // Verify both project cards are rendered
-    const flowsyCard = page.locator('article').filter({ hasText: 'What’s the point of Flowsy?' });
+    // Verify all 3 cards in the row are rendered
+    const flowsyCard = page.locator('article').filter({ hasText: 'Flowsy' });
     const namegeniusCard = page.locator('article').filter({ hasText: 'NameGenius' });
+    const comingSoonCard = page.locator('article').filter({ hasText: 'Coming Soon' });
+
     await expect(flowsyCard).toBeVisible();
     await expect(namegeniusCard).toBeVisible();
+    await expect(comingSoonCard).toBeVisible();
 
-    // Verify Vercel links exist
+    // Verify Flowsy card content: project name, small explanation, Launch Live App CTA
+    await expect(flowsyCard.locator('h2')).toHaveText('Flowsy');
+    await expect(flowsyCard.getByText('Make better small talk')).toBeVisible();
     await expect(flowsyCard.getByRole('link', { name: /Launch Live App/i })).toHaveAttribute('href', 'https://talkflow-mvp.vercel.app');
+    await expect(flowsyCard.getByRole('button', { name: /Details/i })).not.toBeVisible();
+
+    // Verify NameGenius card content: project name, small explanation, Launch Live App CTA
+    await expect(namegeniusCard.locator('h2')).toHaveText('NameGenius');
+    await expect(namegeniusCard.getByText('Brand names you can actually own')).toBeVisible();
     await expect(namegeniusCard.getByRole('link', { name: /Launch Live App/i })).toHaveAttribute('href', 'https://namegenius-lilac.vercel.app');
+    await expect(namegeniusCard.getByRole('button', { name: /Details/i })).not.toBeVisible();
 
-    // 5. Navigate to Flowsy sub-page
-    await flowsyCard.getByRole('button', { name: /Details/i }).click();
-    await expect(page).toHaveURL(/#\/playground\/flowsy$/);
-
-    // Verify Flowsy sub-page
-    await expect(page.locator('h1')).toHaveText('Flowsy');
-    await expect(page.getByText('Silence-Based Coaching')).toBeVisible();
-    await expect(page.getByText('Clipsy ASCII Character')).toBeVisible();
-    await expect(page.getByRole('link', { name: /Launch Flowsy/i })).toHaveAttribute('href', 'https://talkflow-mvp.vercel.app');
-
-    // 6. Navigate back to Playground
-    await page.getByRole('button', { name: /Back to Playground/i }).click();
-    await expect(page).toHaveURL(/#\/playground$/);
-
-    // 7. Navigate to NameGenius sub-page
-    await page.locator('article').filter({ hasText: 'NameGenius' }).getByRole('button', { name: /Details/i }).click();
-    await expect(page).toHaveURL(/#\/playground\/namegenius$/);
-
-    // Verify NameGenius sub-page
-    await expect(page.locator('h1')).toHaveText('NameGenius');
-    await expect(page.getByText('Generate-Then-Verify Pipeline')).toBeVisible();
-    await expect(page.getByText('Tactile NG-01 Handheld Console')).toBeVisible();
-    await expect(page.getByText('Vedic & Vastu Compliance Mode')).toBeVisible();
-    await expect(page.getByRole('link', { name: /Launch NameGenius/i })).toHaveAttribute('href', 'https://namegenius-lilac.vercel.app');
-
-    // 8. Navigate back to Playground, then back to Home
-    await page.getByRole('button', { name: /Back to Playground/i }).click();
-    await expect(page).toHaveURL(/#\/playground$/);
+    // 5. Navigate back to Home
     await page.getByRole('button', { name: /Back to Portfolio/i }).click();
     await expect(page.locator('#work')).toBeVisible();
   });

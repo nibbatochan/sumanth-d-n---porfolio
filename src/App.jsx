@@ -14,8 +14,6 @@ import { NoBrokerCasePage } from './components/NoBrokerCasePage';
 import { NoBrokerRestructuredPage } from './components/NoBrokerRestructuredPage';
 import { PosterChallengePage } from './components/PosterChallengePage';
 import { PlaygroundPage } from './components/playground/PlaygroundPage';
-import { FlowsySubPage } from './components/playground/FlowsySubPage';
-import { NameGeniusSubPage } from './components/playground/NameGeniusSubPage';
 import { projects } from './data/portfolioData';
 import { preloadWindSounds } from './utils/sound';
 import { Agentation } from 'agentation';
@@ -25,7 +23,7 @@ export function App() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeDedicatedCase, setActiveDedicatedCase] = useState(null);
-  const [activePlaygroundView, setActivePlaygroundView] = useState(null); // 'landing' | 'flowsy' | 'namegenius' | null
+  const [activePlaygroundView, setActivePlaygroundView] = useState(null); // 'landing' | null
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   // Preload audio assets into Web Audio buffers on initial app load
@@ -37,14 +35,8 @@ export function App() {
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash;
-      if (hash === '#/playground') {
+      if (hash.startsWith('#/playground')) {
         setActivePlaygroundView('landing');
-        setActiveDedicatedCase(null);
-      } else if (hash === '#/playground/flowsy') {
-        setActivePlaygroundView('flowsy');
-        setActiveDedicatedCase(null);
-      } else if (hash === '#/playground/namegenius') {
-        setActivePlaygroundView('namegenius');
         setActiveDedicatedCase(null);
       } else if (hash === '#/project/nobroker') {
         setActivePlaygroundView(null);
@@ -214,39 +206,6 @@ export function App() {
             onBack={() => {
               setActivePlaygroundView(null);
               window.location.hash = '';
-            }}
-            soundEnabled={soundEnabled}
-            setSoundEnabled={setSoundEnabled}
-            isDarkMode={isDarkMode}
-            setIsDarkMode={setIsDarkMode}
-            onOpenContact={() => setIsContactOpen(true)}
-            onNavigateToProject={(id) => {
-              window.location.hash = `#/playground/${id}`;
-            }}
-          />
-        </div>
-      )}
-
-      {activePlaygroundView === 'flowsy' && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-[#F5F5F7] dark:bg-[#0C0C0E] animate-fade-in">
-          <FlowsySubPage
-            onBack={() => {
-              window.location.hash = '#/playground';
-            }}
-            soundEnabled={soundEnabled}
-            setSoundEnabled={setSoundEnabled}
-            isDarkMode={isDarkMode}
-            setIsDarkMode={setIsDarkMode}
-            onOpenContact={() => setIsContactOpen(true)}
-          />
-        </div>
-      )}
-
-      {activePlaygroundView === 'namegenius' && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-[#F5F5F7] dark:bg-[#0C0C0E] animate-fade-in">
-          <NameGeniusSubPage
-            onBack={() => {
-              window.location.hash = '#/playground';
             }}
             soundEnabled={soundEnabled}
             setSoundEnabled={setSoundEnabled}
