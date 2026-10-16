@@ -34,8 +34,8 @@ export const PlaygroundPage = ({
   return (
     <div className="min-h-screen bg-[#F5F5F7] dark:bg-[#0C0C0E] text-zinc-900 dark:text-zinc-100 font-sans selection:bg-orange-500 selection:text-white transition-colors duration-300 relative overflow-x-hidden">
       
-      {/* Ambient Canvas Spotlight */}
-      <GlobalAsciiBackground isDarkMode={isDarkMode} />
+      {/* Ambient Canvas Spotlight with fullPage={true} so '+' grid hover is active across the entire page */}
+      <GlobalAsciiBackground isDarkMode={isDarkMode} fullPage={true} />
 
       {/* Top Floating Navigation Bar */}
       <header className="sticky top-0 left-0 right-0 z-50 px-4 sm:px-8 py-3.5 bg-white/85 dark:bg-[#0C0C0E]/85 backdrop-blur-md border-b border-zinc-200/80 dark:border-zinc-800/80 transition-all">
@@ -108,14 +108,14 @@ export const PlaygroundPage = ({
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10 relative z-20">
         
-        {/* Intro Section - Engaging, punchy & tag removed */}
+        {/* Intro Section - General & Focused on AI Playground as a whole */}
         <div className="space-y-3 max-w-3xl">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-zinc-900 dark:text-white leading-[1.12]">
-            Experiments built to be touched, <span className="underline decoration-orange-500 decoration-wavy decoration-2 underline-offset-8">not pitched</span>.
+            An experimental sandbox for <span className="underline decoration-orange-500 decoration-wavy decoration-2 underline-offset-8">intelligent interfaces</span> and agentic workflows.
           </h1>
 
           <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-            Functional micro-apps and conversational agents crafted from scratch in this harness. Shipped live on Vercel—tap in, play around, and test the edges.
+            A dedicated space for functional micro-apps, conversational agents, and generative systems built to test real interactions. Shipped live on Vercel—explore the experiments, test edge cases, and see how tactile design meets autonomous code.
           </p>
         </div>
 
@@ -123,8 +123,18 @@ export const PlaygroundPage = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* Card 1: Flowsy */}
-          <article className="bg-white dark:bg-[#121215] rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-2xs overflow-hidden flex flex-col justify-between hover:shadow-xl hover:border-orange-500/40 transition-all duration-300 group">
+          <article className="relative bg-white dark:bg-[#121215] rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-2xs overflow-hidden flex flex-col justify-between hover:shadow-xl hover:border-orange-500/40 hover:-translate-y-1.5 transition-all duration-300 group">
             
+            {/* Subtle Ambient Bottom Gradient on Card Hover */}
+            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-orange-500/[0.08] via-orange-500/[0.02] to-transparent pointer-events-none rounded-b-3xl -z-10" />
+
+            {/* Soft ASCII Grid Texture on Card Hover */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden pointer-events-none select-none font-mono text-[9px] leading-[13px] text-orange-400 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.14] transition-opacity duration-300 -z-10 [mask-image:linear-gradient(to_top,black_30%,transparent_100%)] p-4 break-all">
+              {'+ ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X ' +
+               '+ ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X ' +
+               '+ ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X '}
+            </div>
+
             {/* Simple Image Thumbnail */}
             <a 
               href="https://talkflow-mvp.vercel.app"
@@ -142,13 +152,13 @@ export const PlaygroundPage = ({
             </a>
 
             {/* Content Space: Flowsy */}
-            <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
+            <div className="p-6 flex-1 flex flex-col justify-between space-y-5 relative z-10">
               <div className="space-y-1.5">
                 <h2 className="text-xl font-black text-zinc-900 dark:text-white tracking-tight">
                   Flowsy
                 </h2>
                 <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-                  Make better small talk — practice real-time conversations with an empathetic ASCII AI companion.
+                  Make better small talk with real-time scenarios and get better at it.
                 </p>
               </div>
 
@@ -170,8 +180,18 @@ export const PlaygroundPage = ({
           </article>
 
           {/* Card 2: NameGenius */}
-          <article className="bg-white dark:bg-[#121215] rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-2xs overflow-hidden flex flex-col justify-between hover:shadow-xl hover:border-orange-500/40 transition-all duration-300 group">
+          <article className="relative bg-white dark:bg-[#121215] rounded-3xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-2xs overflow-hidden flex flex-col justify-between hover:shadow-xl hover:border-orange-500/40 hover:-translate-y-1.5 transition-all duration-300 group">
             
+            {/* Subtle Ambient Bottom Gradient on Card Hover */}
+            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-orange-500/[0.08] via-orange-500/[0.02] to-transparent pointer-events-none rounded-b-3xl -z-10" />
+
+            {/* Soft ASCII Grid Texture on Card Hover */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden pointer-events-none select-none font-mono text-[9px] leading-[13px] text-orange-400 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.14] transition-opacity duration-300 -z-10 [mask-image:linear-gradient(to_top,black_30%,transparent_100%)] p-4 break-all">
+              {'+ ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X ' +
+               '+ ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X ' +
+               '+ ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X + ~ · * % @ 8 S 0 # X '}
+            </div>
+
             {/* Simple Image Thumbnail */}
             <a 
               href="https://namegenius-lilac.vercel.app"
@@ -189,13 +209,13 @@ export const PlaygroundPage = ({
             </a>
 
             {/* Content Space: Name Genius */}
-            <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
+            <div className="p-6 flex-1 flex flex-col justify-between space-y-5 relative z-10">
               <div className="space-y-1.5">
                 <h2 className="text-xl font-black text-zinc-900 dark:text-white tracking-tight">
                   NameGenius
                 </h2>
                 <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-                  Brand names you can actually own — verified live at the registry before you see them.
+                  Brand names that you can actually own. That sound memorable and has a proper brand archetype behind it. Check the availability of the domains.
                 </p>
               </div>
 
@@ -217,7 +237,7 @@ export const PlaygroundPage = ({
           </article>
 
           {/* Card 3: In the Works / Slot 3 */}
-          <article className="bg-white/60 dark:bg-[#121215]/60 rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800/90 shadow-2xs overflow-hidden flex flex-col justify-between transition-all duration-300">
+          <article className="relative bg-white/60 dark:bg-[#121215]/60 rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-800/90 shadow-2xs overflow-hidden flex flex-col justify-between transition-all duration-300">
             
             {/* Placeholder Thumbnail Header */}
             <div className="relative aspect-16/10 bg-zinc-100/70 dark:bg-zinc-900/40 border-b border-dashed border-zinc-200 dark:border-zinc-800/80 flex flex-col items-center justify-center p-6 text-center">
@@ -230,7 +250,7 @@ export const PlaygroundPage = ({
             </div>
 
             {/* Content Space */}
-            <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
+            <div className="p-6 flex-1 flex flex-col justify-between space-y-5 relative z-10">
               <div className="space-y-1.5">
                 <h2 className="text-xl font-black text-zinc-400 dark:text-zinc-500 tracking-tight">
                   Coming Soon
