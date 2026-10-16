@@ -16,7 +16,7 @@ test.describe('AI Playground Feature Suite', () => {
     await expect(page).toHaveURL(/#\/playground$/);
 
     // 4. Verify AI Playground Landing Page contents
-    await expect(page.locator('h1')).toContainText('An experimental sandbox for');
+    await expect(page.locator('h1')).toContainText('Personal AI experiences');
     await expect(page.getByText('AI EXPERIMENTAL LAB')).not.toBeVisible();
 
     // Verify all 3 cards in the row are rendered
@@ -28,16 +28,16 @@ test.describe('AI Playground Feature Suite', () => {
     await expect(namegeniusCard).toBeVisible();
     await expect(comingSoonCard).toBeVisible();
 
-    // Verify Flowsy card content: project name, small explanation, Launch Live App CTA
+    // Verify Flowsy card content: project name, small explanation, circular CTA button
     await expect(flowsyCard.locator('h2')).toHaveText('Flowsy');
     await expect(flowsyCard.getByText(/Make better small talk with real-time scenarios/i)).toBeVisible();
-    await expect(flowsyCard.getByRole('link', { name: /Launch Live App/i })).toHaveAttribute('href', 'https://talkflow-mvp.vercel.app');
+    await expect(flowsyCard.getByRole('link', { name: /Launch Flowsy/i })).toHaveAttribute('href', 'https://talkflow-mvp.vercel.app');
     await expect(flowsyCard.getByRole('button', { name: /Details/i })).not.toBeVisible();
 
-    // Verify NameGenius card content: project name, small explanation, Launch Live App CTA
+    // Verify NameGenius card content: project name, small explanation, circular CTA button
     await expect(namegeniusCard.locator('h2')).toHaveText('NameGenius');
     await expect(namegeniusCard.getByText(/Brand names that you can actually own/i)).toBeVisible();
-    await expect(namegeniusCard.getByRole('link', { name: /Launch Live App/i })).toHaveAttribute('href', 'https://namegenius-lilac.vercel.app');
+    await expect(namegeniusCard.getByRole('link', { name: /Launch NameGenius/i })).toHaveAttribute('href', 'https://namegenius-lilac.vercel.app');
     await expect(namegeniusCard.getByRole('button', { name: /Details/i })).not.toBeVisible();
 
     // 5. Navigate back to Home

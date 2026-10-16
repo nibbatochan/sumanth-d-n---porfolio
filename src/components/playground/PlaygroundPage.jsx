@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { 
   ArrowLeft, 
   ArrowSquareOut, 
+  ArrowUpRight,
   Flask, 
   Sun,
   Moon,
   SpeakerHigh,
   SpeakerSlash,
-  ArrowRight
+  Sparkle
 } from '@phosphor-icons/react';
 import { playSound } from '../../utils/sound';
 import { GlobalAsciiBackground } from '../GlobalAsciiBackground';
@@ -108,14 +109,14 @@ export const PlaygroundPage = ({
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10 relative z-20">
         
-        {/* Intro Section - General & Focused on AI Playground as a whole */}
-        <div className="space-y-3 max-w-3xl">
+        {/* Intro Section - Simple, human & personal */}
+        <div className="space-y-3 max-w-2xl">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-zinc-900 dark:text-white leading-[1.12]">
-            An experimental sandbox for <span className="underline decoration-orange-500 decoration-wavy decoration-2 underline-offset-8">intelligent interfaces</span> and agentic workflows.
+            Personal AI experiences.
           </h1>
 
           <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-            A dedicated space for functional micro-apps, conversational agents, and generative systems built to test real interactions. Shipped live on Vercel—explore the experiments, test edge cases, and see how tactile design meets autonomous code.
+            A small collection of side projects, prototypes, and micro-tools I've built to explore what working with AI feels like. All live and usable—feel free to try them out.
           </p>
         </div>
 
@@ -162,17 +163,18 @@ export const PlaygroundPage = ({
                 </p>
               </div>
 
-              {/* Action Button */}
-              <div className="pt-2">
+              {/* Circular Action Button */}
+              <div className="pt-2 flex items-center justify-end">
                 <a
                   href="https://talkflow-mvp.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Launch Flowsy"
+                  title="Launch Live App"
                   onClick={() => playSound('success', soundEnabled)}
-                  className="w-full px-4 py-2.5 rounded-2xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-black dark:hover:bg-zinc-100 text-xs font-bold shadow-sm flex items-center justify-center gap-2 transition-transform active:scale-98"
+                  className="w-10 h-10 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-orange-500 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white shadow-sm flex items-center justify-center transition-all duration-200 hover:scale-108 active:scale-95 group/btn"
                 >
-                  <span>Launch Live App</span>
-                  <ArrowSquareOut size={14} weight="bold" />
+                  <ArrowUpRight size={17} weight="bold" className="transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                 </a>
               </div>
             </div>
@@ -219,17 +221,18 @@ export const PlaygroundPage = ({
                 </p>
               </div>
 
-              {/* Action Button */}
-              <div className="pt-2">
+              {/* Circular Action Button */}
+              <div className="pt-2 flex items-center justify-end">
                 <a
                   href="https://namegenius-lilac.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Launch NameGenius"
+                  title="Launch Live App"
                   onClick={() => playSound('success', soundEnabled)}
-                  className="w-full px-4 py-2.5 rounded-2xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-black dark:hover:bg-zinc-100 text-xs font-bold shadow-sm flex items-center justify-center gap-2 transition-transform active:scale-98"
+                  className="w-10 h-10 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-orange-500 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white shadow-sm flex items-center justify-center transition-all duration-200 hover:scale-108 active:scale-95 group/btn"
                 >
-                  <span>Launch Live App</span>
-                  <ArrowSquareOut size={14} weight="bold" />
+                  <ArrowUpRight size={17} weight="bold" className="transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                 </a>
               </div>
             </div>
@@ -260,10 +263,14 @@ export const PlaygroundPage = ({
                 </p>
               </div>
 
-              {/* Placeholder CTA */}
-              <div className="pt-2">
-                <div className="w-full px-4 py-2.5 rounded-2xl bg-zinc-100 dark:bg-zinc-800/50 text-zinc-400 dark:text-zinc-600 text-xs font-bold flex items-center justify-center gap-2 select-none border border-zinc-200/50 dark:border-zinc-800/50">
-                  <span>In Development</span>
+              {/* Placeholder Circular CTA */}
+              <div className="pt-2 flex items-center justify-end">
+                <div 
+                  aria-label="In development"
+                  title="In Development"
+                  className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800/60 text-zinc-400 dark:text-zinc-600 flex items-center justify-center border border-zinc-200/50 dark:border-zinc-800/50 select-none"
+                >
+                  <Sparkle size={15} weight="bold" />
                 </div>
               </div>
             </div>
