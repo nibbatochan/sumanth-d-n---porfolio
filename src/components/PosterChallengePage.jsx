@@ -873,53 +873,53 @@ export const PosterChallengePage = ({
       {/* ── Minimalist Top Navigation ── */}
       <header 
         onPointerDown={(e) => e.stopPropagation()}
-        className="absolute top-0 left-0 right-0 z-40 px-4 sm:px-10 py-4 sm:py-5 flex items-center justify-between pointer-events-auto"
+        className="absolute top-0 left-0 right-0 z-40 px-3 sm:px-10 py-3 sm:py-5 flex items-center justify-between pointer-events-auto"
       >
         <button
           onClick={() => {
             playWindSwoosh('soft', { volume: 0.25, soundEnabled });
             onBack();
           }}
-          className="group inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider bg-white/10 hover:bg-white text-white hover:text-black border border-white/15 backdrop-blur-md transition-all duration-200"
+          className="group inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider bg-white/10 hover:bg-white text-white hover:text-black border border-white/15 backdrop-blur-md transition-all duration-200 shrink-0"
         >
-          <ArrowLeft size={14} weight="bold" className="group-hover:-translate-x-0.5 transition-transform" />
+          <ArrowLeft size={13} weight="bold" className="group-hover:-translate-x-0.5 transition-transform sm:w-[14px] sm:h-[14px]" />
           <span>Exit</span>
         </button>
 
         {/* Center Title & Day indicator (Mathematically centered on screen) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md z-10 pointer-events-auto whitespace-nowrap shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse shrink-0" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md z-10 pointer-events-auto whitespace-nowrap shadow-sm max-w-[44vw] sm:max-w-none">
+          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-orange-500 animate-pulse shrink-0" />
           <span className="hidden md:inline text-xs font-mono tracking-widest uppercase font-bold text-white/90">
             30-Day Poster Sprint
           </span>
-          <span className="md:hidden text-[11px] font-mono tracking-wider uppercase font-bold text-white/90">
+          <span className="md:hidden text-[10px] sm:text-[11px] font-mono tracking-wider uppercase font-bold text-white/90 truncate">
             Sprint
           </span>
-          <span className="text-white/40 text-xs font-mono">•</span>
-          <span className="text-[11px] sm:text-xs font-mono text-orange-400 font-bold">
+          <span className="text-white/40 text-[10px] sm:text-xs font-mono">•</span>
+          <span className="text-[10px] sm:text-xs font-mono text-orange-400 font-bold shrink-0">
             {displayCard ? displayCard.day : 'Day 01'} / 30
           </span>
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           <button
             onClick={() => {
               playWindSwoosh('soft', { volume: 0.25, soundEnabled });
               setIsAutoPlay(prev => !prev);
             }}
-            className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white/80 hover:text-white transition-colors cursor-pointer"
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-auto sm:px-3.5 sm:py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white/80 hover:text-white transition-colors cursor-pointer"
             title={isAutoPlay ? 'Pause auto-cruise' : 'Resume auto-cruise'}
           >
             {isAutoPlay ? (
               <>
                 <Pause size={12} weight="fill" className="text-orange-400" />
-                <span className="hidden md:inline">Cruise: ON</span>
+                <span className="hidden md:inline ml-1.5">Cruise: ON</span>
               </>
             ) : (
               <>
                 <Play size={12} weight="fill" className="text-white/60" />
-                <span className="hidden md:inline">Cruise: OFF</span>
+                <span className="hidden md:inline ml-1.5">Cruise: OFF</span>
               </>
             )}
           </button>
@@ -930,11 +930,11 @@ export const PosterChallengePage = ({
               playWindSwoosh('focus', { volume: 0.28, soundEnabled });
               setShowProjectInfo(true);
             }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white/80 hover:text-white transition-colors cursor-pointer"
+            className="inline-flex items-center justify-center w-8 h-8 sm:w-auto sm:px-3 sm:py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white/80 hover:text-white transition-colors cursor-pointer"
             title="Project Details & Story"
           >
             <Info size={14} weight="bold" className="text-orange-400" />
-            <span className="hidden sm:inline">Details</span>
+            <span className="hidden sm:inline ml-1.5">Details</span>
           </button>
         </div>
       </header>

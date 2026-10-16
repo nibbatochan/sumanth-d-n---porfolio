@@ -35,8 +35,25 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
 
   const [activeProject, setActiveProject] = useState('ps2');
   const [activeSection, setActiveSection] = useState('header-section');
+  const [mobileTocOpen, setMobileTocOpen] = useState(false);
 
   const containerRef = useRef(null);
+
+  // Close mobile TOC menu on Escape key or desktop resize
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setMobileTocOpen(false);
+    };
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setMobileTocOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const tocItems = [
     { id: 'header-section', label: 'Overview', kicker: 'Intro' },
@@ -108,6 +125,7 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
 
   const scrollToSection = (id) => {
     playSound('pop', soundEnabled);
+    setMobileTocOpen(false);
     const el = document.getElementById(id);
     if (el) {
       smoothScrollTo(el, 70);
@@ -133,7 +151,7 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
       <GlobalAsciiBackground isDarkMode={isDarkMode} fullPage={true} />
 
       {/* Floating Top Bar (Sticky Navigation & Back Button) */}
-      <nav className="sticky top-0 z-50 bg-[#FAF9F6]/85 dark:bg-[#09090B]/80 backdrop-blur-xl border-b border-zinc-200/90 dark:border-zinc-800 px-3 sm:px-6 xl:px-0 py-2.5 sm:py-3.5 transition-all">
+      <nav className="sticky top-0 z-50 bg-[#FAF9F6]/90 dark:bg-[#09090B]/90 backdrop-blur-xl border-b border-zinc-200/90 dark:border-zinc-800 px-3 sm:px-6 xl:px-0 py-2.5 sm:py-3 transition-all">
         <div className="max-w-[1240px] w-full mx-auto flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Left Action: Back to Portfolio with responsive shrink text */}
@@ -150,15 +168,40 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
             <span className="inline sm:hidden text-xs">Back</span>
           </button>
 
-          {/* Quick Jump Navigation Pills (for mobile and tablet) - Flexible container with horizontal scroll */}
-          <div className="flex xl:hidden flex-1 min-w-0 items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-1 mask-linear-fade">
+          {/* Mobile Center: Sleek Three-Dot / Section Selector Pill */}
+          <div className="flex md:hidden items-center shrink-0">
+            <button
+              onClick={() => {
+                setMobileTocOpen(prev => !prev);
+                playSound('pop', soundEnabled);
+              }}
+              aria-label="Jump to Case Study Section"
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold border transition-all ${
+                mobileTocOpen
+                  ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border-transparent shadow-sm'
+                  : 'bg-zinc-100/90 dark:bg-zinc-800/90 text-zinc-800 dark:text-zinc-200 border-zinc-200 dark:border-zinc-700 shadow-xs'
+              }`}
+            >
+              <span className="truncate max-w-[95px] sm:max-w-[120px] text-[11px] font-sans">
+                {tocItems.find(t => t.id === activeSection)?.label || 'Sections'}
+              </span>
+              {mobileTocOpen ? (
+                <X size={14} weight="bold" className="text-orange-500 shrink-0" />
+              ) : (
+                <DotsThreeVertical size={16} weight="bold" className="text-orange-500 shrink-0" />
+              )}
+            </button>
+          </div>
+
+          {/* Tablet Jump Navigation Pills (hidden on mobile, hidden on desktop XL which has sidebar) */}
+          <div className="hidden md:flex xl:hidden flex-1 min-w-0 items-center gap-1.5 overflow-x-auto no-scrollbar py-1 mask-linear-fade">
             {tocItems.map((nav) => {
               const isActive = activeSection === nav.id;
               return (
                 <button
                   key={nav.id}
                   onClick={() => scrollToSection(nav.id)}
-                  className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-colors tactile-btn whitespace-nowrap shrink-0 ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors tactile-btn whitespace-nowrap shrink-0 ${
                     isActive
                       ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900'
                       : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
@@ -211,6 +254,55 @@ export const NoBrokerCasePage = ({ onBack, soundEnabled, onOpenContact, isDarkMo
             </a>
           </div>
         </div>
+
+        {/* Mobile Dropdown Drawer for Section Navigation */}
+        {mobileTocOpen && (
+          <div className="md:hidden mt-2.5 max-w-[1240px] mx-auto bg-white/95 dark:bg-[#121216]/95 backdrop-blur-2xl border border-zinc-200 dark:border-zinc-800 rounded-2xl p-3.5 shadow-2xl space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800/80 px-1">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 dark:text-zinc-500 font-bold">
+                Jump to Case Study Section
+              </span>
+              <button
+                onClick={() => setMobileTocOpen(false)}
+                className="text-[11px] font-mono text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 flex items-center gap-1"
+              >
+                <span>Close</span>
+                <X size={12} weight="bold" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 gap-1 max-h-[60vh] overflow-y-auto py-1">
+              {tocItems.map((nav) => {
+                const isActive = activeSection === nav.id;
+                return (
+                  <button
+                    key={nav.id}
+                    onClick={() => scrollToSection(nav.id)}
+                    className={`w-full px-3 py-2.5 rounded-xl text-left text-xs font-medium flex items-center justify-between transition-colors ${
+                      isActive
+                        ? 'bg-orange-500/10 text-orange-600 dark:text-orange-400 font-bold'
+                        : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 truncate">
+                      <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                        isActive
+                          ? 'bg-orange-500 text-white font-bold'
+                          : 'bg-zinc-200/70 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'
+                      }`}>
+                        {nav.kicker}
+                      </span>
+                      <span className="truncate">{nav.label}</span>
+                    </div>
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0 ml-2" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Editorial Page Container - Centered composite layout with sticky TOC */}
