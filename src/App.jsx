@@ -40,11 +40,11 @@ export function App() {
       if (hash.startsWith('#/playground')) {
         setActivePlaygroundView('landing');
         setActiveDedicatedCase(null);
-      } else if (hash === '#/project/nobroker') {
+      } else if (hash === '#/project/nobroker-old') {
         setActivePlaygroundView(null);
         const nobrokerProj = projects.find(p => p.id === 'nobroker-commute');
         if (nobrokerProj) setActiveDedicatedCase({ ...nobrokerProj, variant: 'timeline' });
-      } else if (hash === '#/project/nobroker-new') {
+      } else if (hash === '#/project/nobroker' || hash === '#/project/nobroker-new') {
         setActivePlaygroundView(null);
         const nobrokerProj = projects.find(p => p.id === 'nobroker-commute');
         if (nobrokerProj) setActiveDedicatedCase({ ...nobrokerProj, variant: 'new' });
@@ -141,7 +141,7 @@ export function App() {
           soundEnabled={soundEnabled}
           onSelectProject={(proj) => {
             if (proj.id === 'nobroker-commute') {
-              setActiveDedicatedCase(proj);
+              setActiveDedicatedCase({ ...proj, variant: 'new' });
               window.history.pushState(null, '', '#/project/nobroker');
             } else if (proj.id === 'poster-challenge') {
               setActiveDedicatedCase(proj);
