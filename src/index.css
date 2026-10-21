@@ -85,3 +85,8 @@ div[data-agentation-root] {
 .animate-marquee-left:hover {
   animation-play-state: paused;
 }
+
+/* Lenis owns the smoothing on the home page; native smooth scroll would double it. */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }

@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 
-export const GlobalAsciiBackground = ({ isDarkMode = true, fullPage = false }) => {
+export const GlobalAsciiBackground = ({ isDarkMode = true, fullPage = false, paused = false }) => {
   const canvasRef = useRef(null);
   const animFrameRef = useRef(null);
 
   useEffect(() => {
+    if (paused) return undefined;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return undefined;
     const ctx = canvas.getContext('2d');
 
     const getZoom = () => {
@@ -47,9 +48,17 @@ export const GlobalAsciiBackground = ({ isDarkMode = true, fullPage = false }) =
     window.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseleave', handleMouseLeave);
 
+    let drawn = false;
     const render = () => {
       mouseX += (targetMouseX - mouseX) * 0.12;
       mouseY += (targetMouseY - mouseY) * 0.12;
+
+      // Nothing to draw and nothing left to clear: skip the frame.
+      if (mouseX <= -500 && !drawn) {
+        animFrameRef.current = requestAnimationFrame(render);
+        return;
+      }
+      drawn = mouseX > -500;
 
       ctx.clearRect(0, 0, width, height);
 
@@ -108,7 +117,7 @@ export const GlobalAsciiBackground = ({ isDarkMode = true, fullPage = false }) =
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [isDarkMode, fullPage]);
+  }, [isDarkMode, fullPage, paused]);
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none">

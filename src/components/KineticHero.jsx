@@ -8,7 +8,7 @@ import { playSound } from '../utils/sound';
 import { AsciiCanvas } from './AsciiCanvas';
 import { PixelFlower } from './PixelFlower';
 
-export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded = true }) => {
+export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded = true, paused = false }) => {
   const [copied, setCopied] = useState(false);
 
   const workBtnRef = useRef(null);
@@ -397,7 +397,7 @@ export const KineticHero = ({ soundEnabled, isDarkMode, onOpenContact, isLoaded 
 
         {/* Right 5 Columns: 3D ASCII Flying Dove Canvas (100% Untouched) */}
         <div ref={doveColRef} className="lg:col-span-5 flex items-center justify-center relative select-none w-full mt-6 lg:mt-0">
-          <AsciiCanvas soundEnabled={soundEnabled} isDarkMode={isDarkMode} />
+          <AsciiCanvas soundEnabled={soundEnabled} isDarkMode={isDarkMode} paused={paused} />
         </div>
 
       </div>

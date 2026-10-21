@@ -12,11 +12,13 @@ import { ContactModal } from './components/ContactModal';
 import { Footer } from './components/Footer';
 import { NoBrokerCasePage } from './components/NoBrokerCasePage';
 import { NoBrokerRestructuredPage } from './components/NoBrokerRestructuredPage';
+import { NoBrokerCaseNewPage } from './components/NoBrokerCaseNewPage';
 import { PosterChallengePage } from './components/PosterChallengePage';
 import { PlaygroundPage } from './components/playground/PlaygroundPage';
 import { projects } from './data/portfolioData';
 import { preloadWindSounds } from './utils/sound';
 import { Agentation } from 'agentation';
+import Lenis from 'lenis';
 
 export function App() {
   const [loading, setLoading] = useState(true);
@@ -42,6 +44,10 @@ export function App() {
         setActivePlaygroundView(null);
         const nobrokerProj = projects.find(p => p.id === 'nobroker-commute');
         if (nobrokerProj) setActiveDedicatedCase({ ...nobrokerProj, variant: 'timeline' });
+      } else if (hash === '#/project/nobroker-new') {
+        setActivePlaygroundView(null);
+        const nobrokerProj = projects.find(p => p.id === 'nobroker-commute');
+        if (nobrokerProj) setActiveDedicatedCase({ ...nobrokerProj, variant: 'new' });
       } else if (hash === '#/project/nobroker-restructured' || hash === '#/project/nobroker-v2') {
         setActivePlaygroundView(null);
         const nobrokerProj = projects.find(p => p.id === 'nobroker-commute');
@@ -79,6 +85,15 @@ export function App() {
     }
   }, [isDarkMode]);
 
+  // Lenis smooth scroll for the home page. Overlays (case studies, modals, playground) own their scroll, so pause it there.
+  const homeScrollActive = !loading && !activeDedicatedCase && !activePlaygroundView && !selectedProject && !isContactOpen;
+  useEffect(() => {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!homeScrollActive || reduce) return undefined;
+    const lenis = new Lenis({ duration: 1.1, easing: (x) => 1 - Math.pow(1 - x, 4), autoRaf: true, anchors: true });
+    return () => lenis.destroy();
+  }, [homeScrollActive]);
+
   return (
     <div className="min-h-screen flex flex-col font-sans text-black dark:text-white bg-white dark:bg-[#09090B] antialiased selection:bg-orange-500 selection:text-white relative transition-colors duration-300 overflow-x-hidden">
       
@@ -94,7 +109,7 @@ export function App() {
       <CustomCursor />
 
       {/* 3. Global Ambient '+' Grid Hover Spotlight */}
-      <GlobalAsciiBackground isDarkMode={isDarkMode} />
+      <GlobalAsciiBackground isDarkMode={isDarkMode} paused={!!activeDedicatedCase} />
 
       {/* 4. Floating Navigation (Reveals only AFTER loader finishes) */}
       <Navbar
@@ -115,6 +130,7 @@ export function App() {
           isDarkMode={isDarkMode}
           onOpenContact={() => setIsContactOpen(true)}
           isLoaded={!loading}
+          paused={!!activeDedicatedCase}
         />
 
         {/* Continuous Skills Marquee Banner */}
@@ -148,12 +164,24 @@ export function App() {
       <Footer
         soundEnabled={soundEnabled}
         onOpenContact={() => setIsContactOpen(true)}
+        paused={!!activeDedicatedCase}
       />
 
       {/* 7. Dedicated Full Case Study Page View */}
       {activeDedicatedCase && activeDedicatedCase.id === 'nobroker-commute' && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-[#F5F5F7] dark:bg-[#0C0C0E] animate-fade-in">
-          {activeDedicatedCase.variant === 'restructured' ? (
+          {activeDedicatedCase.variant === 'new' ? (
+            <NoBrokerCaseNewPage
+              soundEnabled={soundEnabled}
+              isDarkMode={isDarkMode}
+              setIsDarkMode={setIsDarkMode}
+              onOpenContact={() => setIsContactOpen(true)}
+              onBack={() => {
+                setActiveDedicatedCase(null);
+                window.history.pushState(null, '', window.location.pathname);
+              }}
+            />
+          ) : activeDedicatedCase.variant === 'restructured' ? (
             <NoBrokerRestructuredPage
               soundEnabled={soundEnabled}
               isDarkMode={isDarkMode}

@@ -3,7 +3,7 @@ import { RealisticAsciiDove } from '../utils/asciiRenderer';
 import { playSound } from '../utils/sound';
 import { ArrowsClockwise, Crosshair } from '@phosphor-icons/react';
 
-export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
+export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true, paused = false }) => {
   const [asciiOutput, setAsciiOutput] = useState('');
   const [colorIndex, setColorIndex] = useState(0);
   const [reticlePos, setReticlePos] = useState({ x: -100, y: -100 });
@@ -35,6 +35,7 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
   const currentTheme = activePalettes[colorIndex % activePalettes.length];
 
   useEffect(() => {
+    if (paused) return undefined;
     // 118 columns x 42 rows ultra-large dove
     const engine = new RealisticAsciiDove(118, 42);
     engineRef.current = engine;
@@ -57,7 +58,7 @@ export const AsciiCanvas = ({ soundEnabled = true, isDarkMode = true }) => {
     return () => {
       if (animRef.current) clearTimeout(animRef.current);
     };
-  }, []);
+  }, [paused]);
 
   const getZoom = () => {
     try {
