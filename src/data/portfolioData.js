@@ -48,7 +48,7 @@ export const projects = [
     featured: true,
     hasDedicatedPage: true,
     thumbnailImage: '/illustrations/nobroker-case-thumbnail.jpg',
-    summary: 'A house hunt rarely ends in one big decision. It falls apart in small breaks along the way. I went looking for those breaks in NoBroker's rental search.',
+    summary: "A house hunt rarely ends in one big decision. It falls apart in small breaks along the way. I went looking for those breaks in NoBroker's rental search.",
     tags: ['UI/UX Design', 'Product Design', 'UX Research', 'In-App Commute', 'Hi-Fi Lab'],
     heroColor: 'from-[#1A0B05] to-[#0D0502]',
     accentColor: '#EA580C',
