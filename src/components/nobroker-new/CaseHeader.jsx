@@ -57,7 +57,7 @@ export const CaseHeader = ({ onJumpToSection }) => {
         
         {/* Clean Natural Paragraph with Smooth Motion */}
         <p className="header-desc text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-300 font-normal leading-relaxed will-change-transform">
-          <strong className="font-semibold text-zinc-900 dark:text-white">24 of 37 renters</strong> constantly left the app for Google Maps, and <strong className="font-semibold text-zinc-900 dark:text-white">25 of 37 searches</strong> took two weeks or more. I researched why, redesigned three of those moments, and tested them with <strong className="font-semibold text-zinc-900 dark:text-white">12 renters</strong>.
+          A house hunt rarely ends in one big decision. It falls apart in small breaks along the way. I went looking for those breaks in NoBroker's rental search.
         </p>
 
         {/* Editorial Metadata Grid with Identical Spacing & Clean Typography */}
