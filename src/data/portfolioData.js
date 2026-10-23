@@ -48,7 +48,7 @@ export const projects = [
     featured: true,
     hasDedicatedPage: true,
     thumbnailImage: '/illustrations/nobroker-case-thumbnail.jpg',
-    summary: 'A comprehensive product redesign tackling rental search abandonment in Bangalore. Transformed 7 behavioral patterns into an in-app spatial commute engine, verified reality photos, and calm alerts.',
+    summary: 'A house hunt rarely ends in one big decision. It falls apart in small breaks along the way. I went looking for those breaks in NoBroker's rental search.',
     tags: ['UI/UX Design', 'Product Design', 'UX Research', 'In-App Commute', 'Hi-Fi Lab'],
     heroColor: 'from-[#1A0B05] to-[#0D0502]',
     accentColor: '#EA580C',
